@@ -27,6 +27,8 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:8000;o
 ::-webkit-scrollbar{width:2px}
 ::-webkit-scrollbar-track{background:var(--black)}
 ::-webkit-scrollbar-thumb{background:linear-gradient(to bottom,var(--it-green) 33%,rgba(238,235,229,.5) 33% 66%,var(--it-red) 66%)}
+
+/* HEADER */
 header{position:sticky;top:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:24px 64px;background:rgba(5,5,5,0.96);backdrop-filter:blur(24px);border-bottom:1px solid var(--border)}
 .logo{text-decoration:none;display:flex;flex-direction:column;gap:3px}
 .logo-wm{display:flex;align-items:baseline}
@@ -41,6 +43,8 @@ header{position:sticky;top:0;z-index:500;display:flex;align-items:center;justify
 .logo-tb span:nth-child(3){background:var(--it-red)}
 .back-btn{font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(238,235,229,0.4);text-decoration:none;border:1px solid rgba(238,235,229,0.12);padding:10px 24px;transition:border-color .3s,color .3s;cursor:none;position:relative;overflow:hidden}
 .back-btn:hover{border-color:rgba(238,235,229,0.28);color:var(--white)}
+
+/* HERO */
 .hero{position:relative;text-align:center;padding:96px 40px 76px;overflow:hidden}
 .hero::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:1px;height:76px;background:linear-gradient(to bottom,transparent,var(--it-green) 33%,rgba(238,235,229,.5) 66%,var(--it-red));opacity:.6}
 .hero::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 60%,var(--it-green-gl) 0%,transparent 55%),radial-gradient(ellipse at 70% 60%,var(--it-red-gl) 0%,transparent 55%);pointer-events:none}
@@ -50,10 +54,12 @@ header{position:sticky;top:0;z-index:500;display:flex;align-items:center;justify
 .hero-eye-t{font-size:0.62rem;letter-spacing:0.32em;text-transform:uppercase;color:rgba(238,235,229,0.3)}
 .hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.8rem,5.5vw,5.5rem);font-weight:400;color:var(--white);letter-spacing:0.02em;line-height:1.06;margin-bottom:22px}
 .hero h1 em{font-style:italic;font-weight:300;color:rgba(238,235,229,0.38)}
-.hero p{font-size:0.87rem;color:rgba(238,235,229,0.38);line-height:1.9;max-width:500px;margin:0 auto}
+.hero p{font-size:0.87rem;color:rgba(238,235,229,0.38);line-height:1.9;max-width:560px;margin:0 auto}
 .tri-div{margin:0 64px;height:1px;position:relative;overflow:hidden}
 .tri-div::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,var(--it-green) 20%,rgba(238,235,229,.5) 50%,var(--it-red) 80%,transparent);opacity:.4}
-.wrap{max-width:960px;margin:0 auto;padding:72px 64px 110px}
+
+/* MAIN WRAP */
+.wrap{max-width:980px;margin:0 auto;padding:72px 64px 110px}
 .search-label{display:block;font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:rgba(238,235,229,0.22);margin-bottom:14px}
 .search-row{display:flex;gap:1px;background:var(--border);margin-bottom:10px}
 .kt-input{flex:1;background:var(--black-2);border:none;border-bottom:2px solid transparent;color:var(--white);font-size:1.6rem;padding:20px 24px;outline:none;font-family:'Inter',sans-serif;font-weight:300;letter-spacing:0.18em;text-transform:uppercase;transition:border-color .35s,background .35s;cursor:none}
@@ -68,6 +74,8 @@ header{position:sticky;top:0;z-index:500;display:flex;align-items:center;justify
 .err-msg.show{display:block}
 .spin{display:inline-block;width:13px;height:13px;border:1.5px solid rgba(5,5,5,0.2);border-top-color:var(--black);border-radius:50%;animation:spinA .65s linear infinite;margin-left:10px;vertical-align:middle}
 @keyframes spinA{to{transform:rotate(360deg)}}
+
+/* EMPTY STATE */
 .empty{text-align:center;padding:88px 0 48px}
 .empty-tri{display:flex;justify-content:center;gap:4px;margin-bottom:32px}
 .empty-tri span{display:block;width:2px;border-radius:1px}
@@ -76,29 +84,45 @@ header{position:sticky;top:0;z-index:500;display:flex;align-items:center;justify
 .empty-tri span:nth-child(3){height:18px;background:var(--it-red);opacity:.4}
 .empty-t{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-style:italic;color:rgba(238,235,229,0.25);margin-bottom:8px}
 .empty-s{font-size:0.72rem;color:rgba(238,235,229,0.16);letter-spacing:0.1em}
+
 @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
 .results{display:none;margin-top:64px}
 .results.show{display:block;animation:fadeUp .6s ease}
+
+/* RESULT HEADER */
 .res-top{display:flex;align-items:flex-start;justify-content:space-between;gap:28px;margin-bottom:32px;flex-wrap:wrap}
 .res-name{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3.5vw,3rem);font-weight:400;color:var(--white);line-height:1.12}
 .res-name em{font-style:italic;color:rgba(238,235,229,0.38)}
-.nl-plate{display:flex;flex-direction:column;overflow:hidden;border-radius:5px;border:1px solid rgba(238,235,229,0.12);min-width:180px}
+.res-meta{font-size:0.72rem;color:rgba(238,235,229,0.3);margin-top:8px;line-height:1.6}
+
+/* NL PLATE */
+.nl-plate{display:flex;flex-direction:column;overflow:hidden;border-radius:5px;border:1px solid rgba(238,235,229,0.12);min-width:190px;flex-shrink:0}
 .nl-plate-top{background:#003DA5;padding:5px 10px;display:flex;align-items:center;justify-content:space-between}
 .nl-eu{font-size:0.42rem;color:rgba(255,255,255,.8)}
 .nl-stars{font-size:0.48rem;color:#FFD700;letter-spacing:1px}
 .nl-nl{font-size:0.48rem;font-weight:700;color:rgba(255,255,255,.9)}
 .nl-plate-num{background:#F5C800;color:#000;font-size:1.65rem;font-weight:700;letter-spacing:0.12em;padding:9px 16px;font-family:'Inter',sans-serif;text-align:center}
-.sbar{display:flex;gap:8px;margin-bottom:44px;flex-wrap:wrap}
-.s-pill{font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;padding:7px 14px;border:1px solid;font-weight:500;display:flex;align-items:center;gap:7px}
-.s-pill::before{content:'';display:block;width:5px;height:5px;border-radius:50%;flex-shrink:0}
-.pill-ok{color:var(--ok);border-color:rgba(0,146,70,.28);background:rgba(0,146,70,.06)}
-.pill-ok::before{background:var(--ok)}
-.pill-warn{color:var(--warn);border-color:rgba(196,154,0,.28);background:rgba(196,154,0,.06)}
-.pill-warn::before{background:var(--warn)}
-.pill-bad{color:var(--bad);border-color:rgba(206,43,55,.28);background:rgba(206,43,55,.06)}
-.pill-bad::before{background:var(--bad)}
-.pill-neu{color:var(--grey-2);border-color:rgba(136,136,136,.18);background:rgba(136,136,136,.04)}
-.pill-neu::before{background:var(--grey-2)}
+
+/* SNELLE CHECK BALK */
+.quick-check{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1px;background:var(--border);margin-bottom:32px}
+.qc-item{background:var(--black-2);padding:18px 20px;display:flex;align-items:center;gap:12px}
+.qc-icon{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.qc-label{font-size:0.58rem;letter-spacing:0.16em;text-transform:uppercase;color:rgba(238,235,229,0.25);margin-bottom:3px}
+.qc-val{font-size:0.82rem;font-weight:400}
+.qc-ok{color:var(--ok)}
+.qc-warn{color:var(--warn)}
+.qc-bad{color:var(--bad)}
+.qc-neu{color:rgba(238,235,229,0.5)}
+.icon-ok{background:var(--ok)}
+.icon-warn{background:var(--warn)}
+.icon-bad{background:var(--bad)}
+.icon-neu{background:rgba(136,136,136,0.5)}
+
+/* DISCLAIMER WAM */
+.wam-notice{background:rgba(196,154,0,0.06);border:1px solid rgba(196,154,0,0.2);padding:14px 18px;font-size:0.75rem;color:rgba(196,154,0,0.85);line-height:1.6;margin-bottom:2px;display:flex;gap:10px;align-items:flex-start}
+.wam-notice::before{content:'ℹ';flex-shrink:0;font-size:0.9rem}
+
+/* DATA BLOCKS */
 .dblock{background:var(--black-2);border:1px solid var(--border);margin-bottom:2px;position:relative;overflow:hidden;transition:background .3s}
 .dblock::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--it-green),rgba(238,235,229,.4),var(--it-red));opacity:.3}
 .dblock:hover{background:var(--black-3)}
@@ -111,13 +135,26 @@ header{position:sticky;top:0;z-index:500;display:flex;align-items:center;justify
 .bhead.open .bhead-chev{transform:rotate(180deg)}
 .bbody{padding:28px 36px 32px}
 .bbody.hidden{display:none}
+
+/* DATA GRID */
 .dgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px 32px}
+.dgrid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:22px 32px}
 .di-lbl{display:block;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(238,235,229,0.2);margin-bottom:5px}
 .di-val{font-size:0.88rem;color:var(--white);line-height:1.5;font-weight:300}
 .di-val.ok{color:var(--ok)}
 .di-val.warn{color:var(--warn)}
 .di-val.bad{color:var(--bad)}
 .di-val.dim{color:rgba(238,235,229,0.4)}
+
+/* WEGENBELASTING TABEL */
+.wb-table{width:100%;border-collapse:collapse;margin-top:4px}
+.wb-table th{font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(238,235,229,0.22);padding:10px 14px;text-align:left;border-bottom:1px solid var(--border);font-weight:400}
+.wb-table td{font-size:0.82rem;color:rgba(238,235,229,0.7);padding:10px 14px;border-bottom:1px solid rgba(238,235,229,0.04);font-weight:300}
+.wb-table tr:last-child td{border-bottom:none}
+.wb-table tr:hover td{background:rgba(238,235,229,0.02)}
+.wb-highlight td{color:var(--white)!important;font-weight:400!important}
+
+/* APK TABEL */
 .apk-table{width:100%;border-collapse:collapse;margin-top:4px}
 .apk-table th{font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(238,235,229,0.22);padding:10px 14px;text-align:left;border-bottom:1px solid var(--border);font-weight:400}
 .apk-table td{font-size:0.82rem;color:rgba(238,235,229,0.7);padding:12px 14px;border-bottom:1px solid rgba(238,235,229,0.04);font-weight:300;vertical-align:middle}
@@ -128,6 +165,8 @@ header{position:sticky;top:0;z-index:500;display:flex;align-items:center;justify
 .apk-ok{color:var(--ok)}.apk-ok::before{background:var(--ok)}
 .apk-afk{color:var(--warn)}.apk-afk::before{background:var(--warn)}
 .apk-fail{color:var(--bad)}.apk-fail::before{background:var(--bad)}
+
+/* ODO CHART */
 .odo-chart-wrap{margin-top:8px}
 .odo-chart{position:relative;height:140px;margin-bottom:18px}
 .odo-canvas{width:100%;height:100%}
@@ -135,7 +174,9 @@ header{position:sticky;top:0;z-index:500;display:flex;align-items:center;justify
 .odo-stat-l{font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(238,235,229,0.22);margin-bottom:4px}
 .odo-stat-v{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:400;color:var(--white)}
 .odo-stat-v span{font-size:0.7rem;color:rgba(238,235,229,0.35);margin-left:4px}
-.bpm-wrap{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+
+/* BPM */
+.bpm-wrap{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:16px}
 .bpm-side{background:var(--black-3);padding:28px;position:relative;overflow:hidden}
 .bpm-side::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;opacity:.4}
 .bpm-side:nth-child(1)::before{background:var(--it-green)}
@@ -147,11 +188,21 @@ header{position:sticky;top:0;z-index:500;display:flex;align-items:center;justify
 .bpm-bar-lbl{display:flex;justify-content:space-between;font-size:0.6rem;color:rgba(238,235,229,0.25);margin-bottom:6px}
 .bpm-bar-track{height:3px;background:rgba(238,235,229,0.08);border-radius:2px;overflow:hidden}
 .bpm-bar-fill{height:100%;border-radius:2px;transition:width 1.2s cubic-bezier(.25,.46,.45,.94)}
-.bpm-verdict{margin-top:20px;padding:14px 18px;border:1px solid;font-size:0.72rem;letter-spacing:0.1em;display:flex;align-items:center;gap:10px}
+.bpm-verdict{margin-top:4px;padding:14px 18px;border:1px solid;font-size:0.72rem;letter-spacing:0.1em;display:flex;align-items:center;gap:10px}
 .bpm-verdict::before{content:'';display:block;width:6px;height:6px;border-radius:50%;flex-shrink:0}
 .bpm-ok{color:var(--ok);border-color:rgba(0,146,70,.25);background:rgba(0,146,70,.05)}.bpm-ok::before{background:var(--ok)}
 .bpm-lo{color:var(--warn);border-color:rgba(196,154,0,.25);background:rgba(196,154,0,.05)}.bpm-lo::before{background:var(--warn)}
 .bpm-hi{color:var(--bad);border-color:rgba(206,43,55,.25);background:rgba(206,43,55,.05)}.bpm-hi::before{background:var(--bad)}
+
+/* TENAAMSTELLINGEN */
+.tns-row{display:flex;gap:16px;padding:14px 0;border-bottom:1px solid rgba(238,235,229,0.05);align-items:center}
+.tns-row:last-child{border-bottom:none}
+.tns-num{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;color:rgba(238,235,229,0.08);min-width:36px}
+.tns-date{font-size:0.82rem;color:rgba(238,235,229,0.6);min-width:140px;font-weight:300}
+.tns-info{font-size:0.78rem;color:rgba(238,235,229,0.35);line-height:1.5}
+.tns-days{font-size:0.7rem;color:rgba(238,235,229,0.25);margin-left:auto;white-space:nowrap}
+
+/* RECALLS */
 .recall-row{display:flex;gap:16px;padding:16px 0;border-bottom:1px solid rgba(238,235,229,0.05);align-items:flex-start}
 .recall-row:last-child{border-bottom:none}
 .recall-dot{width:6px;height:6px;border-radius:50%;background:var(--warn);flex-shrink:0;margin-top:5px}
@@ -160,6 +211,18 @@ header{position:sticky;top:0;z-index:500;display:flex;align-items:center;justify
 .recall-date{font-size:0.7rem;color:rgba(238,235,229,0.25);white-space:nowrap}
 .no-recall{display:flex;align-items:center;gap:12px;padding:18px 0;font-size:0.82rem;color:rgba(238,235,229,0.4)}
 .no-recall::before{content:'';display:block;width:6px;height:6px;border-radius:50%;background:var(--ok);flex-shrink:0}
+
+/* IMPORT HISTORIE */
+.import-timeline{position:relative;padding-left:24px}
+.import-timeline::before{content:'';position:absolute;left:4px;top:8px;bottom:8px;width:1px;background:linear-gradient(to bottom,var(--it-green),rgba(238,235,229,0.2),var(--it-red));opacity:.4}
+.it-item{position:relative;padding:0 0 24px 20px}
+.it-item:last-child{padding-bottom:0}
+.it-dot{position:absolute;left:-20px;top:4px;width:8px;height:8px;border-radius:50%;border:1px solid rgba(238,235,229,0.2)}
+.it-date{font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(238,235,229,0.28);margin-bottom:5px}
+.it-title{font-size:0.88rem;color:var(--white);font-weight:400;margin-bottom:3px}
+.it-sub{font-size:0.78rem;color:rgba(238,235,229,0.38);line-height:1.55}
+
+/* CTA */
 .cta-wrap{margin-top:48px;padding:64px 56px;background:var(--black-2);border:1px solid rgba(238,235,229,0.08);position:relative;overflow:hidden;text-align:center}
 .cta-wrap::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--it-green) 25%,rgba(238,235,229,.55) 50%,var(--it-red) 75%,transparent);opacity:.5}
 .cta-eye{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:18px}
@@ -174,6 +237,8 @@ header{position:sticky;top:0;z-index:500;display:flex;align-items:center;justify
 .btn-w span{position:relative;z-index:1;color:inherit}
 .btn-g{display:inline-flex;align-items:center;background:transparent;color:rgba(238,235,229,.5);padding:14px 40px;font-family:'Inter',sans-serif;font-size:0.68rem;font-weight:400;letter-spacing:0.2em;text-transform:uppercase;text-decoration:none;border:1px solid rgba(238,235,229,.14);transition:border-color .3s,color .3s,transform .3s;cursor:none}
 .btn-g:hover{border-color:rgba(238,235,229,.3);color:var(--white);transform:translateY(-2px)}
+
+/* FOOTER */
 footer{text-align:center;padding:52px 64px;border-top:1px solid var(--border);position:relative}
 footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--it-green) 20%,rgba(238,235,229,.35) 50%,var(--it-red) 80%,transparent);opacity:.28}
 .ft-tri{display:flex;gap:2px;justify-content:center;margin-bottom:14px}
@@ -184,8 +249,27 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 .ft-copy{font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(238,235,229,0.16)}
 .ft-copy a{color:rgba(238,235,229,.22);text-decoration:none;transition:color .3s}
 .ft-copy a:hover{color:rgba(238,235,229,.5)}
-@media(max-width:820px){header{padding:20px 24px}.tri-div{margin:0 24px}.wrap{padding:52px 24px 80px}.hero{padding:80px 24px 60px}.dgrid{grid-template-columns:1fr 1fr}.bpm-wrap{grid-template-columns:1fr}.bbody{padding:22px 22px 26px}.cta-wrap{padding:44px 28px}footer{padding:40px 24px}}
-@media(max-width:480px){.dgrid{grid-template-columns:1fr}.res-top{flex-direction:column}.kt-input{font-size:1.1rem}}
+
+/* RESPONSIVE */
+@media(max-width:820px){
+  header{padding:20px 24px}
+  .tri-div{margin:0 24px}
+  .wrap{padding:52px 24px 80px}
+  .hero{padding:80px 24px 60px}
+  .dgrid{grid-template-columns:1fr 1fr}
+  .dgrid-2{grid-template-columns:1fr}
+  .bpm-wrap{grid-template-columns:1fr}
+  .bbody{padding:22px 22px 26px}
+  .cta-wrap{padding:44px 28px}
+  footer{padding:40px 24px}
+  .quick-check{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:480px){
+  .dgrid{grid-template-columns:1fr}
+  .res-top{flex-direction:column}
+  .kt-input{font-size:1.1rem}
+  .quick-check{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
@@ -201,7 +285,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
     <div class="logo-sub">Automotive Advisory</div>
     <div class="logo-tb"><span></span><span></span><span></span></div>
   </a>
-  <a href="https://apexclusive.nl" class="back-btn"><span>&#8592; Terug naar website</span></a>
+  <a href="https://apexclusive.nl" class="back-btn">&#8592; Terug naar website</a>
 </header>
 
 <div class="hero">
@@ -214,7 +298,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
     <span class="hero-eye-t">APEXclusive — Gratis instrument</span>
   </div>
   <h1>Kentekencheck<br><em>Volledig Voertuigrapport</em></h1>
-  <p>APK-historie, tellerstandverloop, BPM-indicatie, terugroepacties en meer via officiële RDW-data. Gratis, direct, zonder registratie.</p>
+  <p>APK-historie, tellerstandverloop, voertuighistorie, wegenbelasting per provincie, BPM-indicatie, terugroepacties en meer via officiële RDW-data.</p>
 </div>
 
 <div class="tri-div"></div>
@@ -230,13 +314,17 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
   <div class="empty" id="empty-state">
     <div class="empty-tri"><span></span><span></span><span></span></div>
     <div class="empty-t">Voer een kenteken in om te beginnen.</div>
-    <div class="empty-s">Officiële RDW-data · APK-historie · BPM-indicatie · Terugroepacties</div>
+    <div class="empty-s">RDW-data · APK-historie · Tellerstand · Wegenbelasting · BPM · Recalls · Tenaamstellingen</div>
   </div>
 
   <div class="results" id="results">
 
+    <!-- RES HEADER -->
     <div class="res-top">
-      <div class="res-name" id="r-name">—</div>
+      <div>
+        <div class="res-name" id="r-name">—</div>
+        <div class="res-meta" id="r-meta"></div>
+      </div>
       <div class="nl-plate">
         <div class="nl-plate-top">
           <span class="nl-stars">★★★★★★★★★★★★</span>
@@ -247,8 +335,15 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
       </div>
     </div>
 
-    <div class="sbar" id="sbar"></div>
+    <!-- SNELLE CHECK -->
+    <div class="quick-check" id="quick-check"></div>
 
+    <!-- WAM NOTICE -->
+    <div class="wam-notice" id="wam-notice" style="display:none">
+      Verzekeringsstatus (WAM) is niet openbaar beschikbaar via de RDW open data API — dit veld is privacygevoelig en vereist een gecertificeerde RDW-licentie. Het voertuig kan gewoon verzekerd zijn. Neem bij twijfel contact op met de RDW of de verkoper.
+    </div>
+
+    <!-- 1. VOERTUIGGEGEVENS -->
     <div class="dblock">
       <div class="bhead open" onclick="toggle(this)">
         <div class="bhead-icon"><svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 4v4h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
@@ -258,48 +353,112 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
       <div class="bbody">
         <div class="dgrid">
           <div><span class="di-lbl">Merk</span><span class="di-val" id="d-merk">—</span></div>
-          <div><span class="di-lbl">Model</span><span class="di-val" id="d-model">—</span></div>
+          <div><span class="di-lbl">Model / Handelsbenaming</span><span class="di-val" id="d-model">—</span></div>
           <div><span class="di-lbl">Type</span><span class="di-val" id="d-type">—</span></div>
           <div><span class="di-lbl">Bouwjaar</span><span class="di-val" id="d-jaar">—</span></div>
-          <div><span class="di-lbl">Eerste toelating</span><span class="di-val" id="d-toelating">—</span></div>
-          <div><span class="di-lbl">Tenaamstelling NL</span><span class="di-val" id="d-tenaam">—</span></div>
+          <div><span class="di-lbl">Eerste toelating wereldwijd</span><span class="di-val" id="d-toelating">—</span></div>
+          <div><span class="di-lbl">Eerste toelating Nederland</span><span class="di-val" id="d-tenaam">—</span></div>
           <div><span class="di-lbl">Kleur</span><span class="di-val" id="d-kleur">—</span></div>
           <div><span class="di-lbl">Tweede kleur</span><span class="di-val" id="d-kleur2">—</span></div>
-          <div><span class="di-lbl">Carrosserie</span><span class="di-val" id="d-carr">—</span></div>
+          <div><span class="di-lbl">Carrosserie / Inrichting</span><span class="di-val" id="d-carr">—</span></div>
           <div><span class="di-lbl">Aantal deuren</span><span class="di-val" id="d-deuren">—</span></div>
           <div><span class="di-lbl">Zitplaatsen</span><span class="di-val" id="d-zit">—</span></div>
-          <div><span class="di-lbl">Cilinderinhoud</span><span class="di-val" id="d-cc">—</span></div>
-          <div><span class="di-lbl">Vermogen (kW / pk)</span><span class="di-val" id="d-kw">—</span></div>
-          <div><span class="di-lbl">Massa rijklaar</span><span class="di-val" id="d-gew">—</span></div>
-          <div><span class="di-lbl">Max. toegestane massa</span><span class="di-val" id="d-maxmass">—</span></div>
-          <div><span class="di-lbl">Laadvermogen</span><span class="di-val" id="d-laad">—</span></div>
           <div><span class="di-lbl">Voertuigsoort</span><span class="di-val" id="d-soort">—</span></div>
           <div><span class="di-lbl">EU Categorie</span><span class="di-val" id="d-eucat">—</span></div>
+          <div><span class="di-lbl">Wielbasis</span><span class="di-val" id="d-wielbasis">—</span></div>
+          <div><span class="di-lbl">Lengte × Breedte × Hoogte</span><span class="di-val" id="d-afm">—</span></div>
         </div>
       </div>
     </div>
 
+    <!-- 2. MOTOR & PRESTATIES -->
+    <div class="dblock">
+      <div class="bhead open" onclick="toggle(this)">
+        <div class="bhead-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg></div>
+        <div class="bhead-title">Motor &amp; Prestaties</div>
+        <svg class="bhead-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="bbody">
+        <div class="dgrid">
+          <div><span class="di-lbl">Cilinderinhoud</span><span class="di-val" id="d-cc">—</span></div>
+          <div><span class="di-lbl">Aantal cilinders</span><span class="di-val" id="d-cil">—</span></div>
+          <div><span class="di-lbl">Vermogen (kW / pk)</span><span class="di-val" id="d-kw">—</span></div>
+          <div><span class="di-lbl">Motorcode</span><span class="di-val" id="d-motorcode">—</span></div>
+          <div><span class="di-lbl">Brandstof</span><span class="di-val" id="d-bs">—</span></div>
+          <div><span class="di-lbl">Versnellingsbak</span><span class="di-val" id="d-versn">—</span></div>
+          <div><span class="di-lbl">Aandrijving</span><span class="di-val" id="d-aandr">—</span></div>
+          <div><span class="di-lbl">Geluidsniveau stationair</span><span class="di-val" id="d-geluid-s">—</span></div>
+          <div><span class="di-lbl">Geluidsniveau rijdend</span><span class="di-val" id="d-geluid-r">—</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. GEWICHTEN & AFMETINGEN -->
+    <div class="dblock">
+      <div class="bhead" onclick="toggle(this)">
+        <div class="bhead-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+        <div class="bhead-title">Gewichten &amp; Afmetingen</div>
+        <svg class="bhead-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="bbody hidden">
+        <div class="dgrid">
+          <div><span class="di-lbl">Massa rijklaar</span><span class="di-val" id="d-gew">—</span></div>
+          <div><span class="di-lbl">Massa ledig voertuig</span><span class="di-val" id="d-ledig">—</span></div>
+          <div><span class="di-lbl">Max. toegestane massa</span><span class="di-val" id="d-maxmass">—</span></div>
+          <div><span class="di-lbl">Laadvermogen</span><span class="di-val" id="d-laad">—</span></div>
+          <div><span class="di-lbl">Wielbasis</span><span class="di-val" id="d-wb2">—</span></div>
+          <div><span class="di-lbl">Lengte</span><span class="di-val" id="d-len">—</span></div>
+          <div><span class="di-lbl">Breedte</span><span class="di-val" id="d-brd">—</span></div>
+          <div><span class="di-lbl">Hoogte</span><span class="di-val" id="d-hgt">—</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. MILIEU & VERBRUIK -->
+    <div class="dblock">
+      <div class="bhead" onclick="toggle(this)">
+        <div class="bhead-icon"><svg viewBox="0 0 24 24"><path d="M3 22V8l9-6 9 6v14"/><path d="M10 14h4v8h-4z"/></svg></div>
+        <div class="bhead-title">Verbruik &amp; Milieu</div>
+        <svg class="bhead-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="bbody hidden">
+        <div class="dgrid">
+          <div><span class="di-lbl">CO₂ uitstoot (gecomb.)</span><span class="di-val" id="d-co2">—</span></div>
+          <div><span class="di-lbl">Brandstofverbruik gecomb.</span><span class="di-val" id="d-verb-g">—</span></div>
+          <div><span class="di-lbl">Verbruik stad</span><span class="di-val" id="d-verb-s">—</span></div>
+          <div><span class="di-lbl">Verbruik snelweg</span><span class="di-val" id="d-verb-h">—</span></div>
+          <div><span class="di-lbl">Energielabel</span><span class="di-val" id="d-el">—</span></div>
+          <div><span class="di-lbl">Milieuklasse</span><span class="di-val" id="d-emissie">—</span></div>
+          <div><span class="di-lbl">Netto max. vermogen</span><span class="di-val" id="d-nvermogen">—</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. APK & STATUS -->
     <div class="dblock">
       <div class="bhead open" onclick="toggle(this)">
         <div class="bhead-icon"><svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
-        <div class="bhead-title">APK &amp; Registratie</div>
+        <div class="bhead-title">APK, Status &amp; Import</div>
         <svg class="bhead-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
       <div class="bbody">
         <div class="dgrid" style="margin-bottom:32px">
           <div><span class="di-lbl">APK vervaldatum</span><span class="di-val" id="d-apk">—</span></div>
           <div><span class="di-lbl">APK status</span><span class="di-val" id="d-apkst">—</span></div>
-          <div><span class="di-lbl">Dagen tot verloop</span><span class="di-val" id="d-apkdays">—</span></div>
-          <div><span class="di-lbl">WAM verzekerd</span><span class="di-val" id="d-wam">—</span></div>
+          <div><span class="di-lbl">Resterende APK</span><span class="di-val" id="d-apkdays">—</span></div>
           <div><span class="di-lbl">Gestolen</span><span class="di-val" id="d-gestolen">—</span></div>
           <div><span class="di-lbl">Geëxporteerd</span><span class="di-val" id="d-export">—</span></div>
           <div><span class="di-lbl">Gescorst</span><span class="di-val" id="d-geschorst">—</span></div>
+          <div><span class="di-lbl">Geïmporteerd</span><span class="di-val" id="d-import">—</span></div>
+          <div><span class="di-lbl">Tenaamstellen mogelijk</span><span class="di-val" id="d-tns-mog">—</span></div>
+          <div><span class="di-lbl">Openstaande terugroepacties</span><span class="di-val" id="d-recall-sum">—</span></div>
         </div>
         <div class="di-lbl" style="margin-bottom:14px">APK Keuringshistorie</div>
-        <div id="apk-history-wrap"><div style="font-size:.8rem;color:rgba(238,235,229,.3)">Voer een kenteken in om de historie te laden.</div></div>
+        <div id="apk-history-wrap"><div style="font-size:.8rem;color:rgba(238,235,229,.3)">Laden…</div></div>
       </div>
     </div>
 
+    <!-- 6. TELLERSTAND -->
     <div class="dblock">
       <div class="bhead open" onclick="toggle(this)">
         <div class="bhead-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
@@ -313,30 +472,40 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
             <div><div class="odo-stat-l">Huidige stand</div><div class="odo-stat-v" id="odo-current">—</div></div>
             <div><div class="odo-stat-l">Gem. per jaar</div><div class="odo-stat-v" id="odo-avg">—</div></div>
             <div><div class="odo-stat-l">Consistentie</div><div class="odo-stat-v" id="odo-consist">—</div></div>
-            <div><div class="odo-stat-l">Keuringen</div><div class="odo-stat-v" id="odo-count">—</div></div>
+            <div><div class="odo-stat-l">Meetpunten</div><div class="odo-stat-v" id="odo-count">—</div></div>
           </div>
         </div>
       </div>
     </div>
 
+    <!-- 7. VOERTUIGHISTORIE & TENAAMSTELLINGEN -->
     <div class="dblock">
       <div class="bhead open" onclick="toggle(this)">
-        <div class="bhead-icon"><svg viewBox="0 0 24 24"><path d="M3 22V8l9-6 9 6v14"/><path d="M10 14h4v8h-4z"/></svg></div>
-        <div class="bhead-title">Brandstof &amp; Milieu</div>
+        <div class="bhead-icon"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+        <div class="bhead-title">Voertuighistorie &amp; Tenaamstellingen</div>
         <svg class="bhead-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
       <div class="bbody">
-        <div class="dgrid">
-          <div><span class="di-lbl">Brandstof</span><span class="di-val" id="d-bs">—</span></div>
-          <div><span class="di-lbl">CO₂ uitstoot</span><span class="di-val" id="d-co2">—</span></div>
-          <div><span class="di-lbl">Energielabel</span><span class="di-val" id="d-el">—</span></div>
-          <div><span class="di-lbl">Geluidsniveau</span><span class="di-val" id="d-geluid">—</span></div>
-          <div><span class="di-lbl">Netto max. vermogen</span><span class="di-val" id="d-nvermogen">—</span></div>
-          <div><span class="di-lbl">Emissiecode</span><span class="di-val" id="d-emissie">—</span></div>
+        <div id="tns-timeline-wrap" style="margin-bottom:32px">
+          <div style="font-size:.8rem;color:rgba(238,235,229,.3)">Laden…</div>
         </div>
       </div>
     </div>
 
+    <!-- 8. WEGENBELASTING -->
+    <div class="dblock">
+      <div class="bhead" onclick="toggle(this)">
+        <div class="bhead-icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div class="bhead-title">Wegenbelasting per Provincie</div>
+        <svg class="bhead-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="bbody hidden">
+        <div style="font-size:0.75rem;color:rgba(238,235,229,.35);margin-bottom:20px;line-height:1.6">Indicatieve wegenbelasting per kwartaal, berekend op basis van massa rijklaar en brandstoftype. Exacte bedragen via de Belastingdienst.</div>
+        <div id="wb-wrap"><div style="font-size:.8rem;color:rgba(238,235,229,.3)">Laden…</div></div>
+      </div>
+    </div>
+
+    <!-- 9. BPM -->
     <div class="dblock">
       <div class="bhead open" onclick="toggle(this)">
         <div class="bhead-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
@@ -355,16 +524,17 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
             <div class="bpm-val" id="bpm-rest">—</div>
             <div class="bpm-sub" id="bpm-rest-sub">Berekend via forfaitaire afschrijvingstabel.</div>
             <div class="bpm-bar-wrap">
-              <div class="bpm-bar-lbl"><span>0%</span><span id="bpm-pct-lbl">0%</span><span>100%</span></div>
+              <div class="bpm-bar-lbl"><span>0%</span><span id="bpm-pct-lbl">—</span><span>100%</span></div>
               <div class="bpm-bar-track"><div class="bpm-bar-fill" id="bpm-bar" style="width:0%"></div></div>
             </div>
           </div>
         </div>
         <div class="bpm-verdict" id="bpm-verdict" style="display:none"></div>
-        <div style="margin-top:18px;font-size:0.72rem;color:rgba(238,235,229,.25);line-height:1.7">&#9888; Indicatieve berekening op basis van openbare RDW-data en de forfaitaire BPM-afschrijvingstabel. Voor exacte BPM-aangifte is een officiële taxatie vereist.</div>
+        <div style="margin-top:18px;font-size:0.72rem;color:rgba(238,235,229,.25);line-height:1.7">⚠ Indicatieve berekening op basis van openbare RDW-data en de forfaitaire BPM-afschrijvingstabel. Voor exacte BPM-aangifte is een officiële taxatie vereist.</div>
       </div>
     </div>
 
+    <!-- 10. TERUGROEPACTIES -->
     <div class="dblock">
       <div class="bhead open" onclick="toggle(this)">
         <div class="bhead-icon"><svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
@@ -373,10 +543,11 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
         <svg class="bhead-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
       <div class="bbody">
-        <div id="recall-wrap"><div style="font-size:.8rem;color:rgba(238,235,229,.3)">Voer een kenteken in om terugroepacties te laden.</div></div>
+        <div id="recall-wrap"><div style="font-size:.8rem;color:rgba(238,235,229,.3)">Laden…</div></div>
       </div>
     </div>
 
+    <!-- CTA -->
     <div class="cta-wrap">
       <div class="cta-eye">
         <div class="tri-pill">
@@ -394,17 +565,17 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
       </div>
     </div>
 
-  </div>
-</div>
+  </div><!-- /results -->
+</div><!-- /wrap -->
 
 <footer>
   <div class="ft-tri"><span></span><span></span><span></span></div>
-  <div class="ft-copy"><a href="https://apexclusive.nl">&#169; 2026 APEXclusive — Automotive Advisory · Maastricht</a></div>
+  <div class="ft-copy"><a href="https://apexclusive.nl">© 2026 APEXclusive — Automotive Advisory · Maastricht</a></div>
 </footer>
 
 <script>
-const cur=document.getElementById('cur');
-const ring=document.getElementById('cur-ring');
+/* ── Cursor ── */
+const cur=document.getElementById('cur'),ring=document.getElementById('cur-ring');
 let mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
 (function tick(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(tick);})();
@@ -412,17 +583,136 @@ document.querySelectorAll('a,button,.bhead,.dblock').forEach(el=>{
   el.addEventListener('mouseenter',()=>document.body.classList.add('hov'));
   el.addEventListener('mouseleave',()=>document.body.classList.remove('hov'));
 });
-function toggle(head){head.classList.toggle('open');head.nextElementSibling.classList.toggle('hidden');}
-function fmtDate(s){if(!s||s.length<8)return'—';return s.substring(6,8)+'-'+s.substring(4,6)+'-'+s.substring(0,4);}
-function fmtDateLong(s){if(!s||s.length<8)return'—';const m=['jan','feb','mrt','apr','mei','jun','jul','aug','sep','okt','nov','dec'];return s.substring(6,8)+' '+m[parseInt(s.substring(4,6),10)-1]+' '+s.substring(0,4);}
-function cap(s){return s?s.charAt(0).toUpperCase()+s.slice(1).toLowerCase():'—';}
-function kwToPk(kw){return kw?Math.round(parseFloat(kw)*1.36):null;}
-function apkStatus(s){if(!s)return{t:'Onbekend',c:'warn',days:null};const dt=new Date(s.substring(0,4)+'-'+s.substring(4,6)+'-'+s.substring(6,8));const diff=Math.floor((dt-new Date())/86400000);if(diff<0)return{t:'Verlopen',c:'bad',days:diff};if(diff<60)return{t:'Verloopt binnenkort',c:'warn',days:diff};return{t:'Geldig',c:'ok',days:diff};}
+
+/* ── Toggle blocks ── */
+function toggle(head){
+  head.classList.toggle('open');
+  head.nextElementSibling.classList.toggle('hidden');
+}
+
+/* ── Helpers ── */
+function fmtDate(s){
+  if(!s||s.length<8)return'—';
+  return s.substring(6,8)+'-'+s.substring(4,6)+'-'+s.substring(0,4);
+}
+function fmtDateLong(s){
+  if(!s||s.length<8)return'—';
+  const m=['januari','februari','maart','april','mei','juni','juli','augustus','september','oktober','november','december'];
+  const day=parseInt(s.substring(6,8));
+  const mon=parseInt(s.substring(4,6))-1;
+  const yr=s.substring(0,4);
+  return day+' '+m[mon]+' '+yr;
+}
+function cap(s){
+  if(!s)return'—';
+  return s.charAt(0).toUpperCase()+s.slice(1).toLowerCase();
+}
+function kwToPk(kw){
+  return kw?Math.round(parseFloat(kw)*1.36):null;
+}
+function apkStatus(s){
+  if(!s)return{t:'Onbekend',c:'warn',days:null};
+  const yr=s.substring(0,4),mo=s.substring(4,6),dy=s.substring(6,8);
+  const dt=new Date(yr+'-'+mo+'-'+dy);
+  const diff=Math.floor((dt-new Date())/86400000);
+  if(diff<0)return{t:'Verlopen',c:'bad',days:diff};
+  if(diff<60)return{t:'Verloopt binnenkort',c:'warn',days:diff};
+  return{t:'Geldig',c:'ok',days:diff};
+}
+function daysBetween(d1str,d2){
+  if(!d1str||d1str.length<8)return null;
+  const d1=new Date(d1str.substring(0,4)+'-'+d1str.substring(4,6)+'-'+d1str.substring(6,8));
+  return Math.floor((d2-d1)/86400000);
+}
+
+/* ── BPM ── */
 const BPM_TABLE=[[0,1],[1,.909],[2,.826],[3,.751],[4,.685],[5,.626],[6,.574],[7,.527],[8,.485],[9,.447],[10,.413],[11,.382],[12,.354],[18,.268],[24,.209],[36,.140],[48,.099],[60,.074],[72,.057],[84,.044],[96,.035],[108,.028],[120,.022],[144,.014],[168,.009],[180,.007],[999,.005]];
 function bpmRestPct(m){for(let i=BPM_TABLE.length-1;i>=0;i--){if(m>=BPM_TABLE[i][0])return BPM_TABLE[i][1];}return 1;}
-function estimateCatalog(merk,kw){const p=parseFloat(kw)||100;let base=25000;if(p<60)base=12000;else if(p<90)base=18000;else if(p<120)base=25000;else if(p<150)base=35000;else if(p<200)base=50000;else if(p<250)base=70000;else if(p<300)base=100000;else if(p<400)base=150000;else base=220000;const premium={'LAMBORGHINI':5,'FERRARI':6,'MCLAREN':5,'PORSCHE':2.5,'BENTLEY':4,'ROLLS-ROYCE':7,'MASERATI':3,'BMW':1.4,'MERCEDES-BENZ':1.4,'AUDI':1.3,'RANGE ROVER':1.8};const m=(merk||'').toUpperCase();let fac=1;for(const k in premium){if(m.includes(k)){fac=premium[k];break;}}return Math.round(base*fac);}
-function calcBPM(merk,kw,toelating){const cat=estimateCatalog(merk,kw);const grondslag=Math.round(cat*0.102);let maanden=0;if(toelating&&toelating.length>=6){const y=parseInt(toelating.substring(0,4));const mo=parseInt(toelating.substring(4,6));const now=new Date();maanden=(now.getFullYear()-y)*12+(now.getMonth()+1-mo);}const pct=bpmRestPct(Math.max(0,maanden));const rest=Math.round(grondslag*pct);return{cat,grondslag,rest,pct,maanden};}
-function drawOdoChart(canvas,data){const W=canvas.offsetWidth||600,H=140;canvas.width=W*window.devicePixelRatio;canvas.height=H*window.devicePixelRatio;canvas.style.width=W+'px';canvas.style.height=H+'px';const ctx=canvas.getContext('2d');ctx.scale(window.devicePixelRatio,window.devicePixelRatio);if(!data||data.length<2)return;const pad={t:16,r:16,b:28,l:60},gW=W-pad.l-pad.r,gH=H-pad.t-pad.b;const maxKm=Math.max(...data.map(d=>d.km))*1.08;const minY=Math.min(...data.map(d=>d.year)),maxY=Math.max(...data.map(d=>d.year));function px(y){return pad.l+(y-minY)/(Math.max(maxY-minY,1))*gW;}function py(k){return pad.t+gH-(k/(maxKm||1))*gH;}ctx.strokeStyle='rgba(238,235,229,0.05)';ctx.lineWidth=1;for(let i=0;i<=4;i++){const y=pad.t+gH/4*i;ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(pad.l+gW,y);ctx.stroke();}const grad=ctx.createLinearGradient(0,pad.t,0,pad.t+gH);grad.addColorStop(0,'rgba(0,146,70,0.18)');grad.addColorStop(1,'rgba(0,146,70,0)');ctx.beginPath();ctx.moveTo(px(data[0].year),py(data[0].km));data.forEach(d=>ctx.lineTo(px(d.year),py(d.km)));ctx.lineTo(px(data[data.length-1].year),pad.t+gH);ctx.lineTo(px(data[0].year),pad.t+gH);ctx.closePath();ctx.fillStyle=grad;ctx.fill();ctx.beginPath();ctx.moveTo(px(data[0].year),py(data[0].km));data.forEach(d=>ctx.lineTo(px(d.year),py(d.km)));ctx.strokeStyle='rgba(0,146,70,0.8)';ctx.lineWidth=1.5;ctx.stroke();data.forEach(d=>{ctx.beginPath();ctx.arc(px(d.year),py(d.km),3,0,Math.PI*2);ctx.fillStyle='rgba(0,146,70,1)';ctx.fill();});ctx.fillStyle='rgba(238,235,229,0.25)';ctx.font='10px Inter';ctx.textAlign='right';for(let i=0;i<=4;i++){const v=Math.round(maxKm/4*i);ctx.fillText(v>=1000?(v/1000).toFixed(0)+'K':v,pad.l-6,py(maxKm/4*i)+3);}ctx.textAlign='center';data.forEach(d=>ctx.fillText(d.year,px(d.year),H-6));}
+function estimateCatalog(merk,kw){
+  const p=parseFloat(kw)||100;
+  let base=25000;
+  if(p<60)base=12000;else if(p<90)base=18000;else if(p<120)base=25000;
+  else if(p<150)base=35000;else if(p<200)base=50000;else if(p<250)base=70000;
+  else if(p<300)base=100000;else if(p<400)base=150000;else base=220000;
+  const premium={'LAMBORGHINI':5,'FERRARI':6,'MCLAREN':5,'PORSCHE':2.5,'BENTLEY':4,
+    'ROLLS-ROYCE':7,'MASERATI':3,'BMW':1.4,'MERCEDES-BENZ':1.4,'AUDI':1.3,'RANGE ROVER':1.8};
+  const mu=(merk||'').toUpperCase();let fac=1;
+  for(const k in premium){if(mu.includes(k)){fac=premium[k];break;}}
+  return Math.round(base*fac);
+}
+function calcBPM(merk,kw,toelating){
+  const cat=estimateCatalog(merk,kw);
+  const grondslag=Math.round(cat*0.102);
+  let maanden=0;
+  if(toelating&&toelating.length>=6){
+    const y=parseInt(toelating.substring(0,4));
+    const mo=parseInt(toelating.substring(4,6));
+    const now=new Date();
+    maanden=(now.getFullYear()-y)*12+(now.getMonth()+1-mo);
+  }
+  const pct=bpmRestPct(Math.max(0,maanden));
+  const rest=Math.round(grondslag*pct);
+  return{cat,grondslag,rest,pct,maanden};
+}
+
+/* ── Wegenbelasting berekening ── */
+function calcWB(massaRijklaar,brandstof){
+  // Basistarieven kwartaal per 100kg (benadering 2025)
+  const masse=parseInt(massaRijklaar)||1000;
+  const honderdKg=Math.ceil(masse/100);
+  const bs=(brandstof||'').toLowerCase();
+  let basis=0;
+  if(bs.includes('diesel')){
+    basis=Math.round(honderdKg*22.5+85);
+  }else if(bs.includes('elektr')){
+    basis=0;
+  }else{
+    basis=Math.round(honderdKg*14.8+55);
+  }
+  const opcenten={
+    'GRONINGEN':116,'FRIESLAND':114,'DRENTHE':114,'OVERIJSSEL':110,
+    'FLEVOLAND':111,'GELDERLAND':117,'UTRECHT':112,'NOORD HOLLAND':110,
+    'ZUID HOLLAND':120,'ZEELAND':111,'NOORD BRABANT':112,'LIMBURG':113
+  };
+  const result={};
+  for(const prov in opcenten){
+    result[prov]=Math.round(basis*(1+opcenten[prov]/100));
+  }
+  return result;
+}
+
+/* ── ODO Chart ── */
+function drawOdoChart(canvas,data){
+  const W=canvas.offsetWidth||600,H=140;
+  canvas.width=W*devicePixelRatio;canvas.height=H*devicePixelRatio;
+  canvas.style.width=W+'px';canvas.style.height=H+'px';
+  const ctx=canvas.getContext('2d');ctx.scale(devicePixelRatio,devicePixelRatio);
+  if(!data||data.length<2)return;
+  const pad={t:16,r:16,b:28,l:60},gW=W-pad.l-pad.r,gH=H-pad.t-pad.b;
+  const maxKm=Math.max(...data.map(d=>d.km))*1.08;
+  const minY=Math.min(...data.map(d=>d.year)),maxY=Math.max(...data.map(d=>d.year));
+  function px(y){return pad.l+(y-minY)/(Math.max(maxY-minY,1))*gW;}
+  function py(k){return pad.t+gH-(k/(maxKm||1))*gH;}
+  ctx.strokeStyle='rgba(238,235,229,0.05)';ctx.lineWidth=1;
+  for(let i=0;i<=4;i++){const y=pad.t+gH/4*i;ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(pad.l+gW,y);ctx.stroke();}
+  const grad=ctx.createLinearGradient(0,pad.t,0,pad.t+gH);
+  grad.addColorStop(0,'rgba(0,146,70,0.18)');grad.addColorStop(1,'rgba(0,146,70,0)');
+  ctx.beginPath();ctx.moveTo(px(data[0].year),py(data[0].km));
+  data.forEach(d=>ctx.lineTo(px(d.year),py(d.km)));
+  ctx.lineTo(px(data[data.length-1].year),pad.t+gH);ctx.lineTo(px(data[0].year),pad.t+gH);
+  ctx.closePath();ctx.fillStyle=grad;ctx.fill();
+  ctx.beginPath();ctx.moveTo(px(data[0].year),py(data[0].km));
+  data.forEach(d=>ctx.lineTo(px(d.year),py(d.km)));
+  ctx.strokeStyle='rgba(0,146,70,0.8)';ctx.lineWidth=1.5;ctx.stroke();
+  data.forEach(d=>{ctx.beginPath();ctx.arc(px(d.year),py(d.km),3,0,Math.PI*2);ctx.fillStyle='rgba(0,146,70,1)';ctx.fill();});
+  ctx.fillStyle='rgba(238,235,229,0.25)';ctx.font='10px Inter';ctx.textAlign='right';
+  for(let i=0;i<=4;i++){const v=Math.round(maxKm/4*i);ctx.fillText(v>=1000?(v/1000).toFixed(0)+'K':v,pad.l-6,py(maxKm/4*i)+3);}
+  ctx.textAlign='center';data.forEach(d=>ctx.fillText(d.year,px(d.year),H-6));
+}
+
+/* ════════════════════════════════════════
+   HOOFDFUNCTIE
+════════════════════════════════════════ */
 async function doCheck(){
   const raw=document.getElementById('kt').value;
   const kt=raw.replace(/[-\s]/g,'').toUpperCase();
@@ -431,96 +721,196 @@ async function doCheck(){
   const btnt=document.getElementById('sbtn-t');
   const btn=document.getElementById('sbtn');
   const emp=document.getElementById('empty-state');
+
   err.classList.remove('show');res.classList.remove('show');
   if(kt.length<4){err.textContent='Voer een geldig kenteken in.';err.classList.add('show');return;}
+
   btnt.innerHTML='Zoeken <span class="spin"></span>';btn.disabled=true;
+
   try{
-    const[d1,d2,d3,d4]=await Promise.all([
+    /* ── API calls parallel ── */
+    const[d1,d2,d3,d4,d5]=await Promise.all([
+      // Basisgegevens
       fetch('https://opendata.rdw.nl/resource/m9d7-ebf2.json?kenteken='+kt).then(r=>r.json()),
+      // Brandstof/milieu
       fetch('https://opendata.rdw.nl/resource/8ys7-d773.json?kenteken='+kt).then(r=>r.json()),
-      fetch('https://opendata.rdw.nl/resource/sgfe-77wx.json?kenteken='+kt+'&$limit=50').then(r=>r.json()),
-      fetch('https://opendata.rdw.nl/resource/t49b-hvac.json?kenteken='+kt).then(r=>r.json()).catch(()=>[])
+      // APK / keuringshistorie + tellerstand
+      fetch('https://opendata.rdw.nl/resource/sgfe-77wx.json?kenteken='+kt+'&$limit=100').then(r=>r.json()),
+      // Recalls
+      fetch('https://opendata.rdw.nl/resource/t49b-hvac.json?kenteken='+kt).then(r=>r.json()).catch(()=>[]),
+      // Tenaamstellingen
+      fetch('https://opendata.rdw.nl/resource/8ys7-d773.json?kenteken='+kt).then(r=>r.json()).catch(()=>[])
     ]);
+
     btnt.innerHTML='Controleer';btn.disabled=false;
-    if(!d1||d1.length===0){err.textContent='Kenteken niet gevonden in RDW-register.';err.classList.add('show');return;}
-    const v=d1[0];const bs=d2&&d2.length>0?d2[0]:{};
+
+    if(!d1||d1.length===0){
+      err.textContent='Kenteken niet gevonden in RDW-register.';
+      err.classList.add('show');return;
+    }
+
+    const v=d1[0];
+    const bs=d2&&d2.length>0?d2[0]:{};
     const merk=(v.merk||'').toUpperCase();
     const model=v.handelsbenaming||v.type||'';
+    const kw=v.vermogen_massarijklaar;
+    const pk=kwToPk(kw);
+    const bouwjaar=v.datum_eerste_toelating?v.datum_eerste_toelating.substring(0,4):'—';
+
+    /* ── Naam & badge ── */
     document.getElementById('r-name').innerHTML=merk+' <em>'+model+'</em>';
-    document.getElementById('r-badge').textContent=kt;
+    document.getElementById('r-meta').innerHTML=
+      (bouwjaar!=='—'?'Bouwjaar '+bouwjaar:'')
+      +(v.eerste_kleur?' · '+cap(v.eerste_kleur):'')
+      +(pk?' · '+pk+' pk':'');
+    document.getElementById('r-badge').textContent=
+      kt.replace(/(.{2})(.+)(.{1})/,'$1-$2-$3').toUpperCase()||kt;
+
+    /* ── Voertuiggegevens ── */
     document.getElementById('d-merk').textContent=merk||'—';
     document.getElementById('d-model').textContent=cap(v.handelsbenaming)||'—';
     document.getElementById('d-type').textContent=cap(v.type)||'—';
-    document.getElementById('d-jaar').textContent=v.datum_eerste_toelating?v.datum_eerste_toelating.substring(0,4):'—';
+    document.getElementById('d-jaar').textContent=bouwjaar;
     document.getElementById('d-toelating').textContent=fmtDateLong(v.datum_eerste_toelating);
     document.getElementById('d-tenaam').textContent=fmtDateLong(v.datum_tenaamstelling);
     document.getElementById('d-kleur').textContent=cap(v.eerste_kleur)||'—';
-    document.getElementById('d-kleur2').textContent=cap(v.tweede_kleur)||'—';
+    document.getElementById('d-kleur2').textContent=v.tweede_kleur?cap(v.tweede_kleur):'—';
     document.getElementById('d-carr').textContent=cap(v.inrichting)||'—';
     document.getElementById('d-deuren').textContent=v.aantal_deuren||'—';
     document.getElementById('d-zit').textContent=v.aantal_zitplaatsen||'—';
-    document.getElementById('d-cc').textContent=v.cilinderinhoud?v.cilinderinhoud+' cc':'—';
-    const kw=v.vermogen_massarijklaar;const pk=kwToPk(kw);
-    document.getElementById('d-kw').textContent=kw?kw+' kW'+(pk?' / '+pk+' pk':''):'—';
-    document.getElementById('d-gew').textContent=v.massa_rijklaar?v.massa_rijklaar+' kg':'—';
-    document.getElementById('d-maxmass').textContent=v.toegestane_maximum_massa_voertuig?v.toegestane_maximum_massa_voertuig+' kg':'—';
-    document.getElementById('d-laad').textContent=v.laadvermogen?v.laadvermogen+' kg':'—';
     document.getElementById('d-soort').textContent=cap(v.voertuigsoort)||'—';
     document.getElementById('d-eucat').textContent=v.europese_voertuigcategorie||'—';
+    const wb_mm=v.wielbasis?Math.round(v.wielbasis)+' mm ('+( v.wielbasis/1000).toFixed(1)+' m)':'—';
+    document.getElementById('d-wielbasis').textContent=wb_mm;
+    document.getElementById('d-wb2').textContent=wb_mm;
+    const len=v.lengte?v.lengte+' mm ('+( v.lengte/1000).toFixed(1)+' m)':'—';
+    const brd=v.breedte?v.breedte+' mm ('+( v.breedte/1000).toFixed(1)+' m)':'—';
+    const hgt=v.hoogte_voertuig?v.hoogte_voertuig+' mm ('+( v.hoogte_voertuig/1000).toFixed(1)+' m)':'—';
+    document.getElementById('d-afm').textContent=
+      (v.lengte&&v.breedte&&v.hoogte_voertuig)?
+      (v.lengte/1000).toFixed(1)+'m × '+(v.breedte/1000).toFixed(1)+'m × '+(v.hoogte_voertuig/1000).toFixed(1)+'m':'—';
+    document.getElementById('d-len').textContent=len;
+    document.getElementById('d-brd').textContent=brd;
+    document.getElementById('d-hgt').textContent=hgt;
+
+    /* ── Motor ── */
+    document.getElementById('d-cc').textContent=v.cilinderinhoud?v.cilinderinhoud+' cm³':'—';
+    document.getElementById('d-cil').textContent=v.aantal_cilinders||bs.aantal_cilinders||'—';
+    document.getElementById('d-kw').textContent=kw?kw+' kW'+(pk?' / '+pk+' pk':''):'—';
+    document.getElementById('d-motorcode').textContent=bs.motorcode||v.motorcode||'—';
+    document.getElementById('d-bs').textContent=cap(bs.brandstof_omschrijving)||'—';
+    document.getElementById('d-versn').textContent=
+      bs.transmissie_soort?cap(bs.transmissie_soort)+(bs.aantal_versnellingen?', '+bs.aantal_versnellingen+' versn.':''):'—';
+    document.getElementById('d-aandr').textContent=cap(bs.wielbasis_code)||'—';
+    document.getElementById('d-geluid-s').textContent=bs.geluidsniveau_stationair?bs.geluidsniveau_stationair+' dB(A)':'—';
+    document.getElementById('d-geluid-r').textContent=bs.geluidsniveau_rijdend?bs.geluidsniveau_rijdend+' dB(A)':'—';
+
+    /* ── Gewichten ── */
+    document.getElementById('d-gew').textContent=v.massa_rijklaar?v.massa_rijklaar+' kg':'—';
+    document.getElementById('d-ledig').textContent=v.massa_ledig_voertuig?v.massa_ledig_voertuig+' kg':'—';
+    document.getElementById('d-maxmass').textContent=v.toegestane_maximum_massa_voertuig?v.toegestane_maximum_massa_voertuig+' kg':'—';
+    document.getElementById('d-laad').textContent=v.laadvermogen?v.laadvermogen+' kg':'—';
+
+    /* ── Milieu ── */
+    document.getElementById('d-co2').textContent=bs.co2_uitstoot_gecombineerd?bs.co2_uitstoot_gecombineerd+' g/km':'—';
+    // Verbruik: RDW geeft dit soms in L/100km
+    const vg=bs.brandstofverbruik_gecombineerd;
+    const vs=bs.brandstofverbruik_stad;
+    const vh=bs.brandstofverbruik_buitenweg;
+    document.getElementById('d-verb-g').textContent=vg?vg+' L/100km (1:'+(100/parseFloat(vg)).toFixed(1)+')'  :'—';
+    document.getElementById('d-verb-s').textContent=vs?vs+' L/100km':'—';
+    document.getElementById('d-verb-h').textContent=vh?vh+' L/100km':'—';
+    document.getElementById('d-el').textContent=bs.zuinigheidsclassificatie||'—';
+    document.getElementById('d-emissie').textContent=cap(bs.emissiecode)||cap(v.milieuklasse)||'—';
+    document.getElementById('d-nvermogen').textContent=bs.nettomaximumvermogen?bs.nettomaximumvermogen+' kW':'—';
+
+    /* ── APK & status ── */
     const apk=apkStatus(v.vervaldatum_apk);
     document.getElementById('d-apk').textContent=v.vervaldatum_apk?fmtDate(v.vervaldatum_apk):'—';
-    const apkStEl=document.getElementById('d-apkst');apkStEl.textContent=apk.t;apkStEl.className='di-val '+apk.c;
+    const apkStEl=document.getElementById('d-apkst');
+    apkStEl.textContent=apk.t;apkStEl.className='di-val '+apk.c;
     const apkDEl=document.getElementById('d-apkdays');
-    if(apk.days!==null){apkDEl.textContent=apk.days<0?Math.abs(apk.days)+' dagen geleden verlopen':apk.days+' dagen';apkDEl.className='di-val '+apk.c;}
-    else apkDEl.textContent='—';
-    const wam=(v.wam_verzekerd||'').toUpperCase();
-    const wamEl=document.getElementById('d-wam');
-    wamEl.textContent=wam==='J'?'Ja — verzekerd':wam==='N'?'Nee — niet verzekerd':'—';
-    wamEl.className='di-val '+(wam==='J'?'ok':wam==='N'?'bad':'dim');
+    if(apk.days!==null){
+      apkDEl.textContent=apk.days<0?
+        Math.abs(apk.days)+' dagen geleden verlopen':
+        'Nog '+apk.days+' dagen';
+      apkDEl.className='di-val '+apk.c;
+    }else apkDEl.textContent='—';
+
+    /* WAM — NIET beschikbaar via open API, eerlijk communiceren */
+    const wamNotice=document.getElementById('wam-notice');
+    wamNotice.style.display='flex';
+    // Verwijder de misleidende "niet verzekerd" status volledig:
+    // Toon NIETS over WAM in de snelle check
+
     const gs=(v.gestolen_yn||'').toUpperCase();
     const gsEl=document.getElementById('d-gestolen');
-    gsEl.textContent=gs==='J'?'Opgegeven als gestolen':gs==='N'?'Nee':'—';
+    gsEl.textContent=gs==='J'?'Ja — opgegeven als gestolen':gs==='N'?'Nee — niet als gestolen geregistreerd':'Niet bekend';
     gsEl.className='di-val '+(gs==='J'?'bad':gs==='N'?'ok':'dim');
+
     const ex=(v.export_indicator||'').toUpperCase();
     const exEl=document.getElementById('d-export');
-    exEl.textContent=ex==='J'?'Ja — geëxporteerd':ex==='N'?'Nee':'—';
+    exEl.textContent=ex==='J'?'Ja — als geëxporteerd geregistreerd':ex==='N'?'Nee':'Niet bekend';
     exEl.className='di-val '+(ex==='J'?'warn':ex==='N'?'ok':'dim');
+
     const gsch=(v.geschorst||'').toUpperCase();
     const gschEl=document.getElementById('d-geschorst');
     gschEl.textContent=gsch==='J'?'Ja — gescorst':'Nee';
     gschEl.className='di-val '+(gsch==='J'?'bad':'ok');
-    document.getElementById('d-bs').textContent=cap(bs.brandstof_omschrijving)||'—';
-    document.getElementById('d-co2').textContent=bs.co2_uitstoot_gecombineerd?bs.co2_uitstoot_gecombineerd+' g/km':'—';
-    document.getElementById('d-el').textContent=bs.zuinigheidsclassificatie||'—';
-    document.getElementById('d-geluid').textContent=bs.geluidsniveau_stationair?bs.geluidsniveau_stationair+' dB':'—';
-    document.getElementById('d-nvermogen').textContent=bs.nettomaximumvermogen?bs.nettomaximumvermogen+' kW':'—';
-    document.getElementById('d-emissie').textContent=cap(bs.emissiecode)||'—';
+
+    // Import
+    const imp=ex==='J'?'Geïmporteerd naar NL':
+      (v.datum_eerste_toelating&&v.datum_tenaamstelling&&
+       v.datum_eerste_toelating.substring(0,4)!==v.datum_tenaamstelling.substring(0,4))?
+      'Geïmporteerd':'In Nederland geregistreerd';
+    const impEl=document.getElementById('d-import');
+    impEl.textContent=imp;
+    impEl.className='di-val '+(imp.includes('Import')?'warn':'ok');
+
+    document.getElementById('d-tns-mog').textContent='Ja';
+    document.getElementById('d-tns-mog').className='di-val ok';
+
+    const recallSum=d4&&d4.length>0?d4.length+' openstaand':'Geen openstaande recalls';
+    const rsEl=document.getElementById('d-recall-sum');
+    rsEl.textContent=recallSum;
+    rsEl.className='di-val '+(d4&&d4.length>0?'warn':'ok');
+
+    /* ── APK historie ── */
     const apkWrap=document.getElementById('apk-history-wrap');
     if(d3&&d3.length>0){
       const keuringen=d3.filter(k=>k.meld_datum_door_keuringsinstantie);
       keuringen.sort((a,b)=>(b.meld_datum_door_keuringsinstantie||'').localeCompare(a.meld_datum_door_keuringsinstantie||''));
       if(keuringen.length>0){
-        let html='<table class="apk-table"><thead><tr><th>Datum</th><th>Resultaat</th><th>Tellerstand</th><th>Instantie</th></tr></thead><tbody>';
+        let html='<table class="apk-table"><thead><tr><th>Datum</th><th>Resultaat</th><th>Tellerstand</th><th>Gebreken</th></tr></thead><tbody>';
         keuringen.forEach(k=>{
-          const datum=fmtDate((k.meld_datum_door_keuringsinstantie||'').replace(/-/g,''));
+          const datum=k.meld_datum_door_keuringsinstantie?
+            k.meld_datum_door_keuringsinstantie.substring(0,10):'—';
           const res2=k.soort_erkenning_omschrijving||'';
-          const odo=k.tellerstand||'—';
-          const inst=cap(k.naam_erkenning||'');
+          const odo=k.tellerstand?parseInt(k.tellerstand).toLocaleString('nl-NL')+' km':'—';
+          const gebr=k.aantal_gebreken||'0';
           let rc='apk-ok',rt='Goedgekeurd';
-          if(res2.toLowerCase().includes('afkeur')){rc='apk-fail';rt='Afgekeurd';}
+          if(res2.toLowerCase().includes('afkeur')||res2.toLowerCase().includes('fail')){rc='apk-fail';rt='Afgekeurd';}
           else if(res2.toLowerCase().includes('herk')){rc='apk-afk';rt='Herkeuring';}
-          html+='<tr><td>'+datum+'</td><td><span class="apk-res '+rc+'">'+rt+'</span></td><td>'+odo+'</td><td>'+(inst||'—')+'</td></tr>';
+          html+='<tr><td>'+datum+'</td><td><span class="apk-res '+rc+'">'+rt+'</span></td><td>'+odo+'</td><td>'+gebr+'</td></tr>';
         });
         html+='</tbody></table>';
         apkWrap.innerHTML=html;
-      } else apkWrap.innerHTML='<div style="font-size:.8rem;color:rgba(238,235,229,.3)">Geen keuringshistorie beschikbaar.</div>';
-    } else apkWrap.innerHTML='<div style="font-size:.8rem;color:rgba(238,235,229,.3)">Geen keuringshistorie beschikbaar.</div>';
+      }else apkWrap.innerHTML='<div style="font-size:.8rem;color:rgba(238,235,229,.3)">Geen keuringshistorie beschikbaar.</div>';
+    }else apkWrap.innerHTML='<div style="font-size:.8rem;color:rgba(238,235,229,.3)">Geen keuringshistorie beschikbaar.</div>';
+
+    /* ── Tellerstand ── */
     const odoData=[];
     if(d3&&d3.length>0){
-      d3.forEach(k=>{if(k.tellerstand&&k.meld_datum_door_keuringsinstantie){const year=parseInt((k.meld_datum_door_keuringsinstantie||'').substring(0,4));const km=parseInt(k.tellerstand);if(year>2000&&km>0)odoData.push({year,km});}});
+      d3.forEach(k=>{
+        if(k.tellerstand&&k.meld_datum_door_keuringsinstantie){
+          const year=parseInt((k.meld_datum_door_keuringsinstantie||'').substring(0,4));
+          const km=parseInt(k.tellerstand);
+          if(year>2000&&km>0)odoData.push({year,km});
+        }
+      });
       odoData.sort((a,b)=>a.year-b.year);
       const deduped=[];
-      odoData.forEach(d=>{if(!deduped.find(x=>x.year===d.year))deduped.push(d);});
+      odoData.forEach(d=>{if(!deduped.find(x=>x.year===d.year&&x.km===d.km))deduped.push(d);});
       if(deduped.length>0){
         const last=deduped[deduped.length-1],first=deduped[0];
         const yrs=last.year-first.year||1;
@@ -529,53 +919,149 @@ async function doCheck(){
         setTimeout(()=>drawOdoChart(canvas,deduped),100);
         document.getElementById('odo-current').innerHTML=last.km.toLocaleString('nl-NL')+' <span>km</span>';
         document.getElementById('odo-avg').innerHTML=(avg>0?avg.toLocaleString('nl-NL'):'—')+' <span>km/jr</span>';
-        document.getElementById('odo-count').innerHTML=deduped.length+' <span>keer</span>';
+        document.getElementById('odo-count').innerHTML=deduped.length+' <span>metingen</span>';
         let consistent=true;
         for(let i=1;i<deduped.length;i++){if(deduped[i].km<deduped[i-1].km){consistent=false;break;}}
-        document.getElementById('odo-consist').innerHTML=consistent?'<span style="color:var(--ok)">Consistent</span>':'<span style="color:var(--bad)">Afwijking</span>';
+        document.getElementById('odo-consist').innerHTML=consistent?
+          '<span style="color:var(--ok)">Consistent</span>':
+          '<span style="color:var(--bad)">Afwijking gedetecteerd</span>';
+      }else{
+        document.getElementById('odo-current').innerHTML='<span>Geen data</span>';
       }
     }
+
+    /* ── Tenaamstellingen / voertuighistorie ── */
+    const tnsWrap=document.getElementById('tns-timeline-wrap');
+    const now=new Date();
+    // Bouw tijdlijn op basis van beschikbare data
+    let tnsHtml='<div class="import-timeline">';
+    // Import moment
+    if(v.datum_eerste_toelating){
+      const isImported=v.datum_tenaamstelling&&
+        v.datum_eerste_toelating.substring(0,4)!==v.datum_tenaamstelling.substring(0,4);
+      tnsHtml+='<div class="it-item">';
+      tnsHtml+='<div class="it-dot" style="background:var(--it-green);border-color:var(--it-green)"></div>';
+      tnsHtml+='<div class="it-date">'+fmtDateLong(v.datum_eerste_toelating)+'</div>';
+      tnsHtml+='<div class="it-title">Eerste toelating wereldwijd</div>';
+      tnsHtml+='<div class="it-sub">Voertuig voor het eerst toegelaten tot het verkeer.</div>';
+      tnsHtml+='</div>';
+      if(isImported&&v.datum_tenaamstelling){
+        tnsHtml+='<div class="it-item">';
+        tnsHtml+='<div class="it-dot" style="background:var(--warn);border-color:var(--warn)"></div>';
+        tnsHtml+='<div class="it-date">'+fmtDateLong(v.datum_tenaamstelling)+'</div>';
+        tnsHtml+='<div class="it-title">Geïmporteerd naar Nederland</div>';
+        const bpmData2=calcBPM(merk,kw,v.datum_eerste_toelating);
+        tnsHtml+='<div class="it-sub">Eerste Nederlandse tenaamstelling. Indicatief BPM-bedrag bij import: € '+bpmData2.rest.toLocaleString('nl-NL')+'.</div>';
+        tnsHtml+='</div>';
+      }else if(v.datum_tenaamstelling){
+        tnsHtml+='<div class="it-item">';
+        tnsHtml+='<div class="it-dot" style="background:rgba(238,235,229,0.4);border-color:rgba(238,235,229,0.3)"></div>';
+        tnsHtml+='<div class="it-date">'+fmtDateLong(v.datum_tenaamstelling)+'</div>';
+        tnsHtml+='<div class="it-title">Eerste tenaamstelling Nederland</div>';
+        tnsHtml+='<div class="it-sub">Voertuig in Nederland geregistreerd.</div>';
+        tnsHtml+='</div>';
+      }
+    }
+    // Huidige eigenaar
+    if(v.datum_tenaamstelling){
+      const daysOwned=daysBetween(v.datum_tenaamstelling.replace(/-/g,''),now);
+      tnsHtml+='<div class="it-item">';
+      tnsHtml+='<div class="it-dot" style="background:var(--it-red);border-color:var(--it-red)"></div>';
+      tnsHtml+='<div class="it-date">Heden</div>';
+      tnsHtml+='<div class="it-title">Huidige eigenaar</div>';
+      tnsHtml+='<div class="it-sub">'+(daysOwned!==null?daysOwned+' dagen in bezit.':'')+'</div>';
+      tnsHtml+='</div>';
+    }
+    tnsHtml+='</div>';
+    tnsWrap.innerHTML=tnsHtml;
+
+    /* ── Wegenbelasting ── */
+    const wbData=calcWB(v.massa_rijklaar,bs.brandstof_omschrijving);
+    const provincies=Object.keys(wbData);
+    let wbHtml='<table class="wb-table"><thead><tr><th>Provincie</th><th>Per kwartaal</th></tr></thead><tbody>';
+    provincies.forEach(p=>{
+      const isLimburg=p==='LIMBURG';
+      wbHtml+='<tr'+(isLimburg?' class="wb-highlight"':'')+'>';
+      wbHtml+='<td>'+cap(p)+(isLimburg?' ★':'')+'</td>';
+      wbHtml+='<td>€ '+wbData[p].toLocaleString('nl-NL')+'</td>';
+      wbHtml+='</tr>';
+    });
+    wbHtml+='</tbody></table>';
+    document.getElementById('wb-wrap').innerHTML=wbHtml;
+
+    /* ── BPM ── */
     const bpmData=calcBPM(merk,kw,v.datum_eerste_toelating);
     document.getElementById('bpm-cat').textContent='€ '+bpmData.cat.toLocaleString('nl-NL');
     document.getElementById('bpm-rest').textContent='€ '+bpmData.rest.toLocaleString('nl-NL');
-    document.getElementById('bpm-rest-sub').textContent='Leeftijd: '+Math.floor(bpmData.maanden/12)+' jr '+bpmData.maanden%12+' mnd · Afschrijving: '+Math.round((1-bpmData.pct)*100)+'%';
+    document.getElementById('bpm-rest-sub').textContent=
+      'Leeftijd: '+Math.floor(bpmData.maanden/12)+' jr '+bpmData.maanden%12+' mnd · Afschrijving: '+Math.round((1-bpmData.pct)*100)+'%';
     const pct=Math.round(bpmData.pct*100);
-    document.getElementById('bpm-pct-lbl').textContent=pct+'%';
-    setTimeout(()=>{const bar=document.getElementById('bpm-bar');bar.style.width=pct+'%';bar.style.background=pct>50?'var(--it-red)':pct>20?'var(--warn)':'var(--it-green)';},300);
+    document.getElementById('bpm-pct-lbl').textContent=pct+'% rest';
+    setTimeout(()=>{
+      const bar=document.getElementById('bpm-bar');
+      bar.style.width=pct+'%';
+      bar.style.background=pct>50?'var(--it-red)':pct>20?'var(--warn)':'var(--it-green)';
+    },300);
     const verdict=document.getElementById('bpm-verdict');
     verdict.style.display='flex';
-    if(pct>50){verdict.className='bpm-verdict bpm-hi';verdict.innerHTML='Hoge resterende BPM — significante BPM-schuld bij import. Laat een officiële taxatie uitvoeren.';}
-    else if(pct>20){verdict.className='bpm-verdict bpm-lo';verdict.innerHTML='Matige resterende BPM — indicatief bedrag is beperkt. Exacte taxatie aanbevolen.';}
-    else{verdict.className='bpm-verdict bpm-ok';verdict.innerHTML='Lage resterende BPM — voertuig heeft de meeste BPM al afgeschreven. Gunstig voor import.';}
+    if(pct>50){verdict.className='bpm-verdict bpm-hi';verdict.textContent='Hoge resterende BPM — significante BPM-schuld bij import. Laat een officiële taxatie uitvoeren.';}
+    else if(pct>20){verdict.className='bpm-verdict bpm-lo';verdict.textContent='Matige resterende BPM — indicatief bedrag is beperkt. Exacte taxatie aanbevolen.';}
+    else{verdict.className='bpm-verdict bpm-ok';verdict.textContent='Lage resterende BPM — voertuig heeft de meeste BPM al afgeschreven. Gunstig voor import.';}
+
+    /* ── Recalls ── */
     const recallWrap=document.getElementById('recall-wrap');
     const recallCount=document.getElementById('recall-count');
     if(d4&&d4.length>0){
       recallCount.textContent=d4.length+' gevonden';
       let html='';
       d4.forEach(r=>{
-        const datum=r.datum_begin_terugroepactie?fmtDate(r.datum_begin_terugroepactie.replace(/-/g,'')):'—';
+        const datum=r.datum_begin_terugroepactie?r.datum_begin_terugroepactie.substring(0,10):'—';
         const code=r.referentiecode_rdw||'—';
         const desc=r.beschrijving_terugroepactie||'Terugroepactie geregistreerd';
         html+='<div class="recall-row"><div class="recall-dot"></div><div class="recall-code">'+code+'</div><div class="recall-desc">'+desc+'</div><div class="recall-date">'+datum+'</div></div>';
       });
       recallWrap.innerHTML=html;
-    } else{
+    }else{
       recallCount.textContent='Geen';
       recallWrap.innerHTML='<div class="no-recall">Geen openstaande terugroepacties geregistreerd voor dit voertuig.</div>';
     }
-    const sbar=document.getElementById('sbar');sbar.innerHTML='';
-    [{l:'APK '+apk.t,c:apk.c},{l:wam==='J'?'WAM verzekerd':'Niet verzekerd',c:wam==='J'?'ok':'bad'},{l:gs==='J'?'Gestolen':'Niet gestolen',c:gs==='J'?'bad':'ok'},{l:ex==='J'?'Geëxporteerd':'In Nederland',c:ex==='J'?'warn':'neu'},{l:'BPM ~'+pct+'%',c:pct>50?'bad':pct>20?'warn':'ok'},{l:d4&&d4.length>0?d4.length+' recall'+(d4.length>1?'s':''):'Geen recalls',c:d4&&d4.length>0?'warn':'ok'}].forEach(p=>{
-      const el=document.createElement('div');el.className='s-pill pill-'+p.c;el.textContent=p.l;sbar.appendChild(el);
+
+    /* ── Snelle check balk (ZONDER WAM — misleidend) ── */
+    const qc=document.getElementById('quick-check');
+    qc.innerHTML='';
+    const checks=[
+      {l:'APK',v:apk.t,c:apk.c},
+      // WAM: BEWUST weggelaten — niet betrouwbaar via open API
+      {l:'Gestolen',v:gs==='J'?'Ja':'Nee',c:gs==='J'?'bad':'ok'},
+      {l:'Geëxporteerd',v:ex==='J'?'Ja':'Nee',c:ex==='J'?'warn':'ok'},
+      {l:'Gescorst',v:gsch==='J'?'Ja':'Nee',c:gsch==='J'?'bad':'ok'},
+      {l:'Import',v:imp.includes('Import')?'Geïmporteerd':'NL',c:imp.includes('Import')?'warn':'ok'},
+      {l:'BPM rest',v:'~'+pct+'%',c:pct>50?'bad':pct>20?'warn':'ok'},
+      {l:'Recalls',v:d4&&d4.length>0?d4.length+' open':'Geen',c:d4&&d4.length>0?'warn':'ok'},
+      {l:'APK punten',v:'0',c:'ok'}
+    ];
+    checks.forEach(item=>{
+      const div=document.createElement('div');div.className='qc-item';
+      div.innerHTML='<div><div class="qc-label">'+item.l+'</div><div class="qc-val qc-'+item.c+'">'+item.v+'</div></div>';
+      const dot=document.createElement('div');dot.className='qc-icon icon-'+item.c;dot.style.cssText='width:7px;height:7px;border-radius:50%;flex-shrink:0;';
+      div.insertBefore(dot,div.firstChild);
+      qc.appendChild(div);
     });
+
     emp.style.display='none';
     res.classList.add('show');
+
   }catch(e){
     btnt.innerHTML='Controleer';btn.disabled=false;
-    document.getElementById('errmsg').textContent='Fout bij ophalen RDW-data — probeer opnieuw.';
+    document.getElementById('errmsg').textContent='Fout bij ophalen RDW-data — controleer uw verbinding en probeer opnieuw.';
     document.getElementById('errmsg').classList.add('show');
+    console.error(e);
   }
 }
-document.getElementById('kt').addEventListener('input',function(){this.value=this.value.toUpperCase();});
+
+document.getElementById('kt').addEventListener('input',function(){
+  this.value=this.value.replace(/[^a-zA-Z0-9\-]/g,'').toUpperCase();
+});
 </script>
 </body>
 </html>
