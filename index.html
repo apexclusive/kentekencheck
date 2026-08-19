@@ -8,7 +8,7 @@
 <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" fill="%230a0a0a"/><text x="32" y="46" font-family="Georgia,serif" font-size="42" fill="%23c6cbd1" text-anchor="middle">A</text></svg>'>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&family=Oswald:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=Oswald:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --pt:#c6cbd1;--pt-s:#f2f4f6;
@@ -18,7 +18,7 @@
   --tx:#e4e4e4;--mt:#8a8a8a;
   --ok:#009246;--warn:#c49a00;--bad:#CE2B37;
   --sf:'Cormorant Garamond',serif;
-  --ss:'Montserrat',sans-serif;
+  --ss:'DM Sans',sans-serif;--logo:'DM Sans',sans-serif;
   --lb:'Oswald',sans-serif;
   --pd:clamp(1.25rem,5vw,4rem);
   --ch:linear-gradient(100deg,#5a5f65 0%,#e8ecf0 18%,#a0a8b0 36%,#fff 50%,#a0a8b0 64%,#e8ecf0 82%,#5a5f65 100%);
@@ -47,13 +47,10 @@ a{color:inherit;text-decoration:none}
 .ey.c{justify-content:center}
 
 /* ══ LOGO ══ */
-.brand{font-family:var(--sf);letter-spacing:.18em;text-transform:uppercase;white-space:nowrap;display:inline-flex;align-items:center;gap:0;text-decoration:none;color:var(--tx)}
+.brand{font-family:var(--logo);letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;display:inline-flex;align-items:center;gap:0;text-decoration:none;color:var(--tx)}
 .brand-apex{font-weight:600;color:var(--pt);letter-spacing:.22em}
-.brand-sep{display:inline-flex;flex-direction:column;gap:2px;margin:0 8px;flex-shrink:0}
-.brand-sep span{display:block;width:3px;border-radius:1px}
-.brand-sep span:nth-child(1){height:5px;background:var(--ig)}
-.brand-sep span:nth-child(2){height:5px;background:#fff}
-.brand-sep span:nth-child(3){height:5px;background:var(--ir)}
+.brand-sep{display:block;width:1px;height:.66em;margin:0 .5rem;background:rgba(255,255,255,.62);flex-shrink:0}
+.brand-sep span{display:none}
 .brand-excl{font-weight:300;color:rgba(198,203,209,.42);letter-spacing:.22em}
 
 /* ══ HEADER ══ */
