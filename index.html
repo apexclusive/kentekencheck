@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0d0f10">
 <title>Kentekencheck — APEXclusive | Volledig voertuigrapport</title>
 <meta name="description" content="Controleer elk Nederlands kenteken via officiële RDW-data. APK-historie, tellerstand, BPM-indicatie, terugroepacties en meer. Gratis, direct, zonder registratie.">
 <meta property="og:type" content="website">
@@ -19,7 +20,8 @@
 <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" fill="%230a0a0a"/><text x="32" y="46" font-family="Georgia,serif" font-size="42" fill="%23c6cbd1" text-anchor="middle">A</text></svg>'>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=Oswald:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=Oswald:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --pt:#c6cbd1;--pt-s:#f2f4f6;
@@ -396,74 +398,139 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 }
 </style>
 <link rel="stylesheet" href="apex-tool-theme.css">
-<style>
-  .field-lbl,.search-lbl{color:#d2d5d6!important}.field-help,.search-help,.field-note,.form-hint,.disclaimer,.legal-note,.empty-sub{color:#aeb4b6!important}input::placeholder,textarea::placeholder,select::placeholder{color:#8f989b!important;opacity:1!important}.hero-points span,.hero-note{color:#c1c6c7!important}.chat-hdr-sub,.chat-online,.chat-qbtn{color:#aeb4b6!important}footer .fg>div>p,footer .fl,footer .fl a{color:#aeb4b6!important}footer .fb,footer .site-credit{color:#8e9598!important}
-</style>
 </head>
 <body>
 
+<a class="skip-link" href="#main-content">Ga naar inhoud</a>
+
 <!-- ══ HEADER ══ -->
-<header>
-  <a href="https://apexclusive.nl" class="brand">
-    <span class="brand-apex">APEX</span>
-    <span class="brand-sep" aria-hidden="true"><span></span><span></span><span></span></span>
-    <span class="brand-excl">EXCLUSIVE</span>
-  </a>
-  <a href="https://apexclusive.nl" class="back-btn">
-    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-    Terug naar website
-  </a>
+<header class="site-header">
+  <div class="header-inner">
+    <a href="https://apexclusive.nl" class="brand" aria-label="APEXclusive — naar homepage">
+      <span class="brand-apex">APEX</span>
+      <span class="brand-sep" aria-hidden="true"></span>
+      <span class="brand-excl">EXCLUSIVE</span>
+    </a>
+    <nav class="site-nav" aria-label="Hoofdnavigatie">
+      <a href="https://apexclusive.nl/#diensten">Begeleiding</a>
+      <a href="https://apexclusive.nl/#werkwijze">Werkwijze</a>
+      <a href="https://apexclusive.nl/#tools">Hulpmiddelen</a>
+    </nav>
+    <a href="https://apexclusive.nl" class="back-btn" aria-label="Terug naar de APEXclusive homepage">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H6M11 6l-6 6 6 6"/></svg>
+      <span>Terug naar APEXclusive</span>
+    </a>
+  </div>
 </header>
 
-<!-- ══ HERO ══ -->
-<div class="page-hero">
-  <div class="page-hero-inner">
-    <p class="ey c tri-in" style="margin-bottom:1.1rem">
-      <span class="ey-tri" aria-hidden="true"><span></span><span></span><span></span></span>
-      APEXclusive — Gratis instrument
-      <span class="ey-tri-r" aria-hidden="true"><span></span><span></span><span></span></span>
-    </p>
-    <h1>Kentekencheck<br><em>Volledig voertuigrapport</em></h1>
-    <p>APK-historie, tellerstandverloop, voertuighistorie, wegenbelasting, BPM-indicatie en terugroepacties via officiële RDW-data. Direct, zonder registratie.</p>
-  </div>
-</div>
-
-<div class="tri-div"></div>
-
-<!-- ══ MAIN ══ -->
-<div class="wrap">
-
-  <!-- Zoekbalk -->
-  <div class="search-wrap rv">
-    <span class="search-lbl">Kenteken invoeren</span>
-    <div class="search-row">
-      <input
-        class="kt-input" id="kt" type="text"
-        placeholder="bijv. AB-123-C" maxlength="10"
-        autocomplete="off" spellcheck="false"
-        onkeydown="if(event.key==='Enter')doCheck()"
-      >
-      <button class="search-btn" id="sbtn" onclick="doCheck()">
-        <span id="sbtn-t">Controleer</span>
-      </button>
+<main id="main-content">
+  <!-- ══ HERO ══ -->
+  <section class="page-hero" id="kentekencheck" aria-labelledby="hero-title">
+    <div class="hero-media" aria-hidden="true">
+      <img src="https://res.cloudinary.com/sfd8ohjz/image/upload/w_1800,q_auto:best,f_auto/v1786112048/Lamborghini_cockpit_zw7pmk.jpg" srcset="https://res.cloudinary.com/sfd8ohjz/image/upload/w_768,q_auto:best,f_auto/v1786112048/Lamborghini_cockpit_zw7pmk.jpg 768w, https://res.cloudinary.com/sfd8ohjz/image/upload/w_1200,q_auto:best,f_auto/v1786112048/Lamborghini_cockpit_zw7pmk.jpg 1200w, https://res.cloudinary.com/sfd8ohjz/image/upload/w_1800,q_auto:best,f_auto/v1786112048/Lamborghini_cockpit_zw7pmk.jpg 1800w" sizes="100vw" alt="" width="1800" height="1200" fetchpriority="high">
     </div>
-    <div class="err-msg" id="errmsg"></div>
-  </div>
+    <div class="hero-overlay" aria-hidden="true"></div>
+    <div class="page-hero-inner">
+      <div class="hero-copy">
+        <p class="ey"><span class="ey-dot" aria-hidden="true"></span>Private Vehicle Advisory <span class="ey-divider" aria-hidden="true"></span> Maastricht · Nederland</p>
+        <p class="hero-index"><span>02</span> APEXclusive Garage</p>
+        <h1 id="hero-title">Kentekencheck.<br><em>Vóór u kiest.</em></h1>
+        <p class="hero-lede">Controleer een Nederlands kenteken en krijg helder inzicht in de gegevens die er toe doen — van APK en tellerstand tot historie, BPM en recalls.</p>
+        <div class="hero-actions">
+          <a class="hero-text-link" href="#wat-u-ziet">Wat u controleert <span aria-hidden="true">↓</span></a>
+        </div>
+        <ul class="hero-points" aria-label="Inbegrepen in de kentekencheck">
+          <li>Officiële RDW-data</li>
+          <li>Direct &amp; zonder registratie</li>
+          <li>Gratis hulpmiddel</li>
+        </ul>
+      </div>
 
-  <!-- Lege state -->
-  <div class="empty-state" id="empty-state">
-    <div class="empty-tri"><span></span><span></span><span></span></div>
-    <div class="empty-title">Voer een kenteken in om te beginnen.</div>
-    <div class="empty-sub">RDW-data · APK-historie · Tellerstand · BPM · Wegenbelasting · Recalls</div>
-  </div>
+      <aside class="hero-tool-card" aria-labelledby="lookup-title">
+        <div class="tool-card-topline">
+          <div>
+            <p class="tool-card-label">RDW kentekencheck</p>
+            <h2 id="lookup-title">Voertuigrapport <em>op aanvraag.</em></h2>
+          </div>
+          <span class="tool-card-number">02 <i>/</i> 11</span>
+        </div>
+        <form class="search-wrap rv" id="lookup-form" novalidate>
+          <label class="search-lbl" for="kt">Kenteken invoeren</label>
+          <div class="search-row">
+            <span class="plate-prefix" aria-hidden="true"><span class="plate-stars">••••••</span>NL</span>
+            <input
+              class="kt-input" id="kt" name="kenteken" type="text"
+              placeholder="AB-123-C" maxlength="10"
+              autocomplete="off" autocapitalize="characters" spellcheck="false"
+              aria-describedby="lookup-help lookup-status"
+            >
+            <button class="search-btn" id="sbtn" type="submit">
+              <span id="sbtn-t">Controleer</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+            </button>
+          </div>
+          <div class="search-meta">
+            <span id="lookup-help">Nederlands kenteken · bijv. AB-123-C</span>
+            <span>Bron: RDW open data</span>
+          </div>
+          <p class="err-msg" id="errmsg" role="alert"></p>
+          <p class="lookup-status" id="lookup-status" role="status" aria-live="polite"></p>
+        </form>
+        <div class="tool-card-bottom">
+          <span>APK &amp; status</span><span>Tellerstand</span><span>Historie</span><span>BPM</span>
+        </div>
+      </aside>
+    </div>
+    <a class="scroll-cue" href="#wat-u-ziet"><span>Scroll om te ontdekken</span><i aria-hidden="true"></i></a>
+  </section>
 
-  <!-- Resultaten -->
-  <div class="results" id="results">
+  <div class="tri-div" aria-hidden="true"></div>
+
+  <!-- ══ MAIN ══ -->
+  <div class="wrap">
+
+    <!-- Introductie vóór de eerste zoekopdracht -->
+    <section class="empty-state" id="empty-state" aria-labelledby="insight-title">
+      <div class="section-intro" id="wat-u-ziet">
+        <p class="section-kicker">Heldere informatie vooraf</p>
+        <h2 id="insight-title">Een betere keuze<br><em>begint bij inzicht.</em></h2>
+        <p>Een kenteken vertelt meer dan merk en model. Wij ordenen openbare RDW-data in één rustig rapport, zodat u weet welke vragen u nog wilt stellen.</p>
+      </div>
+      <div class="insight-grid">
+        <article class="insight-card">
+          <span class="insight-number">01</span>
+          <div class="insight-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 7h-4l-2-3H10L8 7H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Z"/><circle cx="12" cy="13" r="3"/></svg></div>
+          <h3>De basis, scherp in beeld.</h3>
+          <p>Merk, uitvoering, toelating, brandstof, gewicht en geregistreerde voertuigstatus.</p>
+        </article>
+        <article class="insight-card">
+          <span class="insight-number">02</span>
+          <div class="insight-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 12h3l3-8 4 16 3-8h5"/></svg></div>
+          <h3>Historie die context geeft.</h3>
+          <p>APK-momenten, tellerstandverloop en belangrijke registratiemomenten overzichtelijk bij elkaar.</p>
+        </article>
+        <article class="insight-card">
+          <span class="insight-number">03</span>
+          <div class="insight-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+          <h3>Kosten vooraf inschatten.</h3>
+          <p>Indicatieve wegenbelasting, resterende BPM en eventuele terugroepacties als vertrekpunt.</p>
+        </article>
+      </div>
+      <div class="source-strip">
+        <span class="source-mark" aria-hidden="true">RDW</span>
+        <p>Gegevens worden rechtstreeks opgehaald uit de openbare datasets van de <strong>Rijksdienst voor het Wegverkeer.</strong></p>
+        <a href="https://opendata.rdw.nl/" target="_blank" rel="noopener noreferrer">Over de bron <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+
+    <!-- Resultaten -->
+    <section class="results" id="results" aria-label="Voertuigrapport" tabindex="-1">
+      <div class="result-overline"><span>Voertuigrapport</span><span id="result-source">RDW open data · actueel opgehaald</span></div>
 
     <!-- Resultaat header -->
     <div class="res-header">
       <div>
-        <div class="res-name" id="r-name">—</div>
+        <div class="res-name" id="r-name"><span id="r-make">—</span> <em id="r-model"></em></div>
         <div class="res-meta" id="r-meta"></div>
       </div>
       <div class="nl-plate">
@@ -547,8 +614,8 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
           <div><span class="di-lbl">Geëxporteerd</span><span class="di-val" id="d-export">—</span></div>
           <div><span class="di-lbl">Gescorst</span><span class="di-val" id="d-geschorst">—</span></div>
           <div><span class="di-lbl">Geïmporteerd</span><span class="di-val" id="d-import">—</span></div>
-          <div><span class="di-lbl">Tenaamstellen mogelijk</span><span class="di-val ok">Ja</span></div>
-          <div><span class="di-lbl">Openstaande recalls</span><span class="di-val" id="d-recall-sum">—</span></div>
+          <div><span class="di-lbl">Registratiecontrole</span><span class="di-val" id="d-tenaamstellen">—</span></div>
+          <div><span class="di-lbl">Geregistreerde recalls</span><span class="di-val" id="d-recall-sum">—</span></div>
         </div>
         <div style="font-family:var(--lb);font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(198,203,209,.22);margin-bottom:.75rem">APK Keuringshistorie</div>
         <div id="apk-history-wrap"><div style="font-size:.75rem;color:rgba(198,203,209,.25)">Laden…</div></div>
@@ -665,8 +732,9 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
       </div>
     </div>
 
+    </section>
   </div>
-</div>
+</main>
 
 <footer>
   <div class="fg"><div><a href="https://apexclusive.nl" class="brand"><span class="brand-apex">APEX</span><span class="brand-sep" aria-hidden="true"></span><span class="brand-excl">EXCLUSIVE</span></a><p>Onafhankelijke begeleiding bij aankoop en import van exclusieve auto&rsquo;s.<br>Maastricht &middot; Nederland</p></div><div><p class="fh">Juridisch</p><ul class="fl"><li><a href="https://apexclusive.nl/algemenevoorwaarden.html">Algemene voorwaarden</a></li></ul></div><div><p class="fh">Contact</p><ul class="fl"><li><a href="mailto:info@apexclusive.nl">E-mail: info@apexclusive.nl</a></li><li><a href="https://wa.me/31624735939">WhatsApp: +31 6 24 73 59 39</a></li><li><a href="https://apexclusive.nl">Maastricht, Nederland</a></li></ul></div></div>
@@ -676,422 +744,695 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 
 <script>
 /* ══ Helpers ══ */
-const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+const numberFormat = new Intl.NumberFormat('nl-NL');
+const shortDateFormat = new Intl.DateTimeFormat('nl-NL', {
+  day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'UTC'
+});
+const longDateFormat = new Intl.DateTimeFormat('nl-NL', {
+  day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC'
+});
 
-function fmtDate(s){
-  if(!s||s.length<8)return'—';
-  return s.substring(6,8)+'-'+s.substring(4,6)+'-'+s.substring(0,4);
-}
-function fmtDateLong(s){
-  if(!s||s.length<8)return'—';
-  const m=['januari','februari','maart','april','mei','juni','juli','augustus','september','oktober','november','december'];
-  return parseInt(s.substring(6,8))+' '+m[parseInt(s.substring(4,6))-1]+' '+s.substring(0,4);
-}
-function cap(s){return s?s.charAt(0).toUpperCase()+s.slice(1).toLowerCase():'—'}
-function kwToPk(kw){return kw?Math.round(parseFloat(kw)*1.36):null}
+let activeLookup = null;
+let lookupSequence = 0;
+let lastOdoData = [];
+let resizeTimer = null;
 
-function apkStatus(s){
-  if(!s)return{t:'Onbekend',c:'warn',days:null};
-  const d=new Date(s.substring(0,4)+'-'+s.substring(4,6)+'-'+s.substring(6,8));
-  const diff=Math.floor((d-new Date())/86400000);
-  if(diff<0)return{t:'Verlopen',c:'bad',days:diff};
-  if(diff<60)return{t:'Verloopt binnenkort',c:'warn',days:diff};
-  return{t:'Geldig',c:'ok',days:diff};
+function cleanText(value) {
+  return value === undefined || value === null ? '' : String(value).trim();
 }
 
-function daysBetween(s,d2){
-  if(!s||s.length<8)return null;
-  const d1=new Date(s.substring(0,4)+'-'+s.substring(4,6)+'-'+s.substring(6,8));
-  return Math.floor((d2-d1)/86400000);
+function displayText(value, fallback = '—') {
+  const text = cleanText(value);
+  return text || fallback;
+}
+
+function cap(value) {
+  const text = cleanText(value);
+  if (!text) return '—';
+  return text.toLocaleLowerCase('nl-NL').replace(/(^|[\s/-])([a-zà-ÿ])/g, (_, separator, char) => (
+    separator + char.toLocaleUpperCase('nl-NL')
+  ));
+}
+
+function escapeHTML(value) {
+  return cleanText(value).replace(/[&<>'"]/g, char => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+  })[char]);
+}
+
+function rdwDate(value) {
+  const match = cleanText(value).match(/^(\d{4})[-/]?(\d{2})[-/]?(\d{2})/);
+  if (!match) return null;
+  const [, year, month, day] = match;
+  const date = new Date(Date.UTC(Number(year), Number(month) - 1, Number(day)));
+  return Number.isNaN(date.getTime()) ? null : date;
+}
+
+function fmtDate(value) {
+  const date = rdwDate(value);
+  return date ? shortDateFormat.format(date) : '—';
+}
+
+function fmtDateLong(value) {
+  const date = rdwDate(value);
+  return date ? longDateFormat.format(date) : '—';
+}
+
+function dateTimestamp(value) {
+  const date = rdwDate(value);
+  return date ? date.getTime() : 0;
+}
+
+function startOfTodayUTC() {
+  const now = new Date();
+  return Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+}
+
+function daysUntil(value) {
+  const date = rdwDate(value);
+  if (!date) return null;
+  return Math.floor((date.getTime() - startOfTodayUTC()) / 86400000);
+}
+
+function daysSince(value) {
+  const date = rdwDate(value);
+  if (!date) return null;
+  return Math.floor((startOfTodayUTC() - date.getTime()) / 86400000);
+}
+
+function kwToPk(kw) {
+  const value = Number.parseFloat(kw);
+  return Number.isFinite(value) && value > 0 ? Math.round(value * 1.35962) : null;
+}
+
+function readFlag(value) {
+  const normalized = cleanText(value).toUpperCase();
+  if (['J', 'JA', 'TRUE', '1'].includes(normalized)) return true;
+  if (['N', 'NEE', 'FALSE', '0'].includes(normalized)) return false;
+  return null;
+}
+
+function apkStatus(value) {
+  const days = daysUntil(value);
+  if (days === null) return { text: 'Onbekend', className: 'warn', days: null };
+  if (days < 0) return { text: 'Verlopen', className: 'bad', days };
+  if (days < 60) return { text: 'Verloopt binnenkort', className: 'warn', days };
+  return { text: 'Geldig', className: 'ok', days };
+}
+
+function setText(id, value, fallback = '—') {
+  const element = document.getElementById(id);
+  if (element) element.textContent = displayText(value, fallback);
+}
+
+function setStatusText(id, value, className = '') {
+  const element = document.getElementById(id);
+  if (!element) return;
+  element.textContent = displayText(value);
+  element.className = `di-val${className ? ` ${className}` : ''}`;
+}
+
+function formatPlate(plate) {
+  const value = cleanText(plate).replace(/[^A-Z0-9]/g, '');
+  const patterns = [
+    /^([A-Z]{2})(\d{2})(\d{2})$/,
+    /^(\d{2})([A-Z]{2})(\d{2})$/,
+    /^(\d{2})(\d{2})([A-Z]{2})$/,
+    /^(\d{2})([A-Z]{3})(\d)$/,
+    /^(\d)([A-Z]{3})(\d{2})$/,
+    /^([A-Z]{2})(\d{3})([A-Z])$/,
+    /^([A-Z])(\d{3})([A-Z]{2})$/,
+    /^([A-Z]{2})(\d{2})([A-Z]{2})$/
+  ];
+  for (const pattern of patterns) {
+    const match = value.match(pattern);
+    if (match) return match.slice(1).join('-');
+  }
+  return value || '—';
+}
+
+function setLookupState({ loading = false, message = '', error = '' } = {}) {
+  const button = document.getElementById('sbtn');
+  const buttonText = document.getElementById('sbtn-t');
+  const status = document.getElementById('lookup-status');
+  const errorElement = document.getElementById('errmsg');
+
+  button.disabled = loading;
+  button.setAttribute('aria-busy', String(loading));
+  buttonText.innerHTML = loading ? 'Ophalen <span class="spin" aria-hidden="true"></span>' : 'Controleer';
+  status.textContent = message;
+  errorElement.textContent = error;
+  errorElement.classList.toggle('show', Boolean(error));
+}
+
+async function fetchJson(url, signal) {
+  const response = await fetch(url, {
+    signal,
+    headers: { Accept: 'application/json' },
+    cache: 'no-store'
+  });
+  if (!response.ok) throw new Error(`RDW request failed (${response.status})`);
+  const payload = await response.json();
+  return Array.isArray(payload) ? payload : [];
+}
+
+function rdwUrl(dataset, plate, limit) {
+  const url = new URL(`https://opendata.rdw.nl/resource/${dataset}.json`);
+  url.searchParams.set('kenteken', plate);
+  if (limit) url.searchParams.set('$limit', String(limit));
+  return url.toString();
+}
+
+async function optionalRdwRequest(dataset, plate, signal, limit) {
+  try {
+    return await fetchJson(rdwUrl(dataset, plate, limit), signal);
+  } catch (error) {
+    if (error.name === 'AbortError') throw error;
+    console.warn(`Optional RDW dataset ${dataset} could not be loaded.`, error);
+    return [];
+  }
 }
 
 /* ══ BPM ══ */
-const BPM_TABLE=[[0,1],[1,.909],[2,.826],[3,.751],[4,.685],[5,.626],[6,.574],[7,.527],[8,.485],[9,.447],[10,.413],[11,.382],[12,.354],[18,.268],[24,.209],[36,.140],[48,.099],[60,.074],[72,.057],[84,.044],[96,.035],[108,.028],[120,.022],[144,.014],[168,.009],[180,.007],[999,.005]];
-function bpmPct(m){for(let i=BPM_TABLE.length-1;i>=0;i--){if(m>=BPM_TABLE[i][0])return BPM_TABLE[i][1];}return 1;}
-function estimateCatalog(merk,kw){
-  const p=parseFloat(kw)||100;
-  let base=25000;
-  if(p<60)base=12000;else if(p<90)base=18000;else if(p<120)base=25000;
-  else if(p<150)base=35000;else if(p<200)base=50000;else if(p<250)base=70000;
-  else if(p<300)base=100000;else if(p<400)base=150000;else base=220000;
-  const prem={'LAMBORGHINI':5,'FERRARI':6,'MCLAREN':5,'PORSCHE':2.5,'BENTLEY':4,'ROLLS-ROYCE':7,'MASERATI':3,'BMW':1.4,'MERCEDES-BENZ':1.4,'AUDI':1.3,'RANGE ROVER':1.8};
-  const mu=(merk||'').toUpperCase();let fac=1;
-  for(const k in prem){if(mu.includes(k)){fac=prem[k];break;}}
-  return Math.round(base*fac);
-}
-function calcBPM(merk,kw,toelating){
-  const cat=estimateCatalog(merk,kw);
-  const grondslag=Math.round(cat*0.102);
-  let maanden=0;
-  if(toelating&&toelating.length>=6){
-    const y=parseInt(toelating.substring(0,4));
-    const mo=parseInt(toelating.substring(4,6));
-    const now=new Date();
-    maanden=(now.getFullYear()-y)*12+(now.getMonth()+1-mo);
+const BPM_TABLE = [[0, 1], [1, .909], [2, .826], [3, .751], [4, .685], [5, .626], [6, .574], [7, .527], [8, .485], [9, .447], [10, .413], [11, .382], [12, .354], [18, .268], [24, .209], [36, .140], [48, .099], [60, .074], [72, .057], [84, .044], [96, .035], [108, .028], [120, .022], [144, .014], [168, .009], [180, .007], [999, .005]];
+
+function bpmPct(months) {
+  for (let index = BPM_TABLE.length - 1; index >= 0; index -= 1) {
+    if (months >= BPM_TABLE[index][0]) return BPM_TABLE[index][1];
   }
-  const pct=bpmPct(Math.max(0,maanden));
-  return{cat,grondslag,rest:Math.round(grondslag*pct),pct,maanden};
+  return 1;
+}
+
+function estimateCatalog(brand, kw) {
+  const power = Number.parseFloat(kw) || 100;
+  let base = 25000;
+  if (power < 60) base = 12000;
+  else if (power < 90) base = 18000;
+  else if (power < 120) base = 25000;
+  else if (power < 150) base = 35000;
+  else if (power < 200) base = 50000;
+  else if (power < 250) base = 70000;
+  else if (power < 300) base = 100000;
+  else if (power < 400) base = 150000;
+  else base = 220000;
+
+  const premiumMultiplier = {
+    LAMBORGHINI: 5, FERRARI: 6, MCLAREN: 5, PORSCHE: 2.5,
+    BENTLEY: 4, 'ROLLS-ROYCE': 7, MASERATI: 3, BMW: 1.4,
+    'MERCEDES-BENZ': 1.4, AUDI: 1.3, 'RANGE ROVER': 1.8
+  };
+  const normalizedBrand = cleanText(brand).toUpperCase();
+  const multiplierKey = Object.keys(premiumMultiplier).find(key => normalizedBrand.includes(key));
+  return Math.round(base * (multiplierKey ? premiumMultiplier[multiplierKey] : 1));
+}
+
+function calcBPM(brand, kw, firstAdmission) {
+  const catalogValue = estimateCatalog(brand, kw);
+  const basis = Math.round(catalogValue * .102);
+  const date = rdwDate(firstAdmission);
+  let months = 0;
+  if (date) {
+    const now = new Date();
+    months = (now.getUTCFullYear() - date.getUTCFullYear()) * 12 + (now.getUTCMonth() - date.getUTCMonth());
+  }
+  months = Math.max(0, months);
+  const percentage = bpmPct(months);
+  return {
+    catalogValue,
+    basis,
+    remainder: Math.round(basis * percentage),
+    percentage,
+    months
+  };
 }
 
 /* ══ Wegenbelasting ══ */
-function calcWB(massa,brandstof){
-  const kg=parseInt(massa)||1000;
-  const hk=Math.ceil(kg/100);
-  const bs=(brandstof||'').toLowerCase();
-  let basis=0;
-  if(bs.includes('diesel'))basis=Math.round(hk*22.5+85);
-  else if(bs.includes('elektr'))basis=0;
-  else basis=Math.round(hk*14.8+55);
-  const opc={GRONINGEN:116,FRIESLAND:114,DRENTHE:114,OVERIJSSEL:110,FLEVOLAND:111,GELDERLAND:117,UTRECHT:112,'NOORD HOLLAND':110,'ZUID HOLLAND':120,ZEELAND:111,'NOORD BRABANT':112,LIMBURG:113};
-  const result={};
-  for(const p in opc)result[p]=Math.round(basis*(1+opc[p]/100));
-  return result;
+function calcWB(mass, fuel) {
+  const kilograms = Number.parseInt(mass, 10) || 1000;
+  const weightClass = Math.ceil(kilograms / 100);
+  const normalizedFuel = cleanText(fuel).toLowerCase();
+  let basis = 0;
+  if (normalizedFuel.includes('diesel')) basis = Math.round(weightClass * 22.5 + 85);
+  else if (normalizedFuel.includes('elektr')) basis = 0;
+  else basis = Math.round(weightClass * 14.8 + 55);
+
+  const provincialSurcharge = {
+    GRONINGEN: 116, FRIESLAND: 114, DRENTHE: 114, OVERIJSSEL: 110,
+    FLEVOLAND: 111, GELDERLAND: 117, UTRECHT: 112, 'NOORD HOLLAND': 110,
+    'ZUID HOLLAND': 120, ZEELAND: 111, 'NOORD BRABANT': 112, LIMBURG: 113
+  };
+  return Object.fromEntries(Object.entries(provincialSurcharge).map(([province, surcharge]) => [
+    province, Math.round(basis * (1 + surcharge / 100))
+  ]));
 }
 
 /* ══ ODO chart ══ */
-function drawOdo(canvas,data){
-  const W=canvas.offsetWidth||600,H=130;
-  canvas.width=W*devicePixelRatio;canvas.height=H*devicePixelRatio;
-  canvas.style.width=W+'px';canvas.style.height=H+'px';
-  const ctx=canvas.getContext('2d');ctx.scale(devicePixelRatio,devicePixelRatio);
-  if(!data||data.length<2)return;
-  const pad={t:12,r:12,b:24,l:52};
-  const gW=W-pad.l-pad.r,gH=H-pad.t-pad.b;
-  const maxK=Math.max(...data.map(d=>d.km))*1.08;
-  const minY=Math.min(...data.map(d=>d.year)),maxY=Math.max(...data.map(d=>d.year));
-  const px=y=>pad.l+(y-minY)/(Math.max(maxY-minY,1))*gW;
-  const py=k=>pad.t+gH-(k/(maxK||1))*gH;
-  ctx.strokeStyle='rgba(198,203,209,.05)';ctx.lineWidth=1;
-  for(let i=0;i<=4;i++){const y=pad.t+gH/4*i;ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(pad.l+gW,y);ctx.stroke();}
-  const gr=ctx.createLinearGradient(0,pad.t,0,pad.t+gH);
-  gr.addColorStop(0,'rgba(0,146,70,.16)');gr.addColorStop(1,'rgba(0,146,70,0)');
-  ctx.beginPath();ctx.moveTo(px(data[0].year),py(data[0].km));
-  data.forEach(d=>ctx.lineTo(px(d.year),py(d.km)));
-  ctx.lineTo(px(data[data.length-1].year),pad.t+gH);ctx.lineTo(px(data[0].year),pad.t+gH);
-  ctx.closePath();ctx.fillStyle=gr;ctx.fill();
-  ctx.beginPath();ctx.moveTo(px(data[0].year),py(data[0].km));
-  data.forEach(d=>ctx.lineTo(px(d.year),py(d.km)));
-  ctx.strokeStyle='rgba(0,146,70,.75)';ctx.lineWidth=1.5;ctx.stroke();
-  data.forEach(d=>{ctx.beginPath();ctx.arc(px(d.year),py(d.km),2.5,0,Math.PI*2);ctx.fillStyle='rgba(0,146,70,.9)';ctx.fill();});
-  ctx.fillStyle='rgba(198,203,209,.22)';ctx.font='9px Oswald,sans-serif';ctx.textAlign='right';
-  for(let i=0;i<=4;i++){const v=Math.round(maxK/4*i);ctx.fillText(v>=1000?(v/1000).toFixed(0)+'K':v,pad.l-5,py(maxK/4*i)+3);}
-  ctx.textAlign='center';
-  data.forEach(d=>ctx.fillText(d.year,px(d.year),H-5));
+function drawOdo(canvas, data) {
+  if (!canvas || !Array.isArray(data) || data.length < 2) return;
+  const width = canvas.offsetWidth || 600;
+  const height = 145;
+  if (width < 20) return;
+
+  const pixelRatio = window.devicePixelRatio || 1;
+  canvas.width = width * pixelRatio;
+  canvas.height = height * pixelRatio;
+  canvas.style.width = `${width}px`;
+  canvas.style.height = `${height}px`;
+
+  const context = canvas.getContext('2d');
+  context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+  const padding = { top: 12, right: 12, bottom: 25, left: 52 };
+  const graphWidth = width - padding.left - padding.right;
+  const graphHeight = height - padding.top - padding.bottom;
+  const maximumKm = Math.max(...data.map(point => point.km)) * 1.08;
+  const minTime = Math.min(...data.map(point => point.time));
+  const maxTime = Math.max(...data.map(point => point.time));
+  const x = point => padding.left + ((point.time - minTime) / Math.max(maxTime - minTime, 1)) * graphWidth;
+  const y = kilometers => padding.top + graphHeight - (kilometers / Math.max(maximumKm, 1)) * graphHeight;
+
+  context.clearRect(0, 0, width, height);
+  context.strokeStyle = 'rgba(198,203,209,.10)';
+  context.lineWidth = 1;
+  for (let step = 0; step <= 4; step += 1) {
+    const gridY = padding.top + (graphHeight / 4) * step;
+    context.beginPath();
+    context.moveTo(padding.left, gridY);
+    context.lineTo(padding.left + graphWidth, gridY);
+    context.stroke();
+  }
+
+  const fill = context.createLinearGradient(0, padding.top, 0, padding.top + graphHeight);
+  fill.addColorStop(0, 'rgba(198,203,209,.18)');
+  fill.addColorStop(1, 'rgba(198,203,209,0)');
+  context.beginPath();
+  context.moveTo(x(data[0]), y(data[0].km));
+  data.forEach(point => context.lineTo(x(point), y(point.km)));
+  context.lineTo(x(data[data.length - 1]), padding.top + graphHeight);
+  context.lineTo(x(data[0]), padding.top + graphHeight);
+  context.closePath();
+  context.fillStyle = fill;
+  context.fill();
+
+  context.beginPath();
+  context.moveTo(x(data[0]), y(data[0].km));
+  data.forEach(point => context.lineTo(x(point), y(point.km)));
+  context.strokeStyle = 'rgba(220,224,224,.88)';
+  context.lineWidth = 1.5;
+  context.stroke();
+
+  data.forEach(point => {
+    context.beginPath();
+    context.arc(x(point), y(point.km), 2.5, 0, Math.PI * 2);
+    context.fillStyle = '#e4e7e7';
+    context.fill();
+  });
+
+  context.fillStyle = 'rgba(198,203,209,.52)';
+  context.font = '9px Oswald, sans-serif';
+  context.textAlign = 'right';
+  for (let step = 0; step <= 4; step += 1) {
+    const value = Math.round((maximumKm / 4) * step);
+    context.fillText(value >= 1000 ? `${Math.round(value / 1000)}K` : value, padding.left - 5, y(value) + 3);
+  }
+
+  context.textAlign = 'center';
+  const labelIndices = data.length <= 4
+    ? data.map((_, index) => index)
+    : [...new Set([0, Math.floor((data.length - 1) / 2), data.length - 1])];
+  labelIndices.forEach(index => {
+    const point = data[index];
+    context.fillText(String(point.year), x(point), height - 5);
+  });
 }
 
-/* ══ Toggle blocks ══ */
-function toggle(head){
-  head.classList.toggle('open');
-  head.nextElementSibling.classList.toggle('hidden');
+function resetOdoStats() {
+  lastOdoData = [];
+  document.getElementById('odo-cur').innerHTML = '—';
+  document.getElementById('odo-avg').innerHTML = '—';
+  document.getElementById('odo-con').innerHTML = '—';
+  document.getElementById('odo-cnt').innerHTML = '—';
+  const canvas = document.getElementById('odo-canvas');
+  if (canvas) canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+}
+
+/* ══ Accessible accordion blocks ══ */
+function toggle(head) {
+  const body = head && head.nextElementSibling;
+  if (!body) return;
+  const isOpen = head.classList.toggle('open');
+  body.classList.toggle('hidden', !isOpen);
+  head.setAttribute('aria-expanded', String(isOpen));
+}
+
+function initialiseAccordions() {
+  document.querySelectorAll('.dblock').forEach((block, index) => {
+    const head = block.querySelector('.bhead');
+    const body = block.querySelector('.bbody');
+    if (!head || !body) return;
+    const bodyId = `report-section-${index + 1}`;
+    body.id = bodyId;
+    head.setAttribute('role', 'button');
+    head.setAttribute('tabindex', '0');
+    head.setAttribute('aria-controls', bodyId);
+    head.setAttribute('aria-expanded', String(!body.classList.contains('hidden')));
+    head.addEventListener('keydown', event => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      event.preventDefault();
+      toggle(head);
+    });
+  });
 }
 
 /* ══ Reveal observer ══ */
-const io=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(!e.isIntersecting)return;
-    io.unobserve(e.target);
-    e.target.classList.add('in');
-    if(e.target.classList.contains('ey'))e.target.classList.add('tri-in');
-    e.target.querySelectorAll&&e.target.querySelectorAll('.ey').forEach(ey=>setTimeout(()=>ey.classList.add('tri-in'),160));
+function initialiseReveals() {
+  if (!('IntersectionObserver' in window)) {
+    document.querySelectorAll('.rv').forEach(element => element.classList.add('in'));
+    return;
+  }
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      observer.unobserve(entry.target);
+      entry.target.classList.add('in');
+    });
+  }, { threshold: .06 });
+  document.querySelectorAll('.rv').forEach(element => observer.observe(element));
+}
+
+function humanError(error) {
+  if (error && error.message && error.message.includes('(429)')) {
+    return 'De RDW-dienst ontvangt veel verzoeken. Wacht een moment en probeer opnieuw.';
+  }
+  if (error && error.message && error.message.includes('(503)')) {
+    return 'De RDW-dienst is tijdelijk niet beschikbaar. Probeer het straks opnieuw.';
+  }
+  return 'De RDW-data kon niet worden opgehaald. Controleer uw verbinding en probeer opnieuw.';
+}
+
+function renderVehicle(v, fuelData, inspectionData, recallData, plate) {
+  const fuel = fuelData[0] || {};
+  const brand = cleanText(v.merk).toUpperCase();
+  const model = cleanText(v.handelsbenaming || v.type);
+  const powerKw = v.vermogen_massarijklaar;
+  const horsepower = kwToPk(powerKw);
+  const firstAdmission = v.datum_eerste_toelating;
+  const firstNlRegistration = v.datum_eerste_tenaamstelling_in_nederland || v.datum_tenaamstelling;
+  const constructionYear = rdwDate(firstAdmission) ? String(rdwDate(firstAdmission).getUTCFullYear()) : '—';
+  const currentRegistration = v.datum_tenaamstelling;
+
+  /* ── Vehicle header ── */
+  setText('r-make', brand || 'Onbekend merk');
+  setText('r-model', model ? cap(model) : '', '');
+  setText('r-meta', [
+    constructionYear !== '—' ? `Bouwjaar ${constructionYear}` : '',
+    v.eerste_kleur ? cap(v.eerste_kleur) : '',
+    horsepower ? `${numberFormat.format(horsepower)} pk` : ''
+  ].filter(Boolean).join(' · '));
+  setText('r-badge', formatPlate(plate));
+
+  /* ── Vehicle data ── */
+  setText('d-merk', brand);
+  setText('d-model', cap(v.handelsbenaming));
+  setText('d-type', cap(v.type));
+  setText('d-jaar', constructionYear);
+  setText('d-toelating', fmtDateLong(firstAdmission));
+  setText('d-tenaam', fmtDateLong(firstNlRegistration));
+  setText('d-kleur', cap(v.eerste_kleur));
+  setText('d-carr', cap(v.inrichting));
+  setText('d-deuren', [
+    v.aantal_deuren ? `${v.aantal_deuren} deuren` : '',
+    v.aantal_zitplaatsen ? `${v.aantal_zitplaatsen} zitplaatsen` : ''
+  ].filter(Boolean).join(' / '));
+  setText('d-wb', v.wielbasis ? `${v.wielbasis} mm (${(Number(v.wielbasis) / 1000).toFixed(1)} m)` : '');
+  const length = v.lengte ? `${(Number(v.lengte) / 1000).toFixed(1)} m` : '';
+  const width = v.breedte ? `${(Number(v.breedte) / 1000).toFixed(1)} m` : '';
+  const height = v.hoogte_voertuig ? `${(Number(v.hoogte_voertuig) / 1000).toFixed(1)} m` : '';
+  setText('d-afm', length && width && height ? `${length} × ${width} × ${height}` : '');
+  setText('d-eucat', v.europese_voertuigcategorie);
+
+  /* ── Power train ── */
+  setText('d-bs', cap(fuel.brandstof_omschrijving));
+  setText('d-cc', v.cilinderinhoud ? `${numberFormat.format(Number(v.cilinderinhoud))} cm³` : '');
+  setText('d-cil', v.aantal_cilinders || fuel.aantal_cilinders);
+  setText('d-kw', powerKw ? `${powerKw} kW${horsepower ? ` / ${numberFormat.format(horsepower)} pk` : ''}` : '');
+  setText('d-mcode', fuel.motorcode);
+  setText('d-versn', fuel.transmissie_soort ? `${cap(fuel.transmissie_soort)}${fuel.aantal_versnellingen ? `, ${fuel.aantal_versnellingen} versn.` : ''}` : '');
+  setText('d-gew', v.massa_rijklaar ? `${numberFormat.format(Number(v.massa_rijklaar))} kg` : '');
+  setText('d-co2', fuel.co2_uitstoot_gecombineerd ? `${fuel.co2_uitstoot_gecombineerd} g/km` : '');
+  const consumption = Number.parseFloat(fuel.brandstofverbruik_gecombineerd);
+  setText('d-verb', Number.isFinite(consumption) && consumption > 0 ? `${consumption} L/100 km (1:${(100 / consumption).toFixed(1)})` : '');
+
+  /* ── APK and registration ── */
+  const apk = apkStatus(v.vervaldatum_apk);
+  setText('d-apk', fmtDate(v.vervaldatum_apk));
+  setStatusText('d-apkst', apk.text, apk.className);
+  setStatusText('d-apkdays', apk.days === null ? '—' : (apk.days < 0 ? `${numberFormat.format(Math.abs(apk.days))} dagen verlopen` : `Nog ${numberFormat.format(apk.days)} dagen`), apk.className);
+
+  const stolen = readFlag(v.gestolen_yn);
+  setStatusText('d-gestolen', stolen === true ? 'Ja — opgegeven als gestolen' : stolen === false ? 'Nee' : 'Niet beschikbaar', stolen === true ? 'bad' : stolen === false ? 'ok' : 'dim');
+  const exported = readFlag(v.export_indicator);
+  setStatusText('d-export', exported === true ? 'Ja — geëxporteerd' : exported === false ? 'Nee' : 'Niet beschikbaar', exported === true ? 'warn' : exported === false ? 'ok' : 'dim');
+  const suspended = readFlag(v.geschorst);
+  setStatusText('d-geschorst', suspended === true ? 'Ja — geschorst' : suspended === false ? 'Nee' : 'Niet beschikbaar', suspended === true ? 'bad' : suspended === false ? 'ok' : 'dim');
+
+  const isImported = Boolean(rdwDate(firstAdmission) && rdwDate(firstNlRegistration) && dateTimestamp(firstNlRegistration) - dateTimestamp(firstAdmission) > 31 * 86400000);
+  setStatusText('d-import', isImported ? 'Ja — later in Nederland geregistreerd' : 'Nee — direct in Nederland geregistreerd', isImported ? 'warn' : 'ok');
+  const registrationClear = stolen !== true && exported !== true && suspended !== true;
+  setStatusText('d-tenaamstellen', registrationClear ? 'Geen openbare blokkade bekend' : 'Controle vereist', registrationClear ? 'ok' : 'warn');
+
+  const recallCount = recallData.length;
+  setStatusText('d-recall-sum', recallCount ? `${recallCount} geregistreerde recall${recallCount === 1 ? '' : 's'}` : 'Geen recalls geregistreerd', recallCount ? 'warn' : 'ok');
+  document.getElementById('wam-notice').style.display = 'flex';
+
+  /* ── Inspection history ── */
+  const inspectionWrap = document.getElementById('apk-history-wrap');
+  const inspections = inspectionData
+    .filter(item => item && item.meld_datum_door_keuringsinstantie)
+    .sort((a, b) => dateTimestamp(b.meld_datum_door_keuringsinstantie) - dateTimestamp(a.meld_datum_door_keuringsinstantie));
+  if (inspections.length) {
+    let table = '<table class="apk-table"><thead><tr><th>Datum</th><th>Resultaat</th><th>Tellerstand</th><th>Gebreken</th></tr></thead><tbody>';
+    inspections.forEach(item => {
+      const description = cleanText(item.soort_erkenning_omschrijving).toLowerCase();
+      let resultClass = 'apk-ok';
+      let resultText = 'Goedgekeurd';
+      if (description.includes('afkeur')) { resultClass = 'apk-fail'; resultText = 'Afgekeurd'; }
+      else if (description.includes('herk')) { resultClass = 'apk-afk'; resultText = 'Herkeuring'; }
+      const kilometerReading = Number.parseInt(item.tellerstand, 10);
+      const defectCount = cleanText(item.aantal_gebreken) || '0';
+      table += `<tr><td>${escapeHTML(fmtDate(item.meld_datum_door_keuringsinstantie))}</td><td><span class="apk-res ${resultClass}">${resultText}</span></td><td>${Number.isFinite(kilometerReading) ? `${numberFormat.format(kilometerReading)} km` : '—'}</td><td>${escapeHTML(defectCount)}</td></tr>`;
+    });
+    inspectionWrap.innerHTML = `${table}</tbody></table>`;
+  } else {
+    inspectionWrap.textContent = 'Geen keuringshistorie beschikbaar.';
+  }
+
+  /* ── Odometer ── */
+  resetOdoStats();
+  const odometerPoints = inspectionData
+    .map(item => {
+      const kilometers = Number.parseInt(item.tellerstand, 10);
+      const date = rdwDate(item.meld_datum_door_keuringsinstantie);
+      return date && Number.isFinite(kilometers) && kilometers > 0 ? {
+        km: kilometers,
+        time: date.getTime(),
+        year: date.getUTCFullYear()
+      } : null;
+    })
+    .filter(Boolean)
+    .sort((a, b) => a.time - b.time)
+    .filter((point, index, array) => index === 0 || point.time !== array[index - 1].time || point.km !== array[index - 1].km);
+
+  if (odometerPoints.length) {
+    const firstPoint = odometerPoints[0];
+    const lastPoint = odometerPoints[odometerPoints.length - 1];
+    const years = Math.max(1, (lastPoint.time - firstPoint.time) / (365.25 * 86400000));
+    const average = Math.max(0, Math.round((lastPoint.km - firstPoint.km) / years));
+    const consistent = odometerPoints.every((point, index) => index === 0 || point.km >= odometerPoints[index - 1].km);
+    document.getElementById('odo-cur').innerHTML = `${numberFormat.format(lastPoint.km)} <span>km</span>`;
+    document.getElementById('odo-avg').innerHTML = `${numberFormat.format(average)} <span>km/jr</span>`;
+    document.getElementById('odo-cnt').innerHTML = `${odometerPoints.length} <span>metingen</span>`;
+    document.getElementById('odo-con').innerHTML = consistent ? '<span style="color:var(--ok)">Consistent</span>' : '<span style="color:var(--bad)">Afwijking</span>';
+    lastOdoData = odometerPoints;
+    window.setTimeout(() => drawOdo(document.getElementById('odo-canvas'), lastOdoData), 80);
+  } else {
+    document.getElementById('odo-cur').innerHTML = '<span>Geen tellerdata</span>';
+  }
+
+  /* ── Registration timeline ── */
+  const timelineWrap = document.getElementById('timeline-wrap');
+  const timeline = [];
+  if (rdwDate(firstAdmission)) {
+    timeline.push({ date: firstAdmission, type: 'first', title: 'Eerste toelating wereldwijd', detail: 'Voertuig voor het eerst toegelaten tot het verkeer.' });
+  }
+  if (isImported && rdwDate(firstNlRegistration)) {
+    const bpmAtImport = calcBPM(brand, powerKw, firstAdmission);
+    timeline.push({ date: firstNlRegistration, type: 'import', title: 'Geregistreerd in Nederland', detail: `Eerste bekende Nederlandse registratie. Indicatieve resterende BPM: € ${numberFormat.format(bpmAtImport.remainder)}.` });
+  } else if (rdwDate(firstNlRegistration)) {
+    timeline.push({ date: firstNlRegistration, type: 'registration', title: 'Eerste registratie Nederland', detail: 'Voertuig geregistreerd in Nederland.' });
+  }
+  if (rdwDate(currentRegistration)) {
+    const ownershipDays = daysSince(currentRegistration);
+    timeline.push({ date: currentRegistration, type: 'current', title: 'Huidige tenaamstelling', detail: ownershipDays === null ? 'Huidige registratie volgens het openbare RDW-register.' : `${numberFormat.format(Math.max(0, ownershipDays))} dagen in de huidige tenaamstelling.` });
+  }
+  timeline.sort((a, b) => dateTimestamp(a.date) - dateTimestamp(b.date));
+  if (timeline.length) {
+    timelineWrap.innerHTML = `<div class="timeline">${timeline.map(item => {
+      const style = item.type === 'first' ? 'background:var(--ig);border-color:var(--ig)' : item.type === 'import' ? 'background:var(--warn);border-color:var(--warn)' : item.type === 'current' ? 'background:var(--ir);border-color:var(--ir)' : 'background:rgba(198,203,209,.4);border-color:rgba(198,203,209,.3)';
+      return `<div class="tl-item"><div class="tl-dot" style="${style}"></div><div class="tl-date">${escapeHTML(fmtDateLong(item.date))}</div><div class="tl-title">${escapeHTML(item.title)}</div><div class="tl-sub">${escapeHTML(item.detail)}</div></div>`;
+    }).join('')}</div>`;
+  } else {
+    timelineWrap.textContent = 'Geen registratiemomenten beschikbaar.';
+  }
+
+  /* ── Road tax indication ── */
+  const roadTax = calcWB(v.massa_rijklaar, fuel.brandstof_omschrijving);
+  let roadTaxTable = '<table class="wb-table"><thead><tr><th>Provincie</th><th>Per kwartaal (indicatie)</th></tr></thead><tbody>';
+  Object.entries(roadTax).forEach(([province, amount]) => {
+    const highlighted = province === 'LIMBURG';
+    roadTaxTable += `<tr${highlighted ? ' class="wb-hl"' : ''}><td>${escapeHTML(cap(province))}${highlighted ? ' ★' : ''}</td><td>€ ${numberFormat.format(amount)}</td></tr>`;
   });
-},{threshold:.06});
-document.querySelectorAll('.rv,.ey').forEach(el=>io.observe(el));
+  roadTaxTable += '</tbody></table><div class="wb-note">Indicatieve berekening op basis van massa rijklaar en brandstoftype. Controleer het exacte bedrag bij de Belastingdienst.</div>';
+  document.getElementById('wb-wrap').innerHTML = roadTaxTable;
 
-/* ══ HOOFDFUNCTIE ══ */
-async function doCheck(){
-  const raw=document.getElementById('kt').value;
-  const kt=raw.replace(/[-\s]/g,'').toUpperCase();
-  const err=document.getElementById('errmsg');
-  const res=document.getElementById('results');
-  const btnt=document.getElementById('sbtn-t');
-  const btn=document.getElementById('sbtn');
-  const emp=document.getElementById('empty-state');
+  /* ── BPM indication ── */
+  const bpm = calcBPM(brand, powerKw, firstAdmission);
+  setText('bpm-cat', `€ ${numberFormat.format(bpm.catalogValue)}`);
+  setText('bpm-rest', `€ ${numberFormat.format(bpm.remainder)}`);
+  setText('bpm-sub', `Leeftijd: ${Math.floor(bpm.months / 12)} jr ${bpm.months % 12} mnd · Afschrijving: ${Math.round((1 - bpm.percentage) * 100)}%`);
+  const remainingPercentage = Math.round(bpm.percentage * 100);
+  setText('bpm-pct-lbl', `${remainingPercentage}% rest`);
+  window.setTimeout(() => {
+    const bar = document.getElementById('bpm-bar');
+    bar.style.width = `${remainingPercentage}%`;
+    bar.style.background = remainingPercentage > 50 ? 'var(--bad)' : remainingPercentage > 20 ? 'var(--warn)' : 'var(--ok)';
+  }, 220);
+  const verdict = document.getElementById('bpm-verdict');
+  verdict.style.display = 'flex';
+  if (remainingPercentage > 50) {
+    verdict.className = 'bpm-verdict bpm-hi';
+    verdict.textContent = 'Hoge resterende BPM — laat voor import een officiële taxatie uitvoeren.';
+  } else if (remainingPercentage > 20) {
+    verdict.className = 'bpm-verdict bpm-lo';
+    verdict.textContent = 'Matige resterende BPM — gebruik dit bedrag uitsluitend als eerste indicatie.';
+  } else {
+    verdict.className = 'bpm-verdict bpm-ok';
+    verdict.textContent = 'Lage resterende BPM — het voertuig is volgens deze indicatie grotendeels afgeschreven.';
+  }
 
-  err.classList.remove('show');
-  res.classList.remove('show');
+  /* ── Recalls ── */
+  const recallWrap = document.getElementById('recall-wrap');
+  const recallCountLabel = document.getElementById('recall-count');
+  if (recallCount) {
+    recallCountLabel.textContent = `${recallCount} gevonden`;
+    recallWrap.innerHTML = recallData.map(item => {
+      const date = item.datum_begin_terugroepactie ? fmtDate(item.datum_begin_terugroepactie) : '—';
+      const code = item.referentiecode_rdw || '—';
+      const description = item.beschrijving_terugroepactie || 'Terugroepactie geregistreerd';
+      return `<div class="recall-row"><div class="recall-dot"></div><div class="recall-code">${escapeHTML(code)}</div><div class="recall-desc">${escapeHTML(description)}</div><div class="recall-date">${escapeHTML(date)}</div></div>`;
+    }).join('');
+  } else {
+    recallCountLabel.textContent = 'Geen';
+    recallWrap.innerHTML = '<div class="no-recall">Geen geregistreerde terugroepacties gevonden voor dit voertuig.</div>';
+  }
 
-  if(kt.length<4){
-    err.textContent='Voer een geldig kenteken in (minimaal 4 tekens).';
-    err.classList.add('show');
+  /* ── Quick checks ── */
+  const quickChecks = document.getElementById('quick-checks');
+  quickChecks.replaceChildren();
+  [
+    { label: `APK ${apk.text}`, className: apk.className },
+    { label: stolen === true ? 'Gestolen gemeld' : stolen === false ? 'Niet gestolen gemeld' : 'Diefstalstatus onbekend', className: stolen === true ? 'bad' : stolen === false ? 'ok' : 'neu' },
+    { label: exported === true ? 'Geëxporteerd' : exported === false ? 'In Nederland' : 'Exportstatus onbekend', className: exported === true ? 'warn' : exported === false ? 'ok' : 'neu' },
+    { label: suspended === true ? 'Geschorst' : suspended === false ? 'Niet geschorst' : 'Schorsing onbekend', className: suspended === true ? 'bad' : suspended === false ? 'ok' : 'neu' },
+    { label: isImported ? 'Geïmporteerd' : 'NL-voertuig', className: isImported ? 'warn' : 'ok' },
+    { label: `BPM ~${remainingPercentage}%`, className: remainingPercentage > 50 ? 'bad' : remainingPercentage > 20 ? 'warn' : 'ok' },
+    { label: recallCount ? `${recallCount} recall${recallCount === 1 ? '' : 's'}` : 'Geen recalls', className: recallCount ? 'warn' : 'ok' }
+  ].forEach(item => {
+    const chip = document.createElement('div');
+    chip.className = `qc qc-${item.className}`;
+    chip.textContent = item.label;
+    quickChecks.appendChild(chip);
+  });
+}
+
+/* ══ Lookup ══ */
+async function doCheck() {
+  const input = document.getElementById('kt');
+  const plate = input.value.replace(/[-\s]/g, '').toUpperCase();
+  const results = document.getElementById('results');
+  const emptyState = document.getElementById('empty-state');
+
+  if (plate.length < 4) {
+    setLookupState({ error: 'Voer een geldig Nederlands kenteken in (minimaal 4 tekens).' });
+    input.focus();
     return;
   }
 
-  btnt.innerHTML='Zoeken <span class="spin"></span>';
-  btn.disabled=true;
+  if (activeLookup) activeLookup.abort();
+  const controller = new AbortController();
+  activeLookup = controller;
+  const requestId = ++lookupSequence;
+  results.classList.remove('show');
+  setLookupState({ loading: true, message: 'RDW-gegevens worden opgehaald…' });
 
-  try{
-    const[d1,d2,d3,d4]=await Promise.all([
-      fetch('https://opendata.rdw.nl/resource/m9d7-ebf2.json?kenteken='+kt).then(r=>r.json()),
-      fetch('https://opendata.rdw.nl/resource/8ys7-d773.json?kenteken='+kt).then(r=>r.json()),
-      fetch('https://opendata.rdw.nl/resource/sgfe-77wx.json?kenteken='+kt+'&$limit=100').then(r=>r.json()),
-      fetch('https://opendata.rdw.nl/resource/t49b-hvac.json?kenteken='+kt).then(r=>r.json()).catch(()=>[])
+  try {
+    const vehicles = await fetchJson(rdwUrl('m9d7-ebf2', plate), controller.signal);
+    if (requestId !== lookupSequence) return;
+    if (!vehicles.length) {
+      emptyState.hidden = false;
+      setLookupState({ error: 'Kenteken niet gevonden in het openbare RDW-register.' });
+      return;
+    }
+
+    const [fuelData, inspectionData, recallData] = await Promise.all([
+      optionalRdwRequest('8ys7-d773', plate, controller.signal),
+      optionalRdwRequest('sgfe-77wx', plate, controller.signal, 100),
+      optionalRdwRequest('t49b-hvac', plate, controller.signal)
     ]);
+    if (requestId !== lookupSequence) return;
 
-    btnt.innerHTML='Controleer';btn.disabled=false;
-
-    if(!d1||d1.length===0){
-      err.textContent='Kenteken niet gevonden in het RDW-register.';
-      err.classList.add('show');return;
+    renderVehicle(vehicles[0], fuelData, inspectionData, recallData, plate);
+    emptyState.hidden = true;
+    results.classList.add('show');
+    setLookupState({ message: `Rapport voor ${formatPlate(plate)} is geladen.` });
+    window.setTimeout(() => {
+      results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      results.focus({ preventScroll: true });
+    }, 80);
+  } catch (error) {
+    if (error.name === 'AbortError') return;
+    console.error(error);
+    if (requestId === lookupSequence) {
+      emptyState.hidden = false;
+      setLookupState({ error: humanError(error) });
     }
-
-    const v=d1[0];
-    const bs=d2&&d2.length>0?d2[0]:{};
-    const merk=(v.merk||'').toUpperCase();
-    const model=v.handelsbenaming||v.type||'';
-    const kw=v.vermogen_massarijklaar;
-    const pk=kwToPk(kw);
-    const bouwjaar=v.datum_eerste_toelating?v.datum_eerste_toelating.substring(0,4):'—';
-
-    /* ── Badge & naam ── */
-    document.getElementById('r-name').innerHTML=merk+' <em>'+model+'</em>';
-    document.getElementById('r-meta').textContent=
-      [bouwjaar!=='—'?'Bouwjaar '+bouwjaar:'',v.eerste_kleur?cap(v.eerste_kleur):'',pk?pk+' pk':''].filter(Boolean).join(' · ');
-
-    /* Kentekenbord opmaak */
-    const plateFormatted=kt.length===6?kt.substring(0,2)+'-'+kt.substring(2,5)+'-'+kt.substring(5):kt;
-    document.getElementById('r-badge').textContent=plateFormatted;
-
-    /* ── Voertuiggegevens ── */
-    document.getElementById('d-merk').textContent=merk||'—';
-    document.getElementById('d-model').textContent=cap(v.handelsbenaming)||'—';
-    document.getElementById('d-type').textContent=cap(v.type)||'—';
-    document.getElementById('d-jaar').textContent=bouwjaar;
-    document.getElementById('d-toelating').textContent=fmtDateLong(v.datum_eerste_toelating);
-    document.getElementById('d-tenaam').textContent=fmtDateLong(v.datum_tenaamstelling);
-    document.getElementById('d-kleur').textContent=cap(v.eerste_kleur)||'—';
-    document.getElementById('d-carr').textContent=cap(v.inrichting)||'—';
-    document.getElementById('d-deuren').textContent=
-      [v.aantal_deuren?v.aantal_deuren+' deuren':'',v.aantal_zitplaatsen?v.aantal_zitplaatsen+' zitplaatsen':''].filter(Boolean).join(' / ')||'—';
-    document.getElementById('d-wb').textContent=v.wielbasis?v.wielbasis+' mm ('+( v.wielbasis/1000).toFixed(1)+' m)':'—';
-    const len=v.lengte?(v.lengte/1000).toFixed(1)+'m':'—';
-    const brd=v.breedte?(v.breedte/1000).toFixed(1)+'m':'—';
-    const hgt=v.hoogte_voertuig?(v.hoogte_voertuig/1000).toFixed(1)+'m':'—';
-    document.getElementById('d-afm').textContent=(len!=='—'&&brd!=='—'&&hgt!=='—')?len+' × '+brd+' × '+hgt:'—';
-    document.getElementById('d-eucat').textContent=v.europese_voertuigcategorie||'—';
-
-    /* ── Motor ── */
-    document.getElementById('d-bs').textContent=cap(bs.brandstof_omschrijving)||'—';
-    document.getElementById('d-cc').textContent=v.cilinderinhoud?v.cilinderinhoud+' cm³':'—';
-    document.getElementById('d-cil').textContent=v.aantal_cilinders||bs.aantal_cilinders||'—';
-    document.getElementById('d-kw').textContent=kw?kw+' kW'+(pk?' / '+pk+' pk':''):'—';
-    document.getElementById('d-mcode').textContent=bs.motorcode||'—';
-    document.getElementById('d-versn').textContent=bs.transmissie_soort?cap(bs.transmissie_soort)+(bs.aantal_versnellingen?', '+bs.aantal_versnellingen+' versn.':''):'—';
-    document.getElementById('d-gew').textContent=v.massa_rijklaar?v.massa_rijklaar+' kg':'—';
-    document.getElementById('d-co2').textContent=bs.co2_uitstoot_gecombineerd?bs.co2_uitstoot_gecombineerd+' g/km':'—';
-    const vg=bs.brandstofverbruik_gecombineerd;
-    document.getElementById('d-verb').textContent=vg?vg+' L/100km (1:'+(100/parseFloat(vg)).toFixed(1)+')'  :'—';
-
-    /* ── APK ── */
-    const apk=apkStatus(v.vervaldatum_apk);
-    document.getElementById('d-apk').textContent=v.vervaldatum_apk?fmtDate(v.vervaldatum_apk):'—';
-    const apkStEl=document.getElementById('d-apkst');
-    apkStEl.textContent=apk.t;apkStEl.className='di-val '+apk.c;
-    const apkDE=document.getElementById('d-apkdays');
-    if(apk.days!==null){
-      apkDE.textContent=apk.days<0?Math.abs(apk.days)+' dagen geleden verlopen':'Nog '+apk.days+' dagen';
-      apkDE.className='di-val '+apk.c;
-    }else apkDE.textContent='—';
-
-    const gs=(v.gestolen_yn||'').toUpperCase();
-    const gsEl=document.getElementById('d-gestolen');
-    gsEl.textContent=gs==='J'?'Ja — opgegeven als gestolen':gs==='N'?'Nee':'—';
-    gsEl.className='di-val '+(gs==='J'?'bad':gs==='N'?'ok':'dim');
-
-    const ex=(v.export_indicator||'').toUpperCase();
-    const exEl=document.getElementById('d-export');
-    exEl.textContent=ex==='J'?'Ja — geëxporteerd':ex==='N'?'Nee':'—';
-    exEl.className='di-val '+(ex==='J'?'warn':ex==='N'?'ok':'dim');
-
-    const gsch=(v.geschorst||'').toUpperCase();
-    const gschEl=document.getElementById('d-geschorst');
-    gschEl.textContent=gsch==='J'?'Ja — gescorst':'Nee';
-    gschEl.className='di-val '+(gsch==='J'?'bad':'ok');
-
-    const isImported=v.datum_tenaamstelling&&v.datum_eerste_toelating&&
-      v.datum_eerste_toelating.substring(0,4)!==v.datum_tenaamstelling.substring(0,4);
-    const impEl=document.getElementById('d-import');
-    impEl.textContent=isImported?'Ja — geïmporteerd naar Nederland':'Nee';
-    impEl.className='di-val '+(isImported?'warn':'ok');
-
-    const recallCount_n=d4&&d4.length>0?d4.length:0;
-    const rsEl=document.getElementById('d-recall-sum');
-    rsEl.textContent=recallCount_n>0?recallCount_n+' openstaande recall'+(recallCount_n>1?'s':''):'Geen openstaande recalls';
-    rsEl.className='di-val '+(recallCount_n>0?'warn':'ok');
-
-    /* WAM notice altijd tonen */
-    document.getElementById('wam-notice').style.display='flex';
-
-    /* ── APK Historie ── */
-    const apkWrap=document.getElementById('apk-history-wrap');
-    if(d3&&d3.length>0){
-      const keuringen=d3.filter(k=>k.meld_datum_door_keuringsinstantie);
-      keuringen.sort((a,b)=>(b.meld_datum_door_keuringsinstantie||'').localeCompare(a.meld_datum_door_keuringsinstantie||''));
-      if(keuringen.length>0){
-        let html='<table class="apk-table"><thead><tr><th>Datum</th><th>Resultaat</th><th>Tellerstand</th><th>Gebreken</th></tr></thead><tbody>';
-        keuringen.forEach(k=>{
-          const datum=k.meld_datum_door_keuringsinstantie?k.meld_datum_door_keuringsinstantie.substring(0,10):'—';
-          const odo=k.tellerstand?parseInt(k.tellerstand).toLocaleString('nl-NL')+' km':'—';
-          const gebr=k.aantal_gebreken||'0';
-          const res2=k.soort_erkenning_omschrijving||'';
-          let rc='apk-ok',rt='Goedgekeurd';
-          if(res2.toLowerCase().includes('afkeur')){rc='apk-fail';rt='Afgekeurd';}
-          else if(res2.toLowerCase().includes('herk')){rc='apk-afk';rt='Herkeuring';}
-          html+='<tr><td>'+datum+'</td><td><span class="apk-res '+rc+'">'+rt+'</span></td><td>'+odo+'</td><td>'+gebr+'</td></tr>';
-        });
-        html+='</tbody></table>';
-        apkWrap.innerHTML=html;
-      }else apkWrap.innerHTML='<div style="font-size:.75rem;color:rgba(198,203,209,.25)">Geen keuringshistorie beschikbaar.</div>';
-    }else apkWrap.innerHTML='<div style="font-size:.75rem;color:rgba(198,203,209,.25)">Geen keuringshistorie beschikbaar.</div>';
-
-    /* ── Tellerstand ── */
-    const odoData=[];
-    if(d3&&d3.length>0){
-      d3.forEach(k=>{
-        if(k.tellerstand&&k.meld_datum_door_keuringsinstantie){
-          const year=parseInt((k.meld_datum_door_keuringsinstantie||'').substring(0,4));
-          const km=parseInt(k.tellerstand);
-          if(year>2000&&km>0)odoData.push({year,km});
-        }
-      });
-      odoData.sort((a,b)=>a.year-b.year);
-      const deduped=[];
-      odoData.forEach(d=>{if(!deduped.find(x=>x.year===d.year&&x.km===d.km))deduped.push(d);});
-      if(deduped.length>0){
-        const last=deduped[deduped.length-1],first=deduped[0];
-        const yrs=last.year-first.year||1;
-        const avg=Math.round((last.km-first.km)/yrs);
-        const canvas=document.getElementById('odo-canvas');
-        setTimeout(()=>drawOdo(canvas,deduped),80);
-        document.getElementById('odo-cur').innerHTML=last.km.toLocaleString('nl-NL')+' <span>km</span>';
-        document.getElementById('odo-avg').innerHTML=(avg>0?avg.toLocaleString('nl-NL'):'—')+' <span>km/jr</span>';
-        document.getElementById('odo-cnt').innerHTML=deduped.length+' <span>metingen</span>';
-        let consistent=true;
-        for(let i=1;i<deduped.length;i++){if(deduped[i].km<deduped[i-1].km){consistent=false;break;}}
-        document.getElementById('odo-con').innerHTML=consistent?
-          '<span style="color:var(--ok)">Consistent</span>':
-          '<span style="color:var(--bad)">Afwijking</span>';
-      }else{
-        document.getElementById('odo-cur').innerHTML='<span>Geen tellerdata</span>';
-      }
+  } finally {
+    if (requestId === lookupSequence) {
+      const status = document.getElementById('lookup-status');
+      const existingMessage = status.textContent;
+      setLookupState({ loading: false, message: existingMessage, error: document.getElementById('errmsg').textContent });
+      activeLookup = null;
     }
-
-    /* ── Voertuighistorie tijdlijn ── */
-    const twWrap=document.getElementById('timeline-wrap');
-    const now=new Date();
-    let tlHtml='<div class="timeline">';
-    if(v.datum_eerste_toelating){
-      tlHtml+='<div class="tl-item"><div class="tl-dot" style="background:var(--ig);border-color:var(--ig)"></div>';
-      tlHtml+='<div class="tl-date">'+fmtDateLong(v.datum_eerste_toelating)+'</div>';
-      tlHtml+='<div class="tl-title">Eerste toelating wereldwijd</div>';
-      tlHtml+='<div class="tl-sub">Voertuig voor het eerst toegelaten tot het verkeer.</div></div>';
-    }
-    if(isImported&&v.datum_tenaamstelling){
-      const bpmData2=calcBPM(merk,kw,v.datum_eerste_toelating);
-      tlHtml+='<div class="tl-item"><div class="tl-dot" style="background:var(--warn);border-color:var(--warn)"></div>';
-      tlHtml+='<div class="tl-date">'+fmtDateLong(v.datum_tenaamstelling)+'</div>';
-      tlHtml+='<div class="tl-title">Geïmporteerd naar Nederland</div>';
-      tlHtml+='<div class="tl-sub">Eerste Nederlandse tenaamstelling. Indicatief BPM-bedrag bij import: € '+bpmData2.rest.toLocaleString('nl-NL')+'.</div></div>';
-    }else if(v.datum_tenaamstelling){
-      tlHtml+='<div class="tl-item"><div class="tl-dot" style="background:rgba(198,203,209,.4);border-color:rgba(198,203,209,.3)"></div>';
-      tlHtml+='<div class="tl-date">'+fmtDateLong(v.datum_tenaamstelling)+'</div>';
-      tlHtml+='<div class="tl-title">Eerste tenaamstelling Nederland</div>';
-      tlHtml+='<div class="tl-sub">Voertuig in Nederland geregistreerd.</div></div>';
-    }
-    if(v.datum_tenaamstelling){
-      const days=daysBetween(v.datum_tenaamstelling.replace(/-/g,''),now);
-      tlHtml+='<div class="tl-item"><div class="tl-dot" style="background:var(--ir);border-color:var(--ir)"></div>';
-      tlHtml+='<div class="tl-date">Heden</div>';
-      tlHtml+='<div class="tl-title">Huidige eigenaar</div>';
-      tlHtml+='<div class="tl-sub">'+(days!==null?days+' dagen in bezit.':'')+'</div></div>';
-    }
-    tlHtml+='</div>';
-    twWrap.innerHTML=tlHtml;
-
-    /* ── Wegenbelasting ── */
-    const wbData=calcWB(v.massa_rijklaar,bs.brandstof_omschrijving);
-    let wbHtml='<table class="wb-table"><thead><tr><th>Provincie</th><th>Per kwartaal (indicatie)</th></tr></thead><tbody>';
-    Object.keys(wbData).forEach(p=>{
-      const hl=p==='LIMBURG';
-      wbHtml+='<tr'+(hl?' class="wb-hl"':'')+'><td>'+cap(p)+(hl?' ★':'')+'</td><td>€ '+wbData[p].toLocaleString('nl-NL')+'</td></tr>';
-    });
-    wbHtml+='</tbody></table>';
-    wbHtml+='<div class="wb-note">Indicatieve berekening op basis van massa rijklaar en brandstoftype. Exacte bedragen via de Belastingdienst.</div>';
-    document.getElementById('wb-wrap').innerHTML=wbHtml;
-
-    /* ── BPM ── */
-    const bpmData=calcBPM(merk,kw,v.datum_eerste_toelating);
-    document.getElementById('bpm-cat').textContent='€ '+bpmData.cat.toLocaleString('nl-NL');
-    document.getElementById('bpm-rest').textContent='€ '+bpmData.rest.toLocaleString('nl-NL');
-    document.getElementById('bpm-sub').textContent=
-      'Leeftijd: '+Math.floor(bpmData.maanden/12)+' jr '+bpmData.maanden%12+' mnd · Afschrijving: '+Math.round((1-bpmData.pct)*100)+'%';
-    const pct=Math.round(bpmData.pct*100);
-    document.getElementById('bpm-pct-lbl').textContent=pct+'% rest';
-    setTimeout(()=>{
-      const bar=document.getElementById('bpm-bar');
-      bar.style.width=pct+'%';
-      bar.style.background=pct>50?'var(--bad)':pct>20?'var(--warn)':'var(--ok)';
-    },300);
-    const verdict=document.getElementById('bpm-verdict');
-    verdict.style.display='flex';
-    if(pct>50){verdict.className='bpm-verdict bpm-hi';verdict.textContent='Hoge resterende BPM — significante BPM-schuld bij import. Laat een officiële taxatie uitvoeren.';}
-    else if(pct>20){verdict.className='bpm-verdict bpm-lo';verdict.textContent='Matige resterende BPM — indicatief bedrag beperkt. Exacte taxatie aanbevolen.';}
-    else{verdict.className='bpm-verdict bpm-ok';verdict.textContent='Lage resterende BPM — voertuig heeft het meeste afgeschreven. Gunstig bij import.';}
-
-    /* ── Recalls ── */
-    const recallWrap=document.getElementById('recall-wrap');
-    const rcCount=document.getElementById('recall-count');
-    if(d4&&d4.length>0){
-      rcCount.textContent=d4.length+' gevonden';
-      let html='';
-      d4.forEach(r=>{
-        const datum=r.datum_begin_terugroepactie?r.datum_begin_terugroepactie.substring(0,10):'—';
-        const code=r.referentiecode_rdw||'—';
-        const desc=r.beschrijving_terugroepactie||'Terugroepactie geregistreerd';
-        html+='<div class="recall-row"><div class="recall-dot"></div><div class="recall-code">'+code+'</div><div class="recall-desc">'+desc+'</div><div class="recall-date">'+datum+'</div></div>';
-      });
-      recallWrap.innerHTML=html;
-    }else{
-      rcCount.textContent='Geen';
-      recallWrap.innerHTML='<div class="no-recall">Geen openstaande terugroepacties geregistreerd voor dit voertuig.</div>';
-    }
-
-    /* ── Quick checks ── */
-    const qc=document.getElementById('quick-checks');
-    qc.innerHTML='';
-    [
-      {l:'APK '+apk.t,c:apk.c},
-      {l:gs==='J'?'Gestolen':'Niet gestolen',c:gs==='J'?'bad':'ok'},
-      {l:ex==='J'?'Geëxporteerd':'In Nederland',c:ex==='J'?'warn':'ok'},
-      {l:gsch==='J'?'Gescorst':'Niet gescorst',c:gsch==='J'?'bad':'ok'},
-      {l:isImported?'Geïmporteerd':'NL-voertuig',c:isImported?'warn':'ok'},
-      {l:'BPM ~'+pct+'%',c:pct>50?'bad':pct>20?'warn':'ok'},
-      {l:recallCount_n>0?recallCount_n+' recall'+(recallCount_n>1?'s':''):'Geen recalls',c:recallCount_n>0?'warn':'ok'}
-    ].forEach(item=>{
-      const el=document.createElement('div');
-      el.className='qc qc-'+item.c;
-      el.textContent=item.l;
-      qc.appendChild(el);
-    });
-
-    /* ── Toon resultaten ── */
-    emp.style.display='none';
-    res.classList.add('show');
-
-    /* Scroll naar resultaten */
-    setTimeout(()=>res.scrollIntoView({behavior:'smooth',block:'start'}),100);
-
-  }catch(e){
-    btnt.innerHTML='Controleer';btn.disabled=false;
-    err.textContent='Fout bij ophalen RDW-data. Controleer uw verbinding en probeer opnieuw.';
-    err.classList.add('show');
-    console.error(e);
   }
 }
 
-/* Input formatting */
-document.getElementById('kt').addEventListener('input',function(){
-  this.value=this.value.replace(/[^a-zA-Z0-9\-]/g,'').toUpperCase();
+/* ══ Initialisation ══ */
+initialiseAccordions();
+initialiseReveals();
+document.getElementById('lookup-form').addEventListener('submit', event => {
+  event.preventDefault();
+  doCheck();
 });
+document.getElementById('kt').addEventListener('input', function () {
+  this.value = this.value.replace(/[^a-zA-Z0-9\-]/g, '').toUpperCase();
+  if (document.getElementById('errmsg').classList.contains('show')) setLookupState();
+});
+window.addEventListener('resize', () => {
+  window.clearTimeout(resizeTimer);
+  resizeTimer = window.setTimeout(() => drawOdo(document.getElementById('odo-canvas'), lastOdoData), 120);
+});
+document.getElementById('yr').textContent = String(new Date().getFullYear());
+
 </script>
 </body>
 </html>
