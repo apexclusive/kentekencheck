@@ -424,7 +424,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
       <span class="ey-tri-r" aria-hidden="true"><span></span><span></span><span></span></span>
     </p>
     <h1>Kentekencheck<br><em>Volledig voertuigrapport</em></h1>
-    <p>APK-historie, tellerstandverloop, voertuighistorie, wegenbelasting, BPM-indicatie en terugroepacties via officiële RDW-data. Direct, zonder registratie.</p>
+    <p>APK-historie met gebreken, NAP-tellerstandoordeel, WAM-status, voertuighistorie, wegenbelasting, BPM-indicatie en terugroepacties via officiële RDW open data. Direct, zonder registratie.</p>
   </div>
 </div>
 
@@ -479,9 +479,9 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
     <!-- Snelle check -->
     <div class="quick-checks" id="quick-checks"></div>
 
-    <!-- WAM disclaimer -->
-    <div class="wam-notice" id="wam-notice" style="display:none">
-      Verzekeringsstatus (WAM) is niet openbaar beschikbaar via de RDW open data API — dit veld vereist een gecertificeerde RDW-licentie. Neem bij twijfel contact op met de RDW of de verkoper.
+    <!-- Databron / beperking notice -->
+    <div class="wam-notice" id="data-notice">
+      Deze tool gebruikt uitsluitend gratis, officiële RDW open data. De RDW publiceert daarin <strong>geen</strong> volledige eigenaarshistorie, tellerstanden of advertentiehistorie — die gegevens (via betaald RDW Voertuigdata, NAP of dataleveranciers) zijn alleen beschikbaar via gelicentieerde aanbieders.
     </div>
 
     <!-- 1. Voertuiggegevens -->
@@ -499,12 +499,15 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
           <div><span class="di-lbl">Bouwjaar</span><span class="di-val" id="d-jaar">—</span></div>
           <div><span class="di-lbl">Eerste toelating wereldwijd</span><span class="di-val" id="d-toelating">—</span></div>
           <div><span class="di-lbl">Eerste toelating Nederland</span><span class="di-val" id="d-tenaam">—</span></div>
+          <div><span class="di-lbl">Laatste tenaamstelling</span><span class="di-val" id="d-lt">—</span></div>
           <div><span class="di-lbl">Kleur</span><span class="di-val" id="d-kleur">—</span></div>
-          <div><span class="di-lbl">Carrosserie</span><span class="di-val" id="d-carr">—</span></div>
+          <div><span class="di-lbl">Inrichting</span><span class="di-val" id="d-carr">—</span></div>
           <div><span class="di-lbl">Aantal deuren / zitplaatsen</span><span class="di-val" id="d-deuren">—</span></div>
           <div><span class="di-lbl">Wielbasis</span><span class="di-val" id="d-wb">—</span></div>
           <div><span class="di-lbl">Afmetingen (L×B×H)</span><span class="di-val" id="d-afm">—</span></div>
           <div><span class="di-lbl">EU categorie</span><span class="di-val" id="d-eucat">—</span></div>
+          <div><span class="di-lbl">Catalogusprijs (nieuw)</span><span class="di-val" id="d-catprijs">—</span></div>
+          <div><span class="di-lbl">Bruto BPM bij 1e tenaamstelling</span><span class="di-val" id="d-brutobpm">—</span></div>
         </div>
       </div>
     </div>
@@ -522,8 +525,8 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
           <div><span class="di-lbl">Cilinderinhoud</span><span class="di-val" id="d-cc">—</span></div>
           <div><span class="di-lbl">Cilinders</span><span class="di-val" id="d-cil">—</span></div>
           <div><span class="di-lbl">Vermogen (kW / pk)</span><span class="di-val" id="d-kw">—</span></div>
-          <div><span class="di-lbl">Motorcode</span><span class="di-val" id="d-mcode">—</span></div>
-          <div><span class="di-lbl">Versnellingsbak</span><span class="di-val" id="d-versn">—</span></div>
+          <div><span class="di-lbl">Emissieklasse</span><span class="di-val" id="d-emissie">—</span></div>
+          <div><span class="di-lbl">Fijnstofuitstoot</span><span class="di-val" id="d-fijnstof">—</span></div>
           <div><span class="di-lbl">Massa rijklaar</span><span class="di-val" id="d-gew">—</span></div>
           <div><span class="di-lbl">CO₂ uitstoot</span><span class="di-val" id="d-co2">—</span></div>
           <div><span class="di-lbl">Brandstofverbruik gecomb.</span><span class="di-val" id="d-verb">—</span></div>
@@ -547,7 +550,9 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
           <div><span class="di-lbl">Geëxporteerd</span><span class="di-val" id="d-export">—</span></div>
           <div><span class="di-lbl">Gescorst</span><span class="di-val" id="d-geschorst">—</span></div>
           <div><span class="di-lbl">Geïmporteerd</span><span class="di-val" id="d-import">—</span></div>
-          <div><span class="di-lbl">Tenaamstellen mogelijk</span><span class="di-val ok">Ja</span></div>
+          <div><span class="di-lbl">Tenaamstellen mogelijk</span><span class="di-val" id="d-ttm">—</span></div>
+          <div><span class="di-lbl">WAM verzekerd</span><span class="di-val" id="d-wam">—</span></div>
+          <div><span class="di-lbl">Tellerstandoordeel (NAP)</span><span class="di-val" id="d-nap">—</span></div>
           <div><span class="di-lbl">Openstaande recalls</span><span class="di-val" id="d-recall-sum">—</span></div>
         </div>
         <div style="font-family:var(--lb);font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(198,203,209,.22);margin-bottom:.75rem">APK Keuringshistorie</div>
@@ -559,17 +564,17 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
     <div class="dblock">
       <div class="bhead open" onclick="toggle(this)">
         <div class="bhead-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-        <div class="bhead-title">Tellerstandverloop</div>
+        <div class="bhead-title">Tellerstand &amp; NAP-oordeel</div>
         <svg class="bhead-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
       <div class="bbody">
         <div class="odo-wrap">
-          <div class="odo-canvas-wrap"><canvas id="odo-canvas" class="odo-canvas"></canvas></div>
           <div class="odo-stats">
-            <div><div class="odo-stat-l">Huidige stand</div><div class="odo-stat-v" id="odo-cur">—</div></div>
-            <div><div class="odo-stat-l">Gem. per jaar</div><div class="odo-stat-v" id="odo-avg">—</div></div>
-            <div><div class="odo-stat-l">Consistentie</div><div class="odo-stat-v" id="odo-con">—</div></div>
-            <div><div class="odo-stat-l">Meetpunten</div><div class="odo-stat-v" id="odo-cnt">—</div></div>
+            <div><div class="odo-stat-l">NAP-oordeel RDW</div><div class="odo-stat-v" id="nap-oordeel">—</div></div>
+            <div><div class="odo-stat-l">Jaar laatste registratie</div><div class="odo-stat-v" id="nap-jaar">—</div></div>
+          </div>
+          <div class="wb-note" style="margin-top:1.1rem;line-height:1.75">
+            De RDW geeft in open data geen tellerstanden vrij — het complete tellerstandverloop is NAP-data. Het RDW-oordeel is gebaseerd op tellerstanden die bij APK-keuringen, beurten en verkopen zijn gemeld. Controleer het volledige NAP-verloop op <a href="https://www.napwebreact.nl" style="color:var(--pt);border-bottom:1px solid rgba(198,203,209,.35)">napwebreact.nl</a>.
           </div>
         </div>
       </div>
@@ -639,6 +644,11 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
       <div class="bbody">
         <div id="recall-wrap"><div style="font-size:.75rem;color:rgba(198,203,209,.25)">Laden…</div></div>
       </div>
+    </div>
+
+    <!-- Databron -->
+    <div class="wb-note" style="padding:0 0 2rem;line-height:1.8">
+      Databron: RDW Open Data (<a href="https://opendata.rdw.nl" style="color:var(--pt);border-bottom:1px solid rgba(198,203,209,.35)">opendata.rdw.nl</a>) — voertuigregister, brandstof, APK-keuringen &amp; geconstateerde gebreken, terugroepregister. Wegenbelasting en BPM zijn indicatief. Volledige eigenaarshistorie, tellerstanden (NAP) en advertentiehistorie maken geen deel uit van RDW open data. Aan deze gegevens kunnen geen rechten worden ontleend.
     </div>
 
     <!-- Andere tools -->
@@ -719,9 +729,12 @@ function estimateCatalog(merk,kw){
   for(const k in prem){if(mu.includes(k)){fac=prem[k];break;}}
   return Math.round(base*fac);
 }
-function calcBPM(merk,kw,toelating){
+function calcBPM(merk,kw,toelating,brutoBPM){
   const cat=estimateCatalog(merk,kw);
-  const grondslag=Math.round(cat*0.102);
+  /* Bij voorkeur de echte, bij 1e NL tenaamstelling betaalde bruto BPM (RDW);
+     anders een schatting op basis van cataloguswaarde × BPM-tarief. */
+  const catRDW=brutoBPM?null:cat;
+  const grondslag=brutoBPM?parseInt(brutoBPM):Math.round(cat*0.102);
   let maanden=0;
   if(toelating&&toelating.length>=6){
     const y=parseInt(toelating.substring(0,4));
@@ -730,7 +743,7 @@ function calcBPM(merk,kw,toelating){
     maanden=(now.getFullYear()-y)*12+(now.getMonth()+1-mo);
   }
   const pct=bpmPct(Math.max(0,maanden));
-  return{cat,grondslag,rest:Math.round(grondslag*pct),pct,maanden};
+  return{cat,catRDW,grondslag,rest:Math.round(grondslag*pct),pct,maanden,brutoBron:!!brutoBPM};
 }
 
 /* ══ Wegenbelasting ══ */
@@ -746,37 +759,6 @@ function calcWB(massa,brandstof){
   const result={};
   for(const p in opc)result[p]=Math.round(basis*(1+opc[p]/100));
   return result;
-}
-
-/* ══ ODO chart ══ */
-function drawOdo(canvas,data){
-  const W=canvas.offsetWidth||600,H=130;
-  canvas.width=W*devicePixelRatio;canvas.height=H*devicePixelRatio;
-  canvas.style.width=W+'px';canvas.style.height=H+'px';
-  const ctx=canvas.getContext('2d');ctx.scale(devicePixelRatio,devicePixelRatio);
-  if(!data||data.length<2)return;
-  const pad={t:12,r:12,b:24,l:52};
-  const gW=W-pad.l-pad.r,gH=H-pad.t-pad.b;
-  const maxK=Math.max(...data.map(d=>d.km))*1.08;
-  const minY=Math.min(...data.map(d=>d.year)),maxY=Math.max(...data.map(d=>d.year));
-  const px=y=>pad.l+(y-minY)/(Math.max(maxY-minY,1))*gW;
-  const py=k=>pad.t+gH-(k/(maxK||1))*gH;
-  ctx.strokeStyle='rgba(198,203,209,.05)';ctx.lineWidth=1;
-  for(let i=0;i<=4;i++){const y=pad.t+gH/4*i;ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(pad.l+gW,y);ctx.stroke();}
-  const gr=ctx.createLinearGradient(0,pad.t,0,pad.t+gH);
-  gr.addColorStop(0,'rgba(0,146,70,.16)');gr.addColorStop(1,'rgba(0,146,70,0)');
-  ctx.beginPath();ctx.moveTo(px(data[0].year),py(data[0].km));
-  data.forEach(d=>ctx.lineTo(px(d.year),py(d.km)));
-  ctx.lineTo(px(data[data.length-1].year),pad.t+gH);ctx.lineTo(px(data[0].year),pad.t+gH);
-  ctx.closePath();ctx.fillStyle=gr;ctx.fill();
-  ctx.beginPath();ctx.moveTo(px(data[0].year),py(data[0].km));
-  data.forEach(d=>ctx.lineTo(px(d.year),py(d.km)));
-  ctx.strokeStyle='rgba(0,146,70,.75)';ctx.lineWidth=1.5;ctx.stroke();
-  data.forEach(d=>{ctx.beginPath();ctx.arc(px(d.year),py(d.km),2.5,0,Math.PI*2);ctx.fillStyle='rgba(0,146,70,.9)';ctx.fill();});
-  ctx.fillStyle='rgba(198,203,209,.22)';ctx.font='9px Oswald,sans-serif';ctx.textAlign='right';
-  for(let i=0;i<=4;i++){const v=Math.round(maxK/4*i);ctx.fillText(v>=1000?(v/1000).toFixed(0)+'K':v,pad.l-5,py(maxK/4*i)+3);}
-  ctx.textAlign='center';
-  data.forEach(d=>ctx.fillText(d.year,px(d.year),H-5));
 }
 
 /* ══ Toggle blocks ══ */
@@ -820,12 +802,35 @@ async function doCheck(){
   btn.disabled=true;
 
   try{
-    const[d1,d2,d3,d4]=await Promise.all([
+    const[d1,d2,d3,d4,d5]=await Promise.all([
       fetch('https://opendata.rdw.nl/resource/m9d7-ebf2.json?kenteken='+kt).then(r=>r.json()),
       fetch('https://opendata.rdw.nl/resource/8ys7-d773.json?kenteken='+kt).then(r=>r.json()),
       fetch('https://opendata.rdw.nl/resource/sgfe-77wx.json?kenteken='+kt+'&$limit=100').then(r=>r.json()),
-      fetch('https://opendata.rdw.nl/resource/t49b-hvac.json?kenteken='+kt).then(r=>r.json()).catch(()=>[])
+      fetch('https://opendata.rdw.nl/resource/t49b-isb7.json?kenteken='+kt+'&$limit=100').then(r=>r.json()).catch(()=>[]),
+      fetch('https://opendata.rdw.nl/resource/a34c-vvps.json?kenteken='+kt+'&$limit=100').then(r=>r.json()).catch(()=>[])
     ]);
+
+    /* Gebreken-beschrijvingen één keer ophalen aan de hand van geconstateerde gebrek-IDs */
+    let gebrOms={};
+    if(d5&&d5.length>0){
+      const ids=[...new Set(d5.map(g=>g.gebrek_identificatie).filter(Boolean))];
+      const q=ids.map(id=>'gebrek_identificatie=\''+id+'\'').join(' OR ');
+      try{
+        const gd=await fetch('https://opendata.rdw.nl/resource/hx2c-gt7k.json?$where='+encodeURIComponent(q)).then(r=>r.json());
+        gd.forEach(g=>{gebrOms[g.gebrek_identificatie]=g.gebrek_omschrijving;});
+      }catch(e){/* omschrijvingen optioneel */}
+    }
+
+    /* Recall-actiedetails ophalen bij de referentiecodes uit het kenteken-register */
+    let recallActies={};
+    if(d4&&d4.length>0){
+      const codes=[...new Set(d4.map(r=>r.referentiecode_rdw).filter(Boolean))];
+      const cq=codes.map(c=>'referentiecode_rdw=\''+c+'\'').join(' OR ');
+      try{
+        const ad=await fetch('https://opendata.rdw.nl/resource/j9yg-7rg9.json?$where='+encodeURIComponent(cq)).then(r=>r.json());
+        ad.forEach(a=>{recallActies[a.referentiecode_rdw]=a;});
+      }catch(e){/* details optioneel */}
+    }
 
     btnt.innerHTML='Controleer';btn.disabled=false;
 
@@ -838,8 +843,16 @@ async function doCheck(){
     const bs=d2&&d2.length>0?d2[0]:{};
     const merk=(v.merk||'').toUpperCase();
     const model=v.handelsbenaming||v.type||'';
-    const kw=v.vermogen_massarijklaar;
+    const kw=bs.nettomaximumvermogen||v.vermogen_massarijklaar;
     const pk=kwToPk(kw);
+
+    /* Hulp: J/N of Ja/Nee velden uit RDW */
+    const isJa=x=>x&&String(x).toUpperCase().charAt(0)==='J';
+
+    /* Recall-status centraal afleiden uit het kenteken-register (t49b-isb7) */
+    const recallsAll=(d4||[]);
+    const recallsOpen=recallsAll.filter(r=>(r.code_status||'').toUpperCase()==='O');
+    const openStaand=recallsOpen.length>0;
     const bouwjaar=v.datum_eerste_toelating?v.datum_eerste_toelating.substring(0,4):'—';
 
     /* ── Badge & naam ── */
@@ -857,7 +870,10 @@ async function doCheck(){
     document.getElementById('d-type').textContent=cap(v.type)||'—';
     document.getElementById('d-jaar').textContent=bouwjaar;
     document.getElementById('d-toelating').textContent=fmtDateLong(v.datum_eerste_toelating);
-    document.getElementById('d-tenaam').textContent=fmtDateLong(v.datum_tenaamstelling);
+    document.getElementById('d-tenaam').textContent=fmtDateLong(v.datum_eerste_tenaamstelling_in_nederland);
+    document.getElementById('d-lt').textContent=fmtDateLong(v.datum_tenaamstelling);
+    document.getElementById('d-catprijs').textContent=v.catalogusprijs?'€ '+parseInt(v.catalogusprijs).toLocaleString('nl-NL'):'—';
+    document.getElementById('d-brutobpm').textContent=v.bruto_bpm?'€ '+parseInt(v.bruto_bpm).toLocaleString('nl-NL')+' (bij 1e NL tenaamstelling)':'—';
     document.getElementById('d-kleur').textContent=cap(v.eerste_kleur)||'—';
     document.getElementById('d-carr').textContent=cap(v.inrichting)||'—';
     document.getElementById('d-deuren').textContent=
@@ -873,9 +889,9 @@ async function doCheck(){
     document.getElementById('d-bs').textContent=cap(bs.brandstof_omschrijving)||'—';
     document.getElementById('d-cc').textContent=v.cilinderinhoud?v.cilinderinhoud+' cm³':'—';
     document.getElementById('d-cil').textContent=v.aantal_cilinders||bs.aantal_cilinders||'—';
-    document.getElementById('d-kw').textContent=kw?kw+' kW'+(pk?' / '+pk+' pk':''):'—';
-    document.getElementById('d-mcode').textContent=bs.motorcode||'—';
-    document.getElementById('d-versn').textContent=bs.transmissie_soort?cap(bs.transmissie_soort)+(bs.aantal_versnellingen?', '+bs.aantal_versnellingen+' versn.':''):'—';
+    document.getElementById('d-kw').textContent=kw?Math.round(parseFloat(kw))+' kW'+(pk?' / '+pk+' pk':''):'—';
+    document.getElementById('d-emissie').textContent=bs.uitlaatemissieniveau||'—';
+    document.getElementById('d-fijnstof').textContent=bs.uitstoot_deeltjes_licht?parseFloat(bs.uitstoot_deeltjes_licht).toFixed(3).replace(/0+$/,'').replace(/\.$/,'')+' g/km':'—';
     document.getElementById('d-gew').textContent=v.massa_rijklaar?v.massa_rijklaar+' kg':'—';
     document.getElementById('d-co2').textContent=bs.co2_uitstoot_gecombineerd?bs.co2_uitstoot_gecombineerd+' g/km':'—';
     const vg=bs.brandstofverbruik_gecombineerd;
@@ -892,88 +908,95 @@ async function doCheck(){
       apkDE.className='di-val '+apk.c;
     }else apkDE.textContent='—';
 
-    const gs=(v.gestolen_yn||'').toUpperCase();
-    const gsEl=document.getElementById('d-gestolen');
-    gsEl.textContent=gs==='J'?'Ja — opgegeven als gestolen':gs==='N'?'Nee':'—';
-    gsEl.className='di-val '+(gs==='J'?'bad':gs==='N'?'ok':'dim');
+    const setVN=(id,val,txtJa,txtNee,txtNA)=>{
+      const el=document.getElementById(id);
+      if(val==null||val===''||String(val).toLowerCase().includes('geen verstrekking')){
+        el.textContent=txtNA||'Niet in open data';el.className='di-val dim';
+      }else if(isJa(val)){el.textContent=txtJa;el.className='di-val ok';}
+      else{el.textContent=txtNee;el.className='di-val bad';}
+    };
+    /* Gestolen/geschorst: niet standaard in RDW open data */
+    setVN('d-gestolen',v.gestolen_yn||null,'Ja — opgegeven als gestolen','Nee','Niet in open data');
+    setVN('d-geschorst',v.geschorst||null,'Ja — geschorst','Nee','Niet in open data');
+    /* Geëxporteerd: open data bevat 'Ja'/'Nee' */
+    setVN('d-export',v.export_indicator||null,'Ja — geëxporteerd','Nee — in Nederland','—');
+    document.getElementById('d-export').className='di-val '+(isJa(v.export_indicator)?'warn':'ok');
+    /* Tenaamstellen mogelijk & WAM: open data bevat 'Ja'/'Nee' */
+    setVN('d-ttm',v.tenaamstellen_mogelijk||null,'Ja','Nee','—');
+    setVN('d-wam',v.wam_verzekerd||null,'Ja — verzekerd (WAM)','Nee — niet verzekerd','Onbekend');
 
-    const ex=(v.export_indicator||'').toUpperCase();
-    const exEl=document.getElementById('d-export');
-    exEl.textContent=ex==='J'?'Ja — geëxporteerd':ex==='N'?'Nee':'—';
-    exEl.className='di-val '+(ex==='J'?'warn':ex==='N'?'ok':'dim');
-
-    const gsch=(v.geschorst||'').toUpperCase();
-    const gschEl=document.getElementById('d-geschorst');
-    gschEl.textContent=gsch==='J'?'Ja — gescorst':'Nee';
-    gschEl.className='di-val '+(gsch==='J'?'bad':'ok');
-
-    const isImported=v.datum_tenaamstelling&&v.datum_eerste_toelating&&
-      v.datum_eerste_toelating.substring(0,4)!==v.datum_tenaamstelling.substring(0,4);
+    /* Import: vergelijk eerste toelating wereldwijd met eerste tenaamstelling NL */
+    const isImported=v.datum_eerste_toelating&&v.datum_eerste_tenaamstelling_in_nederland&&
+      v.datum_eerste_toelating!==v.datum_eerste_tenaamstelling_in_nederland;
     const impEl=document.getElementById('d-import');
-    impEl.textContent=isImported?'Ja — geïmporteerd naar Nederland':'Nee';
+    impEl.textContent=isImported?'Ja — geïmporteerd naar Nederland':'Nee — origineel Nederlands';
     impEl.className='di-val '+(isImported?'warn':'ok');
 
-    const recallCount_n=d4&&d4.length>0?d4.length:0;
+    /* NAP tellerstandoordeel */
+    const nap=v.tellerstandoordeel||'';
+    const napJaar=v.jaar_laatste_registratie_tellerstand||'';
+    const napEl=document.getElementById('d-nap');
+    if(nap.toLowerCase()==='logisch'){napEl.textContent='Logisch ✓ (NAP)'+(napJaar?', laatste registratie '+napJaar:'');napEl.className='di-val ok';}
+    else if(nap){napEl.textContent=cap(nap)+(napJaar?' ('+napJaar+')':'');napEl.className='di-val warn';}
+    else{napEl.textContent='Geen oordeel beschikbaar';napEl.className='di-val dim';}
+
+    const recallCount_n=recallsAll.length;
     const rsEl=document.getElementById('d-recall-sum');
-    rsEl.textContent=recallCount_n>0?recallCount_n+' openstaande recall'+(recallCount_n>1?'s':''):'Geen openstaande recalls';
-    rsEl.className='di-val '+(recallCount_n>0?'warn':'ok');
+    rsEl.textContent=openStaand?recallsOpen.length+' openstaande recall'+(recallsOpen.length>1?'s':''):
+      (recallCount_n>0?recallCount_n+' afgehandelde recall'+(recallCount_n>1?'s':''):'Geen recalls in register');
+    rsEl.className='di-val '+(openStaand?'warn':'ok');
 
-    /* WAM notice altijd tonen */
-    document.getElementById('wam-notice').style.display='flex';
-
-    /* ── APK Historie ── */
+    /* ── APK Historie (gebreken uit datasets a34c-vvps + hx2c-gt7k) ── */
     const apkWrap=document.getElementById('apk-history-wrap');
+    /* Gebreken per keuringsdatum indexeren */
+    const gebrByDate={};
+    if(d5&&d5.length>0){
+      d5.forEach(g=>{
+        const dt=g.meld_datum_door_keuringsinstantie;
+        if(!dt)return;
+        if(!gebrByDate[dt])gebrByDate[dt]=[];
+        gebrByDate[dt].push({id:g.gebrek_identificatie,aantal:g.aantal_gebreken_geconstateerd||'1',
+          oms:gebrOms[g.gebrek_identificatie]||('Gebrek '+g.gebrek_identificatie)});
+      });
+    }
     if(d3&&d3.length>0){
-      const keuringen=d3.filter(k=>k.meld_datum_door_keuringsinstantie);
+      const keuringen=d3.filter(k=>k.meld_datum_door_keuringsinstantie&&
+        (k.soort_melding_ki_omschrijving||'').toLowerCase().includes('periodieke'));
       keuringen.sort((a,b)=>(b.meld_datum_door_keuringsinstantie||'').localeCompare(a.meld_datum_door_keuringsinstantie||''));
       if(keuringen.length>0){
-        let html='<table class="apk-table"><thead><tr><th>Datum</th><th>Resultaat</th><th>Tellerstand</th><th>Gebreken</th></tr></thead><tbody>';
+        let html='<table class="apk-table"><thead><tr><th>Datum</th><th>Resultaat</th><th>Geconstateerde gebreken</th></tr></thead><tbody>';
         keuringen.forEach(k=>{
-          const datum=k.meld_datum_door_keuringsinstantie?k.meld_datum_door_keuringsinstantie.substring(0,10):'—';
-          const odo=k.tellerstand?parseInt(k.tellerstand).toLocaleString('nl-NL')+' km':'—';
-          const gebr=k.aantal_gebreken||'0';
-          const res2=k.soort_erkenning_omschrijving||'';
+          const dt=k.meld_datum_door_keuringsinstantie;
+          const datum=dt?dt.substring(0,10):'—';
+          const gebr=gebrByDate[dt]||[];
           let rc='apk-ok',rt='Goedgekeurd';
-          if(res2.toLowerCase().includes('afkeur')){rc='apk-fail';rt='Afgekeurd';}
-          else if(res2.toLowerCase().includes('herk')){rc='apk-afk';rt='Herkeuring';}
-          html+='<tr><td>'+datum+'</td><td><span class="apk-res '+rc+'">'+rt+'</span></td><td>'+odo+'</td><td>'+gebr+'</td></tr>';
+          let gebrTxt='Geen';
+          if(gebr.length>0){
+            /* Gebreken geconstateerd bij een periodieke controle = goedgekeurd na reparatie
+               (RDW neemt afkeurkeuringen niet in deze open dataset op). */
+            rc='apk-afk';rt='Goedgekeurd na reparatie';
+            gebrTxt=gebr.map(g=>'<div style="margin:.15rem 0">'+g.aantal+'× '+g.oms+'</div>').join('');
+          }
+          html+='<tr><td>'+datum+'</td><td><span class="apk-res '+rc+'">'+rt+'</span></td><td style="font-size:.74rem;color:rgba(198,203,209,.6)">'+gebrTxt+'</td></tr>';
         });
         html+='</tbody></table>';
+        html+='<div class="wb-note">Alleen periodieke APK-controles getoond. Tellerstanden bij keuring zijn NAP-data en niet in RDW open data opgenomen.</div>';
         apkWrap.innerHTML=html;
       }else apkWrap.innerHTML='<div style="font-size:.75rem;color:rgba(198,203,209,.25)">Geen keuringshistorie beschikbaar.</div>';
     }else apkWrap.innerHTML='<div style="font-size:.75rem;color:rgba(198,203,209,.25)">Geen keuringshistorie beschikbaar.</div>';
 
-    /* ── Tellerstand ── */
-    const odoData=[];
-    if(d3&&d3.length>0){
-      d3.forEach(k=>{
-        if(k.tellerstand&&k.meld_datum_door_keuringsinstantie){
-          const year=parseInt((k.meld_datum_door_keuringsinstantie||'').substring(0,4));
-          const km=parseInt(k.tellerstand);
-          if(year>2000&&km>0)odoData.push({year,km});
-        }
-      });
-      odoData.sort((a,b)=>a.year-b.year);
-      const deduped=[];
-      odoData.forEach(d=>{if(!deduped.find(x=>x.year===d.year&&x.km===d.km))deduped.push(d);});
-      if(deduped.length>0){
-        const last=deduped[deduped.length-1],first=deduped[0];
-        const yrs=last.year-first.year||1;
-        const avg=Math.round((last.km-first.km)/yrs);
-        const canvas=document.getElementById('odo-canvas');
-        setTimeout(()=>drawOdo(canvas,deduped),80);
-        document.getElementById('odo-cur').innerHTML=last.km.toLocaleString('nl-NL')+' <span>km</span>';
-        document.getElementById('odo-avg').innerHTML=(avg>0?avg.toLocaleString('nl-NL'):'—')+' <span>km/jr</span>';
-        document.getElementById('odo-cnt').innerHTML=deduped.length+' <span>metingen</span>';
-        let consistent=true;
-        for(let i=1;i<deduped.length;i++){if(deduped[i].km<deduped[i-1].km){consistent=false;break;}}
-        document.getElementById('odo-con').innerHTML=consistent?
-          '<span style="color:var(--ok)">Consistent</span>':
-          '<span style="color:var(--bad)">Afwijking</span>';
-      }else{
-        document.getElementById('odo-cur').innerHTML='<span>Geen tellerdata</span>';
-      }
+    /* ── Tellerstand / NAP-oordeel ── */
+    const napEl2=document.getElementById('nap-oordeel');
+    if(nap.toLowerCase()==='logisch'){
+      napEl2.innerHTML='<span style="color:var(--ok)">Logische tellerstand (NAP)</span>';
+    }else if(nap.toLowerCase().includes('onlogisch')){
+      napEl2.innerHTML='<span style="color:var(--bad)">Onlogisch — verdacht!</span>';
+    }else if(nap){
+      napEl2.innerHTML='<span style="color:var(--warn)">'+cap(nap)+'</span>';
+    }else{
+      napEl2.innerHTML='<span style="color:rgba(198,203,209,.4)">Geen oordeel</span>';
     }
+    document.getElementById('nap-jaar').textContent=napJaar||'—';
 
     /* ── Voertuighistorie tijdlijn ── */
     const twWrap=document.getElementById('timeline-wrap');
@@ -985,25 +1008,29 @@ async function doCheck(){
       tlHtml+='<div class="tl-title">Eerste toelating wereldwijd</div>';
       tlHtml+='<div class="tl-sub">Voertuig voor het eerst toegelaten tot het verkeer.</div></div>';
     }
-    if(isImported&&v.datum_tenaamstelling){
-      const bpmData2=calcBPM(merk,kw,v.datum_eerste_toelating);
+    const datumNL=v.datum_eerste_tenaamstelling_in_nederland;
+    if(isImported&&datumNL){
+      const bpmData2=calcBPM(merk,kw,v.datum_eerste_toelating,v.bruto_bpm);
       tlHtml+='<div class="tl-item"><div class="tl-dot" style="background:var(--warn);border-color:var(--warn)"></div>';
-      tlHtml+='<div class="tl-date">'+fmtDateLong(v.datum_tenaamstelling)+'</div>';
+      tlHtml+='<div class="tl-date">'+fmtDateLong(datumNL)+'</div>';
       tlHtml+='<div class="tl-title">Geïmporteerd naar Nederland</div>';
-      tlHtml+='<div class="tl-sub">Eerste Nederlandse tenaamstelling. Indicatief BPM-bedrag bij import: € '+bpmData2.rest.toLocaleString('nl-NL')+'.</div></div>';
-    }else if(v.datum_tenaamstelling){
+      tlHtml+='<div class="tl-sub">Eerste Nederlandse tenaamstelling. Bruto BPM bij invoer blijkens RDW: '+(v.bruto_bpm?'€ '+parseInt(v.bruto_bpm).toLocaleString('nl-NL'):'€ '+bpmData2.rest.toLocaleString('nl-NL')+' (indicatief)')+'.</div></div>';
+    }else if(datumNL){
       tlHtml+='<div class="tl-item"><div class="tl-dot" style="background:rgba(198,203,209,.4);border-color:rgba(198,203,209,.3)"></div>';
-      tlHtml+='<div class="tl-date">'+fmtDateLong(v.datum_tenaamstelling)+'</div>';
+      tlHtml+='<div class="tl-date">'+fmtDateLong(datumNL)+'</div>';
       tlHtml+='<div class="tl-title">Eerste tenaamstelling Nederland</div>';
-      tlHtml+='<div class="tl-sub">Voertuig in Nederland geregistreerd.</div></div>';
+      tlHtml+='<div class="tl-sub">Voertuig oorspronkelijk in Nederland op kenteken gezet.</div></div>';
     }
     if(v.datum_tenaamstelling){
-      const days=daysBetween(v.datum_tenaamstelling.replace(/-/g,''),now);
+      const days=daysBetween(v.datum_tenaamstelling,now);
       tlHtml+='<div class="tl-item"><div class="tl-dot" style="background:var(--ir);border-color:var(--ir)"></div>';
-      tlHtml+='<div class="tl-date">Heden</div>';
-      tlHtml+='<div class="tl-title">Huidige eigenaar</div>';
+      tlHtml+='<div class="tl-date">'+fmtDateLong(v.datum_tenaamstelling)+'</div>';
+      tlHtml+='<div class="tl-title">Laatste tenaamstelling (huidige eigenaar)</div>';
       tlHtml+='<div class="tl-sub">'+(days!==null?days+' dagen in bezit.':'')+'</div></div>';
     }
+    tlHtml+='<div class="tl-item"><div class="tl-dot" style="background:transparent;border-color:rgba(198,203,209,.15)"></div>';
+    tlHtml+='<div class="tl-title" style="color:rgba(198,203,209,.45);font-size:.78rem">Volledige eigenaarshistorie niet beschikbaar in open data</div>';
+    tlHtml+='<div class="tl-sub" style="font-size:.72rem">RDW open data toont alleen eerste en laatste tenaamstelling. Tussenliggende eigenaren en advertentiehistorie vereisen betaald RDW Voertuigdata of een gelicentieerde dataleverancier.</div></div>';
     tlHtml+='</div>';
     twWrap.innerHTML=tlHtml;
 
@@ -1019,9 +1046,13 @@ async function doCheck(){
     document.getElementById('wb-wrap').innerHTML=wbHtml;
 
     /* ── BPM ── */
-    const bpmData=calcBPM(merk,kw,v.datum_eerste_toelating);
-    document.getElementById('bpm-cat').textContent='€ '+bpmData.cat.toLocaleString('nl-NL');
+    const bpmData=calcBPM(merk,kw,v.datum_eerste_toelating,v.bruto_bpm);
+    const echteCat=v.catalogusprijs?parseInt(v.catalogusprijs):bpmData.cat;
+    document.getElementById('bpm-cat').textContent='€ '+echteCat.toLocaleString('nl-NL')+(v.catalogusprijs?' (RDW)':' (schatting)');
     document.getElementById('bpm-rest').textContent='€ '+bpmData.rest.toLocaleString('nl-NL');
+    if(v.bruto_bpm){
+      document.getElementById('bpm-sub').textContent='Forfaitaire rest-BPM bij invoer nú, berekend op de werkelijke bruto BPM bij 1e tenaamstelling (€ '+parseInt(v.bruto_bpm).toLocaleString('nl-NL')+', RDW). Leeftijd: '+Math.floor(bpmData.maanden/12)+' jr '+bpmData.maanden%12+' mnd · Afschrijving: '+Math.round((1-bpmData.pct)*100)+'%.';
+    }
     document.getElementById('bpm-sub').textContent=
       'Leeftijd: '+Math.floor(bpmData.maanden/12)+' jr '+bpmData.maanden%12+' mnd · Afschrijving: '+Math.round((1-bpmData.pct)*100)+'%';
     const pct=Math.round(bpmData.pct*100);
@@ -1037,22 +1068,29 @@ async function doCheck(){
     else if(pct>20){verdict.className='bpm-verdict bpm-lo';verdict.textContent='Matige resterende BPM — indicatief bedrag beperkt. Exacte taxatie aanbevolen.';}
     else{verdict.className='bpm-verdict bpm-ok';verdict.textContent='Lage resterende BPM — voertuig heeft het meeste afgeschreven. Gunstig bij import.';}
 
-    /* ── Recalls ── */
+    /* ── Recalls (nieuw register: t49b-isb7 status per kenteken + j9yg-7rg9 details) ── */
     const recallWrap=document.getElementById('recall-wrap');
     const rcCount=document.getElementById('recall-count');
-    if(d4&&d4.length>0){
-      rcCount.textContent=d4.length+' gevonden';
+    const recalls=recallsAll.slice().sort((a,b)=>(b.referentiecode_rdw||'').localeCompare(a.referentiecode_rdw||''));
+    if(recalls.length>0){
+      rcCount.textContent=recallsOpen.length>0?recallsOpen.length+' open / '+recalls.length+' totaal':recalls.length+' afgehandeld';
       let html='';
-      d4.forEach(r=>{
-        const datum=r.datum_begin_terugroepactie?r.datum_begin_terugroepactie.substring(0,10):'—';
+      recalls.forEach(r=>{
         const code=r.referentiecode_rdw||'—';
-        const desc=r.beschrijving_terugroepactie||'Terugroepactie geregistreerd';
-        html+='<div class="recall-row"><div class="recall-dot"></div><div class="recall-code">'+code+'</div><div class="recall-desc">'+desc+'</div><div class="recall-date">'+datum+'</div></div>';
+        const open=(r.code_status||'').toUpperCase()==='O';
+        const st=r.status||(open?'Openstaande terugroepactie':'Producent heeft herstel gemeld');
+        const a=recallActies[code]||{};
+        const datum=a.publicatiedatum_rdw?fmtDateLong(a.publicatiedatum_rdw):'—';
+        const dotStyle=open?'background:var(--bad)':'background:var(--ok)';
+        const beschrijf=(a.omschrijving_defect||'Terugroepactie geregistreerd.')+
+          '<div style="color:rgba(198,203,209,.35);margin-top:.35rem;font-size:.72rem">'+st+(a.totaal_aantal_voertuigen_terugroepactie?' · '+parseInt(a.totaal_aantal_voertuigen_terugroepactie).toLocaleString('nl-NL')+' voertuigen wereldwijd':'')+(a.nationaal_opgegeven_aantal_voertuigen_terugroepactie?', waarvan '+parseInt(a.nationaal_opgegeven_aantal_voertuigen_terugroepactie).toLocaleString('nl-NL')+' in NL':'')+'</div>';
+        html+='<div class="recall-row"><div class="recall-dot" style="'+dotStyle+'"></div><div class="recall-code">'+code+'</div><div class="recall-desc">'+beschrijf+'</div><div class="recall-date">'+(datum!=='—'?datum:'')+'</div></div>';
       });
+      html+='<div class="wb-note">Status per kenteken uit het RDW terugroepregister. Een afgehandelde actie (groen) betekent dat de fabrikant heeft gemeld dat het herstel is uitgevoerd.</div>';
       recallWrap.innerHTML=html;
     }else{
       rcCount.textContent='Geen';
-      recallWrap.innerHTML='<div class="no-recall">Geen openstaande terugroepacties geregistreerd voor dit voertuig.</div>';
+      recallWrap.innerHTML='<div class="no-recall">Dit voertuig komt niet voor in het RDW terugroepregister — geen bekende terugroepacties.</div>';
     }
 
     /* ── Quick checks ── */
@@ -1060,12 +1098,13 @@ async function doCheck(){
     qc.innerHTML='';
     [
       {l:'APK '+apk.t,c:apk.c},
-      {l:gs==='J'?'Gestolen':'Niet gestolen',c:gs==='J'?'bad':'ok'},
-      {l:ex==='J'?'Geëxporteerd':'In Nederland',c:ex==='J'?'warn':'ok'},
-      {l:gsch==='J'?'Gescorst':'Niet gescorst',c:gsch==='J'?'bad':'ok'},
+      {l:isJa(v.wam_verzekerd)?'WAM verzekerd':'WAM onbekend',c:isJa(v.wam_verzekerd)?'ok':'neu'},
+      {l:nap.toLowerCase()==='logisch'?'NAP logisch':nap?'NAP: '+cap(nap):'NAP onbekend',c:nap.toLowerCase()==='logisch'?'ok':nap?'warn':'neu'},
+      {l:isJa(v.export_indicator)?'Geëxporteerd':'In Nederland',c:isJa(v.export_indicator)?'warn':'ok'},
+      {l:isJa(v.tenaamstellen_mogelijk)?'Tenaamstellen mogelijk':'Tenaamstellen ⚠',c:isJa(v.tenaamstellen_mogelijk)?'ok':'warn'},
       {l:isImported?'Geïmporteerd':'NL-voertuig',c:isImported?'warn':'ok'},
-      {l:'BPM ~'+pct+'%',c:pct>50?'bad':pct>20?'warn':'ok'},
-      {l:recallCount_n>0?recallCount_n+' recall'+(recallCount_n>1?'s':''):'Geen recalls',c:recallCount_n>0?'warn':'ok'}
+      {l:'Rest-BPM ~'+pct+'%',c:pct>50?'bad':pct>20?'warn':'ok'},
+      {l:openStaand?'Openstaande recall'+((recallCount_n||1)>1?'s':''):'Geen openstaande recalls',c:openStaand?'warn':'ok'}
     ].forEach(item=>{
       const el=document.createElement('div');
       el.className='qc qc-'+item.c;
