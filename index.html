@@ -335,6 +335,24 @@ header{
 .no-recall{display:flex;align-items:center;gap:.75rem;padding:.9rem 0;font-size:.8rem;color:rgba(198,203,209,.4)}
 .no-recall::before{content:'';display:block;width:5px;height:5px;border-radius:50%;background:var(--ok);flex-shrink:0}
 
+/* Recall-kaarten */
+.recall-card{border:1px solid rgba(198,203,209,.14);background:rgba(255,255,255,.015);padding:1.15rem 1.3rem;margin-bottom:.85rem;position:relative}
+.recall-card:last-child{margin-bottom:0}
+.recall-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px}
+.recall-card.done::before{background:var(--ok);opacity:.55}
+.recall-card.open::before{background:var(--bad);opacity:.7}
+.recall-top{display:flex;align-items:center;gap:.7rem;margin-bottom:.6rem;flex-wrap:wrap}
+.recall-badge{font-family:var(--lb);font-size:.54rem;letter-spacing:.14em;text-transform:uppercase;padding:.3rem .65rem;border:1px solid;display:inline-flex;align-items:center;gap:.45rem;font-weight:500}
+.recall-badge::before{content:'';width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.recall-badge.done{color:var(--ok);border-color:rgba(0,146,70,.32);background:rgba(0,146,70,.06)}
+.recall-badge.done::before{background:var(--ok)}
+.recall-badge.open{color:var(--bad);border-color:rgba(206,43,55,.34);background:rgba(206,43,55,.06)}
+.recall-badge.open::before{background:var(--bad)}
+.recall-ref{font-family:var(--lb);font-size:.54rem;letter-spacing:.13em;color:rgba(198,203,209,.32)}
+.recall-defect{font-size:.86rem;color:var(--tx);line-height:1.55;margin-bottom:.6rem;font-weight:400}
+.recall-meta{display:flex;flex-direction:column;gap:.22rem;font-size:.71rem;color:rgba(198,203,209,.42);line-height:1.5}
+.recall-meta b{color:rgba(198,203,209,.6);font-weight:400}
+
 /* CTA blok */
 .cta-wrap{
   margin-top:2.5rem;padding:2.5rem 2rem;
@@ -418,13 +436,13 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 <!-- ══ HERO ══ -->
 <div class="page-hero">
   <div class="page-hero-inner">
-    <p class="ey c tri-in" style="margin-bottom:1.1rem">
+    <p class="ey tri-in" style="margin-bottom:1.4rem">
       <span class="ey-tri" aria-hidden="true"><span></span><span></span><span></span></span>
-      APEXclusive — Gratis instrument
+      Gratis hulpmiddel · APEXclusive · Maastricht
       <span class="ey-tri-r" aria-hidden="true"><span></span><span></span><span></span></span>
     </p>
-    <h1>Kentekencheck<br><em>Volledig voertuigrapport</em></h1>
-    <p>APK-historie met gebreken, NAP-tellerstandoordeel, WAM-status, voertuighistorie, wegenbelasting, BPM-indicatie en terugroepacties via officiële RDW open data. Direct, zonder registratie.</p>
+    <h1>Kentekencheck<br><em>Volledig voertuigrapport.</em></h1>
+    <p>Voer een Nederlands kenteken in en ontvang direct het volledige rapport: APK-historie met gebreken, NAP-tellerstandoordeel, WAM-status, voertuighistorie, wegenbelasting, BPM-indicatie en terugroepacties — via officiële RDW open data. Gratis, zonder registratie.</p>
   </div>
 </div>
 
@@ -553,7 +571,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
           <div><span class="di-lbl">Tenaamstellen mogelijk</span><span class="di-val" id="d-ttm">—</span></div>
           <div><span class="di-lbl">WAM verzekerd</span><span class="di-val" id="d-wam">—</span></div>
           <div><span class="di-lbl">Tellerstandoordeel (NAP)</span><span class="di-val" id="d-nap">—</span></div>
-          <div><span class="di-lbl">Openstaande recalls</span><span class="di-val" id="d-recall-sum">—</span></div>
+          <div><span class="di-lbl">Terugroepregister</span><span class="di-val" id="d-recall-sum">—</span></div>
         </div>
         <div style="font-family:var(--lb);font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(198,203,209,.22);margin-bottom:.75rem">APK Keuringshistorie</div>
         <div id="apk-history-wrap"><div style="font-size:.75rem;color:rgba(198,203,209,.25)">Laden…</div></div>
@@ -1071,7 +1089,12 @@ async function doCheck(){
     /* ── Recalls (nieuw register: t49b-isb7 status per kenteken + j9yg-7rg9 details) ── */
     const recallWrap=document.getElementById('recall-wrap');
     const rcCount=document.getElementById('recall-count');
-    const recalls=recallsAll.slice().sort((a,b)=>(b.referentiecode_rdw||'').localeCompare(a.referentiecode_rdw||''));
+    const recalls=recallsAll.slice().sort((a,b)=>{
+      /* Openstaande eerst, dan op referentiecode */
+      const ao=(a.code_status||'').toUpperCase()==='O'?0:1;
+      const bo=(b.code_status||'').toUpperCase()==='O'?0:1;
+      return ao-bo||(b.referentiecode_rdw||'').localeCompare(a.referentiecode_rdw||'');
+    });
     if(recalls.length>0){
       rcCount.textContent=recallsOpen.length>0?recallsOpen.length+' open / '+recalls.length+' totaal':recalls.length+' afgehandeld';
       let html='';
@@ -1080,13 +1103,29 @@ async function doCheck(){
         const open=(r.code_status||'').toUpperCase()==='O';
         const st=r.status||(open?'Openstaande terugroepactie':'Producent heeft herstel gemeld');
         const a=recallActies[code]||{};
-        const datum=a.publicatiedatum_rdw?fmtDateLong(a.publicatiedatum_rdw):'—';
-        const dotStyle=open?'background:var(--bad)':'background:var(--ok)';
-        const beschrijf=(a.omschrijving_defect||'Terugroepactie geregistreerd.')+
-          '<div style="color:rgba(198,203,209,.35);margin-top:.35rem;font-size:.72rem">'+st+(a.totaal_aantal_voertuigen_terugroepactie?' · '+parseInt(a.totaal_aantal_voertuigen_terugroepactie).toLocaleString('nl-NL')+' voertuigen wereldwijd':'')+(a.nationaal_opgegeven_aantal_voertuigen_terugroepactie?', waarvan '+parseInt(a.nationaal_opgegeven_aantal_voertuigen_terugroepactie).toLocaleString('nl-NL')+' in NL':'')+'</div>';
-        html+='<div class="recall-row"><div class="recall-dot" style="'+dotStyle+'"></div><div class="recall-code">'+code+'</div><div class="recall-desc">'+beschrijf+'</div><div class="recall-date">'+(datum!=='—'?datum:'')+'</div></div>';
+        const badge=open
+          ? '<span class="recall-badge open">Openstaand — actie nodig</span>'
+          : '<span class="recall-badge done">✓ Hersteld (fabrikant gemeld)</span>';
+        const defect=a.omschrijving_defect||'Terugroepactie geregistreerd in het RDW-register.';
+        let meta='';
+        meta+='<div><b>Status:</b> '+cap(st)+'</div>';
+        if(a.categorie_defect)meta+='<div><b>Categorie:</b> '+cap(a.categorie_defect)+'</div>';
+        if(a.publicatiedatum_rdw)meta+='<div><b>Gepubliceerd door RDW:</b> '+fmtDateLong(a.publicatiedatum_rdw)+' <span style="color:rgba(198,203,209,.26)">(actiedatum — niet de reparatiedatum van dit kenteken)</span></div>';
+        if(a.meldende_producent_distributeur)meta+='<div><b>Meldende partij:</b> '+a.meldende_producent_distributeur+'</div>';
+        if(a.totaal_aantal_voertuigen_terugroepactie){
+          let v=parseInt(a.totaal_aantal_voertuigen_terugroepactie).toLocaleString('nl-NL')+' voertuigen wereldwijd';
+          if(a.nationaal_opgegeven_aantal_voertuigen_terugroepactie)v+=', waarvan '+parseInt(a.nationaal_opgegeven_aantal_voertuigen_terugroepactie).toLocaleString('nl-NL')+' in Nederland';
+          meta+='<div><b>Getroffen voertuigen:</b> '+v+'</div>';
+        }
+        if(a.beschrijving_van_het_herstel)meta+='<div><b>Herstel:</b> '+a.beschrijving_van_het_herstel+'</div>';
+        if(!open)meta+='<div style="color:rgba(0,146,70,.65);margin-top:.15rem">Dit kenteken staat als hersteld geregistreerd.</div>';
+        html+='<div class="recall-card '+(open?'open':'done')+'">'
+          +'<div class="recall-top">'+badge+'<span class="recall-ref">Ref. '+code+'</span></div>'
+          +'<div class="recall-defect">'+defect+'</div>'
+          +'<div class="recall-meta">'+meta+'</div>'
+          +'</div>';
       });
-      html+='<div class="wb-note">Status per kenteken uit het RDW terugroepregister. Een afgehandelde actie (groen) betekent dat de fabrikant heeft gemeld dat het herstel is uitgevoerd.</div>';
+      html+='<div class="wb-note">Gegevens uit het RDW terugroepregister per kenteken. De RDW publiceert <b>niet</b> de exacte reparatiedatum per auto — alleen de status (open of "fabrikant heeft herstel gemeld"). De getoonde datum is de publicatiedatum van de actie.</div>';
       recallWrap.innerHTML=html;
     }else{
       rcCount.textContent='Geen';
