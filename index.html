@@ -353,6 +353,26 @@ header{
 .recall-meta{display:flex;flex-direction:column;gap:.22rem;font-size:.71rem;color:rgba(198,203,209,.42);line-height:1.5}
 .recall-meta b{color:rgba(198,203,209,.6);font-weight:400}
 
+/* Verkoop- / advertentiehistorie */
+.hist-demo{background:rgba(196,154,0,.06);border:1px solid rgba(196,154,0,.32);padding:.9rem 1.1rem;font-size:.72rem;color:rgba(226,200,120,.92);line-height:1.65;margin-bottom:1.4rem;display:flex;gap:.8rem;align-items:flex-start}
+.hist-demo-tag{flex-shrink:0;font-family:var(--lb);font-size:.54rem;letter-spacing:.16em;background:var(--warn);color:#14110a;padding:.24rem .55rem;font-weight:600;margin-top:.1rem}
+.hist-live-tag{flex-shrink:0;font-family:var(--lb);font-size:.54rem;letter-spacing:.16em;background:var(--ok);color:#041208;padding:.24rem .55rem;font-weight:600;margin-top:.1rem}
+.hist-stats{display:flex;gap:2.2rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.hist-stat-l{font-family:var(--lb);font-size:.52rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(198,203,209,.22);margin-bottom:.28rem}
+.hist-stat-v{font-family:var(--sf);font-size:1.35rem;font-weight:300;color:var(--tx)}
+.hist-stat-v span{font-size:.65rem;color:rgba(198,203,209,.32);margin-left:.3rem}
+.hist-seclbl{font-family:var(--lb);font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(198,203,209,.22);margin:1.4rem 0 .75rem}
+.photo-gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem}
+@media(max-width:560px){.photo-gallery{grid-template-columns:repeat(2,1fr)}}
+.photo-tile{position:relative;aspect-ratio:4/3;background:var(--ink3);border:1px solid var(--ln);overflow:hidden;display:flex;align-items:center;justify-content:center}
+.photo-tile img{width:100%;height:100%;object-fit:cover}
+.photo-ph{color:rgba(198,203,209,.22);display:flex;flex-direction:column;align-items:center;gap:.45rem}
+.photo-ph svg{width:26px;height:26px;stroke:currentColor;fill:none;stroke-width:1.3}
+.photo-ph span{font-family:var(--lb);font-size:.5rem;letter-spacing:.16em;text-transform:uppercase}
+.photo-tag{position:absolute;top:.4rem;left:.4rem;font-family:var(--lb);font-size:.48rem;letter-spacing:.12em;text-transform:uppercase;background:rgba(0,0,0,.62);color:rgba(255,255,255,.78);padding:.16rem .42rem}
+.hist-note{font-size:.7rem;color:rgba(198,203,209,.22);margin-top:1rem;line-height:1.7;font-family:var(--lb);letter-spacing:.04em}
+.hist-note a{color:var(--pt);border-bottom:1px solid rgba(198,203,209,.35)}
+
 /* CTA blok */
 .cta-wrap{
   margin-top:2.5rem;padding:2.5rem 2rem;
@@ -610,6 +630,19 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
       </div>
     </div>
 
+    <!-- 5b. Verkoop- & advertentiehistorie (externe dataleverancier / demo) -->
+    <div class="dblock">
+      <div class="bhead" onclick="toggle(this)">
+        <div class="bhead-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <div class="bhead-title">Verkoop- &amp; advertentiehistorie</div>
+        <div class="bhead-count" id="hist-count"></div>
+        <svg class="bhead-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="bbody hidden">
+        <div id="hist-wrap"><div style="font-size:.75rem;color:rgba(198,203,209,.25)">Laden…</div></div>
+      </div>
+    </div>
+
     <!-- 6. Wegenbelasting -->
     <div class="dblock">
       <div class="bhead" onclick="toggle(this)">
@@ -777,6 +810,38 @@ function calcWB(massa,brandstof){
   const result={};
   for(const p in opc)result[p]=Math.round(basis*(1+opc[p]/100));
   return result;
+}
+
+/* ══ Verkoop- / advertentiehistorie: dataleverancier-adapter ══
+   Deze gegevens komen NIET uit RDW open data. Ze vereisen een gelicentieerde
+   dataleverancier (bijv. VWE Automotive, Autotelex, Finnik, of RDW Voertuigdata).
+   Vul hier de (door je backend geproxiede) endpoint van je leverancier in;
+   de response moet het formaat uit de demo-data hieronder volgen.
+   Zonder geldige SLEUTEL/endpoint toont de tool een duidelijk als fictief
+   ontwerpvoorbeeld gemarkeerde demo — er wordt niets van derden geschraapt. */
+const SALES_HISTORY_ENDPOINT='';  // bijv. '/api/history?kenteken=' + je eigen backend met VWE/Autotelex-sleutel
+
+function demoSalesHistory(){
+  return{
+    demo:true,
+    fotoCount:12,
+    advertenties:[
+      {datum:'2025-08',km:120500,prijs:68900,plaats:'Voorbeeldstad'},
+      {datum:'2024-03',km:108000,prijs:74500,plaats:'Voorbeelddorp'},
+      {datum:'2022-09',km:91000,prijs:89000,plaats:'Voorbeeldstad'},
+      {datum:'2020-11',km:64000,prijs:104000,plaats:'Voorbeeldhaven'}
+    ],
+    eigenaren:4
+  };
+}
+async function getSalesHistory(kt){
+  if(SALES_HISTORY_ENDPOINT){
+    try{
+      const r=await fetch(SALES_HISTORY_ENDPOINT+encodeURIComponent(kt)).then(r=>r.json());
+      return Object.assign({demo:false},r);
+    }catch(e){return demoSalesHistory();}
+  }
+  return demoSalesHistory();
 }
 
 /* ══ Toggle blocks ══ */
@@ -1131,6 +1196,73 @@ async function doCheck(){
       rcCount.textContent='Geen';
       recallWrap.innerHTML='<div class="no-recall">Dit voertuig komt niet voor in het RDW terugroepregister — geen bekende terugroepacties.</div>';
     }
+
+    /* ── Verkoop- / advertentiehistorie (externe leverancier of demo) ── */
+    const sales=await getSalesHistory(kt).catch(()=>demoSalesHistory());
+    const histWrap=document.getElementById('hist-wrap');
+    const histCount=document.getElementById('hist-count');
+    (function(){
+      const ad=sales.advertenties||[];
+      histCount.textContent=sales.demo?'Demo':ad.length+' advertentie'+(ad.length===1?'':'s');
+      let h='';
+      if(sales.demo){
+        h+='<div class="hist-demo"><span class="hist-demo-tag">Ontwerp-demo</span><div>'
+          +'Dit is een <b>fictief ontwerpvoorbeeld</b> — geen echte data van dit kenteken. Verkoopgeschiedenis, foto&rsquo;s en advertentieprijzen staan niet in RDW open data. Zodra je een koppeling hebt met een gelicentieerde dataleverancier (bijv. <b>VWE Automotive, Autotelex, Finnik</b> of <b>RDW Voertuigdata</b>), verschijnen hier de echte gegevens. Vraag zo&rsquo;n partij een (veelal gratis) proefaccount om de echte data te testen.'
+          +'</div></div>';
+      }else{
+        h+='<div class="hist-demo" style="background:rgba(0,146,70,.06);border-color:rgba(0,146,70,.32);color:rgba(150,220,180,.95)"><span class="hist-live-tag">Live data</span><div>Aangevuld met gegevens van een gelicentieerde dataleverancier.</div></div>';
+      }
+
+      /* Statistieken */
+      h+='<div class="hist-stats">';
+      h+='<div><div class="hist-stat-l">Bekende advertenties</div><div class="hist-stat-v">'+ad.length+' <span>stuks</span></div></div>';
+      if(sales.fotoCount)h+='<div><div class="hist-stat-l">Bekende foto&rsquo;s</div><div class="hist-stat-v">'+sales.fotoCount+' <span>stuks</span></div></div>';
+      if(sales.eigenaren)h+='<div><div class="hist-stat-l">Eigenarenhistorie</div><div class="hist-stat-v">'+sales.eigenaren+' <span>bekend</span></div></div>';
+      if(ad.length){
+        const prijzen=ad.map(a=>a.prijs).filter(Boolean).sort((x,y)=>y-x);
+        h+='<div><div class="hist-stat-l">Laatste vraagprijs</div><div class="hist-stat-v">€ '+prijzen[prijzen.length-1].toLocaleString('nl-NL')+'</div></div>';
+      }
+      h+='</div>';
+
+      /* Foto's */
+      h+='<div class="hist-seclbl">Foto&rsquo;s uit advertentiehistorie</div>';
+      if(ad.length&&!sales.demo){
+        h+='<div class="photo-gallery">';
+        (sales.fotos||[]).slice(0,8).forEach(f=>{
+          h+='<div class="photo-tile"><img src="'+f+'" alt="Advertentiefoto van '+merk+' '+model+'" loading="lazy"></div>';
+        });
+        h+='</div>';
+      }else{
+        /* Demo: plaatsaanduidingen met camera-icoon (geen echte foto's) */
+        h+='<div class="photo-gallery">';
+        for(let i=0;i<4;i++){
+          h+='<div class="photo-tile"><div class="photo-ph">'
+            +'<svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>'
+            +'<span>Demo foto</span></div><span class="photo-tag">voorbeeld</span></div>';
+        }
+        h+='</div>';
+      }
+
+      /* Prijstabel */
+      if(ad.length){
+        h+='<div class="hist-seclbl">Advertentiehistorie &amp; prijsverloop</div>';
+        h+='<table class="apk-table"><thead><tr><th>Datum</th><th>Kilometerstand</th><th>Vraagprijs</th><th>Plaats</th></tr></thead><tbody>';
+        ad.forEach((a,i)=>{
+          const prijsDelta=(i<ad.length-1)?(ad[i].prijs-ad[i+1].prijs):null;
+          const deltaTxt=prijsDelta!==null&&prijsDelta!==0
+            ?' <span style="color:'+(prijsDelta<0?'var(--ok)':'var(--bad)')+';font-size:.68rem">'+(prijsDelta<0?'▼':'▲')+' € '+Math.abs(prijsDelta).toLocaleString('nl-NL')+'</span>'
+            :'';
+          h+='<tr><td>'+a.datum+(sales.demo?' <span style="color:rgba(198,203,209,.3)">(fictief)</span>':'')+'</td>'
+            +'<td>'+(a.km?a.km.toLocaleString('nl-NL')+' km':'—')+'</td>'
+            +'<td>€ '+a.prijs.toLocaleString('nl-NL')+deltaTxt+'</td>'
+            +'<td>'+(a.plaats||'—')+'</td></tr>';
+        });
+        h+='</tbody></table>';
+      }
+
+      h+='<div class="hist-note">Deze sectie toont <b>alleen</b> data via een gelicentieerde dataleverancier. De tool schraapt geen gegevens van andere aanbieders — dat is niet toegestaan zonder overeenkomst (databankrecht &amp; auteursrecht op foto&rsquo;s). Bij interesse kan APEXclusive de koppeling opzetten; veel leveranciers bieden een gratis proefperiode om de data te beoordelen.</div>';
+      histWrap.innerHTML=h;
+    })();
 
     /* ── Quick checks ── */
     const qc=document.getElementById('quick-checks');
