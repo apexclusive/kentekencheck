@@ -1170,6 +1170,15 @@ header.topbar .back:hover{color:var(--brand-copper-light);border-color:var(--bra
 .footer-grid h3{margin-bottom:1rem;color:var(--brand-copper-light);font:600 .6rem/1 var(--brand-display);letter-spacing:.18em;text-transform:uppercase;font-family:var(--brand-display)}
 .footer-grid a:not(.wordmark){display:block;margin-top:.65rem;color:#b1b4ae;font-size:.8rem;font-family:var(--ss);text-decoration:none;transition:color .25s}
 .footer-grid a:not(.wordmark):hover{color:var(--brand-paper)}
+/* Footer-deelstrook (mond-tot-mond) */
+.footer-share{display:flex;align-items:center;justify-content:space-between;gap:1.25rem;flex-wrap:wrap;padding:1.4rem 0;border-top:1px solid var(--brand-line);margin-bottom:1.2rem}
+.footer-share .fs-txt{display:flex;flex-direction:column;gap:.2rem;max-width:46ch}
+.footer-share .fs-txt b{font-family:var(--sf);font-weight:400;color:var(--brand-copper-light);font-size:1.02rem}
+.footer-share .fs-txt span{font-family:var(--lb);font-size:.72rem;color:rgba(198,203,209,.6);line-height:1.55}
+.footer-share .fs-btns{display:flex;gap:.6rem;flex-wrap:wrap}
+.fs-btn{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--lb);font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;padding:.6rem 1.05rem;border:1px solid var(--brand-copper);color:var(--brand-copper-light);background:transparent;cursor:pointer;text-decoration:none;transition:.22s}
+.fs-btn:hover{background:var(--brand-copper);color:#111}
+@media(max-width:560px){.footer-share{flex-direction:column;align-items:flex-start}.footer-share .fs-btns{width:100%}.fs-btn{flex:1;justify-content:center}}
 .footer-bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;padding-top:1.2rem;border-top:1px solid var(--brand-line);color:#8b938d;font-size:.68rem;font-family:var(--brand-display)}
 .footer-bottom a{color:#8b938d;text-decoration:none;font-family:var(--brand-display)}
 .footer-bottom a:hover{color:var(--brand-paper)}
@@ -2031,6 +2040,26 @@ body{font-family:'DM Sans',Arial,sans-serif;font-weight:400}
       <a href="https://www.instagram.com/apexclusive.nl/" target="_blank" rel="noopener noreferrer">Instagram &#8599;</a>
     </div>
   </div>
+  <div class="page-width footer-share">
+    <div class="fs-txt">
+      <b>Handig bij een auto kopen?</b>
+      <span>Deel deze gratis kentekencheck met iemand die op zoek is — volledig rapport, geen account, geen kosten.</span>
+    </div>
+    <div class="fs-btns">
+      <button type="button" class="fs-btn" id="footer-share-native" style="display:none" onclick="shareReport('native')">
+        <svg aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="10.5" x2="15.4" y2="6.5"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/></svg>
+        Delen
+      </button>
+      <a class="fs-btn" id="footer-share-wa" href="https://wa.me/?text=" onclick="return footerDeelWa(this)" target="_blank" rel="noopener noreferrer">
+        <svg aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.8 14.06c-.24.68-1.4 1.3-1.94 1.38-.5.07-1.13.1-1.82-.11-.42-.13-.96-.31-1.65-.61-2.9-1.25-4.79-4.18-4.94-4.37-.14-.19-1.18-1.57-1.18-2.99 0-1.42.74-2.12 1.01-2.41.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.41-.07.64.49.24.57.81 1.97.88 2.11.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.17-.29.37-.42.5-.14.14-.28.29-.12.57.16.28.71 1.17 1.52 1.9 1.05.94 1.93 1.23 2.21 1.37.28.14.45.12.61-.07.16-.19.69-.8.87-1.08.18-.28.37-.23.62-.14.25.09 1.6.76 1.87.9.27.14.45.21.52.33.07.12.07.68-.18 1.36z"/></svg>
+        WhatsApp
+      </a>
+      <button type="button" class="fs-btn" id="footer-share-copy" onclick="footerDeelCopy(this)">
+        <svg aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        <span class="fs-copy-txt">Link kopiëren</span>
+      </button>
+    </div>
+  </div>
   <div class="page-width footer-bottom">
     <span>&copy; <span id="yr">2026</span> APEXclusive</span>
     <a href="https://apexclusive.nl/algemenevoorwaarden.html">Algemene voorwaarden</a>
@@ -2272,12 +2301,33 @@ function mobielDelen(){
   if(navigator.share){shareReport('native');}
   else{copyShareLink();}
 }
+/* Footer-deelstrook: WhatsApp-deel bouwt de tekst pas bij klik op (bevat dan
+   het huidige rapport/deelbare link), kopiëren toont korte feedback. */
+function _deelTekst(){
+  const badgeEl=document.getElementById('r-badge');
+  const plate=(badgeEl&&badgeEl.getAttribute('data-plate'))||'';
+  return 'Gratis volledige kentekencheck op basis van officiële RDW-data'
+    +(plate?' (bijv. kenteken '+plate+')':'')+': '+window.location.href;
+}
+function footerDeelWa(a){
+  a.href='https://wa.me/?text='+encodeURIComponent(_deelTekst());
+  return true;
+}
+function footerDeelCopy(btn){
+  const txt=_deelTekst();
+  const done=()=>{const el=btn.querySelector('.fs-copy-txt');if(el){const o=el.textContent;el.textContent='✓ Gekopieerd';setTimeout(()=>el.textContent=o,1800);}};
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(done).catch(()=>{fallbackCopy(txt);done();});
+  }else{fallbackCopy(txt);done();}
+}
 /* Toon de native deelknop alleen als het platform systeem-delen ondersteunt
    (vooral mobiel: WhatsApp, berichten, e-mail, AirDrop…). */
 (function(){
   if(navigator.share){
     const b=document.getElementById('share-native-btn');
     if(b)b.style.display='inline-flex';
+    const fb=document.getElementById('footer-share-native');
+    if(fb)fb.style.display='inline-flex';
     /* Op de mobiele balk wordt 'Link' dan het rijkere 'Delen' */
     const mt=document.getElementById('ma-share-txt'),mi=document.getElementById('ma-share-ic');
     if(mt)mt.textContent='Delen';
