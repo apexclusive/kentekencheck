@@ -3,7 +3,7 @@
    ook zonder verbinding opent. RDW-datavragen (opendata.rdw.nl) gaan ALTIJD
    rechtstreeks naar het netwerk en worden nooit gecachet — die data moet actueel
    blijven. Alleen verzoeken naar onze eigen oorsprong komen in aanmerking. */
-const VERSIE='kc-v2.3.1';
+const VERSIE='kc-v2.4.0';
 const APP_SHELL=[
   './',
   './index.html',

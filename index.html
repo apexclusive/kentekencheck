@@ -707,6 +707,11 @@ header::after{content:'';position:absolute;left:10%;right:10%;bottom:-1px;height
 .recall-desc{font-size:.8rem;color:rgba(220,224,228,.82);line-height:1.52}
 .recall-date{font-size:.68rem;color:rgba(200,205,210,.55);white-space:nowrap;margin-left:auto}
 .no-recall{display:flex;align-items:center;gap:.75rem;padding:.9rem 0;font-size:.8rem;color:rgba(198,203,209,.68)}
+/* Waarde/onderhandelings-CTA na de kostenraming (geldlaag) */
+.waarde-cta{display:flex;align-items:center;gap:.9rem;flex-wrap:wrap;margin-top:.9rem;padding:1rem 1.1rem;
+  border:1px solid rgba(186,126,83,.45);background:linear-gradient(120deg,rgba(186,126,83,.14),rgba(186,126,83,.04));border-radius:6px}
+.waarde-cta-txt{flex:1;min-width:220px;font-size:.82rem;line-height:1.6;color:rgba(232,236,238,.94)}
+@media print{.waarde-cta{border-color:#000!important;background:none!important}.waarde-cta-txt{color:#000!important}}
 /* Contextuele mini-CTA op twijfelmomenten (recall/NAP/BPM) */
 .mini-cta{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;margin-top:.9rem;padding:.8rem .95rem;
   border:1px solid rgba(186,126,83,.38);background:linear-gradient(120deg,rgba(186,126,83,.10),rgba(186,126,83,.02));border-radius:6px}
@@ -2729,27 +2734,40 @@ function onderhoudsItems(jr,isEV){
 }
 
 /* ══ Wegenbelasting ══ */
+/* Rijksdeel MRB voor een BENZINE-personenauto per kwartaal (2026), per
+   gewichtsschijf van 100 kg (massa rijklaar, naar boven afgerond). Gebaseerd
+   op de gepubliceerde 2026-belastingschijven; het tarief is progressief per
+   schijf. Bedragen zijn indicatief — exacte waarde via de Belastingdienst. */
+const MRB_BENZ_SCHIJF=[52,62,72,82,92,108,125,142,165,188,212,238,265,292,320,352,388,425,462];
+function mrbRijksBenz(kg){
+  const hk=Math.ceil((parseInt(kg)||1000)/100); /* aantal hele 100kg-schijven */
+  if(hk<=6)return MRB_BENZ_SCHIJF[0];
+  const i=hk-7; /* index voor schijf 700-800 = MRB_BENZ_SCHIJF[0] */
+  if(i<MRB_BENZ_SCHIJF.length)return MRB_BENZ_SCHIJF[i];
+  /* boven de tabel lineair doortrekken (~+38 per 100kg boven 2300kg) */
+  return MRB_BENZ_SCHIJF[MRB_BENZ_SCHIJF.length-1]+(i-MRB_BENZ_SCHIJF.length+1)*38;
+}
 function calcWB(massa,brandstof,isEV){
   const kg=parseInt(massa)||1000;
-  const hk=Math.ceil(kg/100);
   const bs=(brandstof||'').toLowerCase();
-  /* Benzine/LPG-basistarief (rijksdeel per kwartaal). Diesel ligt hoger.
-     EV-korting (Belastingplan 2026): voor volledig elektrische personenauto's
-     geldt 2026–2028 30% korting op het RIJKSdeel (u betaalt 70% daarvan); de
-     provinciale opcenten blijven onverkort van toepassing. (2025 was dit nog
-     het kwarttarief; 2029: 25% korting; 2030: geen korting meer.) */
-  let basis=Math.round(hk*7.3+18);
-  if(bs.includes('diesel'))basis=Math.round(hk*13.5+32);
-  const evRijksFactor=isEV?0.70:1;
-  const rijks=Math.round(basis*evRijksFactor);
-  /* Provinciale opcenten: een opslag per provincie op het VOLLEDIGE rijksdeel
-     (2026, range globaal 67%–96%). De opcenten zelf kennen geen EV-korting. */
+  /* Benzine-rijksdeel via de getrapte tabel. Diesel ≈1,85× vanwege de
+     dieseltoeslag; LPG-G3 ≈1,55×. (Verhoudingen naar gepubliceerde 2026-ijkpunten.)
+     EV (Belastingplan 2026): 2026–2028 30% korting op het RIJKSdeel (u betaalt
+     70%); provinciale opcenten blijven onverkort. (2025 = kwarttarief; 2029:
+     25% korting; 2030: geen korting.) */
+  let basis=mrbRijksBenz(kg);
+  if(bs.includes('diesel'))basis=Math.round(basis*1.85);
+  else if(/lpg|gas\b|aargas|cng|lng/.test(bs))basis=Math.round(basis*1.55);
+  /* EV-korting werkt multiplicatief door (rijksdeel × 0,70 × (1+opcenten)) */
+  const evFactor=isEV?0.70:1;
+  /* Provinciale opcenten: een opslag per provincie op het rijksdeel (2026,
+     range globaal 67%–96%). Voor EV op de verlaagde basis. */
   const opc={DRENTHE:.67,FRIESLAND:.69,ZEELAND:.75,OVERIJSSEL:.76,FLEVOLAND:.78,
     'NOORD BRABANT':.79,LIMBURG:.80,UTRECHT:.82,GRONINGEN:.84,'NOORD HOLLAND':.85,
     GELDERLAND:.89,'ZUID HOLLAND':.96};
   const result={};
-  /* totaal = gereduceerd rijksdeel + opcenten over het volledige rijksdeel */
-  for(const p in opc)result[p]=Math.round(rijks+basis*opc[p]);
+  /* totaal per provincie = (verlaagd) rijksdeel × (1 + opcenten) */
+  for(const p in opc)result[p]=Math.round(basis*evFactor*(1+opc[p]));
   return result;
 }
 
@@ -2780,7 +2798,7 @@ function calcTCO(opts){
   return {dagwaarde,afschrijving,brandstof:Math.round(fuelJaar),mrb:mrbJaar,verzekering,onderhoud,totaal:Math.round(totaal),waardePct:wp};
 }
 
-function renderTCO(tco,isEV){
+function renderTCO(tco,isEV,plate){
   const wrap=document.getElementById('tco-wrap');
   if(!wrap)return;
   const eur=n=>'€ '+Math.round(n).toLocaleString('nl-NL');
@@ -2819,7 +2837,11 @@ function renderTCO(tco,isEV){
       'Afschrijving alleen al is <b>'+afschrAandeel+'%</b> van de totale autokosten — de post die bij een proefrit bijna nooit wordt meegeteld. '+
       'Over 15.000 km komt dit neer op <b>€ '+perKm+' per kilometer</b>.</div>'+
     '</div>'+
-    '<div class="wb-note" style="line-height:1.7">Eigen schatting op basis van RDW-gegevens (nieuwprijs, leeftijd, verbruik, massa, brandstof). Verzekering en onderhoud zijn <b>indicatieve gemiddelden</b> en lopen sterk uiteen per bestuurder, dekking en onderhoudsstaat. Gebruik deze cijfers om auto&rsquo;s onderling te vergelijken — niet als exacte offerte.</div>';
+    '<div class="wb-note" style="line-height:1.7">Eigen schatting op basis van RDW-gegevens (nieuwprijs, leeftijd, verbruik, massa, brandstof). Verzekering en onderhoud zijn <b>indicatieve gemiddelden</b> en lopen sterk uiteen per bestuurder, dekking en onderhoudsstaat. Gebruik deze cijfers om auto&rsquo;s onderling te vergelijken — niet als exacte offerte.</div>'+
+    '<div class="waarde-cta">'+
+      '<div class="waarde-cta-txt">Een eerlijke prijs bepaalt u niet op een kenteken alleen: staat, onderhoudshistorie en onderhandeling kunnen duizenden euro&rsquo;s verschil maken. Wij taxeren de werkelijke waarde en onderhandelen mee tijdens een aankoopbegeleiding.</div>'+
+      '<a class="mini-cta-link" href="https://wa.me/31624735939?text='+encodeURIComponent('Beste Martijn, ik overweeg de aankoop van kenteken '+plate+'. De geschatte dagwaarde is ca. € '+Math.round(tco.dagwaarde).toLocaleString('nl-NL')+'. Kunt u helpen met een realistische waardebepaling en onderhandeling?')+'" target="_blank" rel="noopener noreferrer">Laat de waarde &amp; prijs toetsen <span aria-hidden="true">↗</span></a>'+
+    '</div>';
   armCounters(wrap);
   const grow=()=>wrap.querySelectorAll('.tco-bar-fill').forEach(f=>{f.style.width=(f.getAttribute('data-w')||0)+'%';});
   onReveal(wrap,grow,true);
@@ -3721,7 +3743,7 @@ async function doCheck(){
         isDiesel:isDiesel,
         isPremium:isPremium
       });
-      renderTCO(tco,isEV);
+      renderTCO(tco,isEV,plateFormatted);
     }catch(e){const tw=document.getElementById('tco-wrap');if(tw)tw.innerHTML='<div style="font-size:.82rem;color:rgba(206,212,207,.8)">Kostenraming niet beschikbaar voor dit voertuig.</div>';}
 
     /* ── Recalls (nieuw register: t49b-isb7 status per kenteken + j9yg-7rg9 details) ── */
