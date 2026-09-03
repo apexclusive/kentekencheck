@@ -2320,11 +2320,14 @@ function shareReport(kanaal){
   const badgeEl=document.getElementById('r-badge');
   const plate=(badgeEl&&badgeEl.getAttribute('data-plate'))||(badgeEl?badgeEl.textContent.trim():'' )||'';
   const score=(document.getElementById('score-num')||{}).textContent||'';
-  const tekst='Kentekencheck van '+plate+' — score '+score+'/100. Volledig gratis RDW-rapport: '+url;
+  /* URL op een eigen regel zodat WhatsApp/sociaal de voorbeeldkaart (OG) tonen;
+     een persoonlijke, aanbevelende zin stimuleert mond-tot-mond. */
+  const scoreDeel=score&&score!=='–'?' (score '+score+'/100)':'';
+  const tekst='Ik liet net kenteken '+plate+' gratis checken'+scoreDeel+' — volledig RDW-rapport met APK-historie, NAP, BPM, wegenbelasting en terugroepacties. Handig als je een auto op het oog hebt:\n'+url;
   if(kanaal==='wa'){
     window.open('https://wa.me/?text='+encodeURIComponent(tekst),'_blank','noopener');
   }else if(navigator.share){
-    navigator.share({title:'Kentekencheck '+plate,text:tekst,url:url}).catch(()=>{});
+    navigator.share({title:'Gratis kentekencheck '+plate,text:tekst,url:url}).catch(()=>{});
   }else{
     copyShareLink();
   }
