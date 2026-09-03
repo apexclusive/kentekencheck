@@ -3623,7 +3623,8 @@ async function doCheck(){
     if(!(extra&&extra.owners&&extra.owners.length)){
       tlHtml+='<div class="tl-item"><div class="tl-dot" style="background:transparent;border-color:rgba(198,203,209,.15)"></div>';
       tlHtml+='<div class="tl-title" style="color:rgba(198,203,209,.45);font-size:.78rem">Volledige eigenaarshistorie niet beschikbaar in open data</div>';
-      tlHtml+='<div class="tl-sub" style="font-size:.72rem">RDW open data toont alleen eerste en laatste tenaamstelling. Tussenliggende eigenaren, foto&rsquo;s en advertentiehistorie komen uit een gelicentieerde dataleverancier (VWE, Autotelex, RDW Voertuigdata).</div></div>';
+      tlHtml+='<div class="tl-sub" style="font-size:.72rem">RDW open data toont alleen eerste en laatste tenaamstelling. Tussenliggende eigenaren, foto&rsquo;s en advertentiehistorie komen uit een gelicentieerde dataleverancier (VWE, Autotelex, RDW Voertuigdata).</div>';
+      tlHtml+='<div class="tl-sub" style="font-size:.72rem;margin-top:.4rem">Wij achterhalen de volledige historie wél tijdens een aankoopbegeleiding. <a href="https://wa.me/31624735939?text='+encodeURIComponent('Beste Martijn, bij kenteken '+plateFormatted+' wil ik graag de volledige eigenaars- en onderhoudshistorie laten uitzoeken. Kunt u meedenken?')+'" target="_blank" rel="noopener noreferrer" style="color:var(--brand-copper-light);border-bottom:1px solid rgba(186,126,83,.5);text-decoration:none">Laat de historie uitzoeken ↗</a></div></div>';
     }
     tlHtml+='</div>';
     twWrap.innerHTML=tlHtml;
