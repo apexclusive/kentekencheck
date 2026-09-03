@@ -2680,18 +2680,23 @@ function calcWB(massa,brandstof,isEV){
   const kg=parseInt(massa)||1000;
   const hk=Math.ceil(kg/100);
   const bs=(brandstof||'').toLowerCase();
-  /* Benzine/LPG-basistarief; EV kent vanaf 2026 een gereduceerd tarief (≈25%
-     van het normaal tarief, oplopend). Diesel ligt hoger. */
+  /* Benzine/LPG-basistarief (rijksdeel per kwartaal). Diesel ligt hoger.
+     EV-korting (Belastingplan 2026): voor volledig elektrische personenauto's
+     geldt 2026–2028 30% korting op het RIJKSdeel (u betaalt 70% daarvan); de
+     provinciale opcenten blijven onverkort van toepassing. (2025 was dit nog
+     het kwarttarief; 2029: 25% korting; 2030: geen korting meer.) */
   let basis=Math.round(hk*7.3+18);
   if(bs.includes('diesel'))basis=Math.round(hk*13.5+32);
-  if(isEV)basis=Math.round(basis*0.25);
-  /* Provinciale opcenten: een opslag per provincie op het rijksdeel (2026,
-     range globaal 67%–96%). Uitgedrukt als fractie van het basiskwartaal. */
+  const evRijksFactor=isEV?0.70:1;
+  const rijks=Math.round(basis*evRijksFactor);
+  /* Provinciale opcenten: een opslag per provincie op het VOLLEDIGE rijksdeel
+     (2026, range globaal 67%–96%). De opcenten zelf kennen geen EV-korting. */
   const opc={DRENTHE:.67,FRIESLAND:.69,ZEELAND:.75,OVERIJSSEL:.76,FLEVOLAND:.78,
     'NOORD BRABANT':.79,LIMBURG:.80,UTRECHT:.82,GRONINGEN:.84,'NOORD HOLLAND':.85,
     GELDERLAND:.89,'ZUID HOLLAND':.96};
   const result={};
-  for(const p in opc)result[p]=Math.round(basis*(1+opc[p]));
+  /* totaal = gereduceerd rijksdeel + opcenten over het volledige rijksdeel */
+  for(const p in opc)result[p]=Math.round(rijks+basis*opc[p]);
   return result;
 }
 
@@ -3548,7 +3553,7 @@ async function doCheck(){
     renderExtraBlock(extra,merk,model);
 
     /* ── Wegenbelasting ── */
-    const isEV=fuelNames.length===1&&/elektr/i.test(fuelNames[0]||'');
+    const isEV=isVolledigEV(fuels);
     const isDiesel=fuelNames.some(n=>/diesel/i.test(n));
     const wbData=calcWB(v.massa_rijklaar,(bs.brandstof_omschrijving||''),isEV);
     /* Gesorteerde balkgrafiek per provincie; Limburg (thuisprovincie APEXclusive, Maastricht) gehighlight */
@@ -3556,7 +3561,7 @@ async function doCheck(){
     const wbMax=Math.max(...wbSorted.map(x=>x.val),1);
     let wbHtml='<div class="mrb-bars">';
     if(isEV){
-      wbHtml+='<div class="mrb-ev">Volledig elektrisch: in 2026 geldt een gereduceerd MRB-tarief (±25% van het normaalbedrag, oplopend in latere jaren). De balken tonen dat gereduceerde tarief. Controleer het exacte bedrag bij de Belastingdienst.</div>';
+      wbHtml+='<div class="mrb-ev">Volledig elektrisch: in 2026–2028 geldt 30% korting op het rijks-MRB-tarief (u betaalt 70%); de provinciale opcenten blijven volledig. De balken tonen dat gereduceerde tarief. Controleer het exacte bedrag bij de Belastingdienst.</div>';
     }
     wbSorted.forEach((r,i)=>{
       const hl=r.p==='LIMBURG';
