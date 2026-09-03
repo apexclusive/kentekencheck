@@ -1790,6 +1790,7 @@ body{font-family:'DM Sans',Arial,sans-serif;font-weight:400}
         </div>
         <div class="bpm-verdict" id="bpm-verdict" style="display:none"></div>
         <div style="margin-top:.85rem;font-size:.72rem;color:rgba(206,212,218,.8);line-height:1.65;font-family:var(--lb);letter-spacing:.05em">⚠ Indicatieve berekening op basis van openbare RDW-data. Voor exacte BPM-aangifte is een officiële taxatie vereist.</div>
+        <div id="bpm-cta" style="display:none;margin-top:.9rem"></div>
       </div>
     </div>
 
@@ -3734,6 +3735,17 @@ async function doCheck(){
       else if(pct>20){verdict.className='bpm-verdict bpm-lo';verdict.textContent='Matige resterende BPM — indicatief bedrag beperkt. Exacte taxatie aanbevolen.';}
       else{verdict.className='bpm-verdict bpm-ok';verdict.textContent='Lage resterende BPM — voertuig heeft het meeste afgeschreven. Gunstig bij import.';}
     }
+    /* Import/BPM-CTA: bij een noemenswaardige rest-BPM wijzen we op begeleiding
+       bij invoer (taxatie + BPM-afhandeling is een concrete dienst). */
+    (function(){
+      const bc=document.getElementById('bpm-cta');
+      if(!bc)return;
+      const noemenswaardig=!bpmData.waterstof && !(bpmData.ev&&!bpmData.evVast) && bpmData.rest>=1000;
+      if(noemenswaardig){
+        bc.style.display='block';
+        bc.innerHTML=miniCTA('Importeert u deze auto? Dan komt er naast de rest-BPM (ca. € '+Math.round(bpmData.rest).toLocaleString('nl-NL')+') vaak nog keuring, transport en afhandeling bij. Ik wil de BPM en het complete invoertraject goed geregeld hebben.',plateFormatted);
+      }else bc.style.display='none';
+    })();
     /* Teken afschrijvingscurve zodra het BPM-blok in beeld komt */
     (function(){
       const bpmBlock=document.getElementById('bpm-chart');
