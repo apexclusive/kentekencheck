@@ -2266,12 +2266,22 @@ function shareReport(kanaal){
     copyShareLink();
   }
 }
+/* Mobiel: gebruik het systeem-deelblad (WhatsApp/berichten/kopiëren/AirDrop)
+   als dat beschikbaar is; anders terugvallen op link-kopiëren. */
+function mobielDelen(){
+  if(navigator.share){shareReport('native');}
+  else{copyShareLink();}
+}
 /* Toon de native deelknop alleen als het platform systeem-delen ondersteunt
    (vooral mobiel: WhatsApp, berichten, e-mail, AirDrop…). */
 (function(){
   if(navigator.share){
     const b=document.getElementById('share-native-btn');
     if(b)b.style.display='inline-flex';
+    /* Op de mobiele balk wordt 'Link' dan het rijkere 'Delen' */
+    const mt=document.getElementById('ma-share-txt'),mi=document.getElementById('ma-share-ic');
+    if(mt)mt.textContent='Delen';
+    if(mi)mi.textContent='<';
   }
 })();
 
@@ -4310,7 +4320,7 @@ if('serviceWorker' in navigator){
 <nav class="mobile-actions" id="mobile-actions" aria-label="Rapportacties">
   <button type="button" class="ma-btn ma-primary" onclick="window.print()"><span class="ma-ic">⎙</span><span>PDF</span></button>
   <button type="button" class="ma-btn" onclick="kopieerSamenvatting(event)"><span class="ma-ic">☰</span><span>Samenvatting</span></button>
-  <button type="button" class="ma-btn" onclick="copyShareLink()"><span class="ma-ic">🔗</span><span>Link</span></button>
+  <button type="button" class="ma-btn" id="ma-share" onclick="mobielDelen()"><span class="ma-ic" id="ma-share-ic">🔗</span><span id="ma-share-txt">Link</span></button>
   <button type="button" class="ma-btn" onclick="shareReport('wa')"><span class="ma-ic">✆</span><span>WhatsApp</span></button>
   <button type="button" class="ma-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})"><span class="ma-ic">↑</span><span>Boven</span></button>
 </nav>
