@@ -664,7 +664,7 @@ header::after{content:'';position:absolute;left:10%;right:10%;bottom:-1px;height
 .cmp-table th:nth-child(2),.cmp-table td:nth-child(2){background:rgba(186,126,83,.05)}
 @media print{
   header.topbar,.page-hero,.search-wrap,.empty-state,.trust-strip,.report-actions,.other-tools,.cta-wrap,.lead-banner,.back-btn,.bhead-chev,.bhead-icon,.compare-panel,.to-top,#scroll-prog,.voorbeelden,#skeleton,.car-view .car-view-sub,.mini-cta,.wa-fab{display:none!important}
-  .footer-share{display:none!important}
+  .footer-share,.report-share{display:none!important}
   .car-view{border:1px solid #ccc;background:none;padding:.6rem .8rem;break-inside:avoid}
   .print-head{display:flex!important;justify-content:space-between;align-items:baseline;border-bottom:2px solid #000;padding-bottom:.5rem;margin-bottom:1rem;font-family:Georgia,serif;font-size:1rem;color:#000}
   .print-head span{font-weight:normal;font-size:.75rem}
@@ -838,6 +838,17 @@ header::after{content:'';position:absolute;left:10%;right:10%;bottom:-1px;height
 .print-cta{display:none}
 
 /* Score-afhankelijke lead-banner */
+/* Context-deelbalk onder de score (mond-tot-mond op het hoogste emotie-moment) */
+.report-share{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;border:1px solid rgba(186,126,83,.28);background:linear-gradient(120deg,rgba(186,126,83,.10),rgba(186,126,83,.02));padding:.95rem 1.25rem;margin:0 0 1.4rem}
+.report-share .rs-txt{display:flex;flex-direction:column;gap:.15rem}
+.report-share .rs-txt b{font-family:var(--sf);font-weight:400;color:var(--brand-copper-light);font-size:1.02rem}
+.report-share .rs-txt span{font-family:var(--lb);font-size:.7rem;color:rgba(198,203,209,.62);letter-spacing:.02em}
+.report-share .rs-btns{display:flex;gap:.55rem;flex-wrap:wrap}
+.rs-btn{display:inline-flex;align-items:center;gap:.45rem;font-family:var(--lb);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;padding:.62rem 1rem;border:1px solid var(--brand-copper);color:var(--brand-copper-light);background:transparent;cursor:pointer;transition:.22s}
+.rs-btn:hover{background:rgba(186,126,83,.18)}
+.rs-btn.rs-wa{background:var(--brand-copper);color:#14100c;border-color:var(--brand-copper);font-weight:700}
+.rs-btn.rs-wa:hover{background:var(--brand-copper-light);border-color:var(--brand-copper-light)}
+@media(max-width:560px){.report-share{flex-direction:column;align-items:stretch;gap:.8rem}.report-share .rs-btns{width:100%}.rs-btn{flex:1;justify-content:center}}
 .lead-banner{display:flex;gap:1rem;align-items:flex-start;border:1px solid rgba(186,126,83,.4);background:linear-gradient(120deg,rgba(186,126,83,.12),rgba(186,126,83,.03));padding:1.1rem 1.25rem;margin:0 0 1.4rem}
 .lead-banner.lb-bad{border-color:rgba(225,80,80,.5);background:linear-gradient(120deg,rgba(225,80,80,.12),rgba(225,80,80,.03))}
 .lead-ico{color:var(--brand-copper-light);flex:none;margin-top:.15rem}
@@ -1582,6 +1593,28 @@ body{font-family:'DM Sans',Arial,sans-serif;font-weight:400}
       <div>
         <div class="score-verdict" id="score-verdict">Bezig met beoordelen…</div>
         <div class="score-points" id="score-points"></div>
+      </div>
+    </div>
+
+    <!-- Context-deelbalk: tonen net nadat de score zichtbaar is (sterk deelmoment) -->
+    <div class="report-share rv" id="report-share" style="display:none">
+      <div class="rs-txt">
+        <b id="rs-title">Deel dit gratis rapport</b>
+        <span id="rs-sub">Tip iemand die een auto op het oog heeft — volledige RDW-check, geen account nodig.</span>
+      </div>
+      <div class="rs-btns">
+        <button type="button" class="rs-btn rs-wa" onclick="shareReport('wa')">
+          <svg aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.8 14.06c-.24.68-1.4 1.3-1.94 1.38-.5.07-1.13.1-1.82-.11-.42-.13-.96-.31-1.65-.61-2.9-1.25-4.79-4.18-4.94-4.37-.14-.19-1.18-1.57-1.18-2.99 0-1.42.74-2.12 1.01-2.41.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.41-.07.64.49.24.57.81 1.97.88 2.11.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.17-.29.37-.42.5-.14.14-.28.29-.12.57.16.28.71 1.17 1.52 1.9 1.05.94 1.93 1.23 2.21 1.37.28.14.45.12.61-.07.16-.19.69-.8.87-1.08.18-.28.37-.23.62-.14.25.09 1.6.76 1.87.9.27.14.45.21.52.33.07.12.07.68-.18 1.36z"/></svg>
+          WhatsApp
+        </button>
+        <button type="button" class="rs-btn" id="rs-native" style="display:none" onclick="shareReport('native')">
+          <svg aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="10.5" x2="15.4" y2="6.5"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/></svg>
+          Delen
+        </button>
+        <button type="button" class="rs-btn" onclick="copyShareLink(this)">
+          <svg aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          <span class="rs-copy-txt">Link</span>
+        </button>
       </div>
     </div>
 
@@ -2425,10 +2458,15 @@ function renderStatusBanner(ok,warn,bad){
   b.className='status-banner show '+cls;
   ic.textContent=icon;ti.textContent=titel;tx.innerHTML=tekst;
 }
-function copyShareLink(){
+function copyShareLink(srcBtn){
   const url=window.location.href;
-  const btn=document.getElementById('copy-link');
-  const done=()=>{if(btn){const old=btn.innerHTML;btn.innerHTML='✓ Link gekopieerd';setTimeout(()=>btn.innerHTML=old,1800);}};
+  const btn=(srcBtn&&srcBtn.currentTarget)||srcBtn||document.getElementById('copy-link');
+  /* Feedback: zoek een label-span in de geklikte knop, anders de knop zelf */
+  const lbl=btn&&(btn.querySelector('.rs-copy-txt')||btn.querySelector('.fs-copy-txt'));
+  const done=()=>{
+    if(lbl){const old=lbl.textContent;lbl.textContent='✓ Gekopieerd';setTimeout(()=>lbl.textContent=old,1800);}
+    else if(btn){const old=btn.innerHTML;btn.innerHTML='✓ Link gekopieerd';setTimeout(()=>btn.innerHTML=old,1800);}
+  };
   if(navigator.clipboard&&navigator.clipboard.writeText){
     navigator.clipboard.writeText(url).then(done).catch(()=>fallback());
   }else fallback();
@@ -3199,6 +3237,7 @@ async function doCheck(){
   const retryBtn=document.getElementById('retry-btn');
   if(retryBtn)retryBtn.classList.remove('show');
   const fabHide=document.getElementById('wa-fab');if(fabHide)fabHide.classList.remove('show');
+  const rshHide=document.getElementById('report-share');if(rshHide)rshHide.style.display='none';
 
   /* Een Nederlands kenteken telt altijd 6 tekens (letters/cijfers). Kortere
      invoer kan nooit een resultaat geven — vang dat direct af zonder RDW-call. */
@@ -4126,6 +4165,17 @@ async function doCheck(){
     if(maBar)maBar.classList.add('show');
     document.body.classList.add('has-results');
     document.body.style.paddingBottom=''; /* mobiel: ruimte onder balk via CSS */
+
+    /* Context-deelbalk tonen (hoogste emotie-moment: net na de score) */
+    (function(){
+      const rsh=document.getElementById('report-share');
+      if(!rsh)return;
+      rsh.style.display='flex';
+      const rt=document.getElementById('rs-title'),rs=document.getElementById('rs-sub');
+      if(rt)rt.textContent='Deel het rapport van '+plateFormatted;
+      if(rs)rs.textContent='Score '+score.score+'/100 · tip iemand die deze auto op het oog heeft — volledige RDW-check, gratis.';
+      if(navigator.share){const n=document.getElementById('rs-native');if(n)n.style.display='inline-flex';}
+    })();
 
     /* Deelbare URL bijwerken (zonder paginaverversing) */
     try{history.replaceState(null,'','?kenteken='+encodeURIComponent(plateFormatted));}catch(e){}
