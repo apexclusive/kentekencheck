@@ -27,12 +27,15 @@
 <meta property="og:title" content="Gratis kentekencheck — RDW-data, APK-historie, NAP, BPM, kosten">
 <meta property="og:description" content="Volledige gratis kentekencheck op basis van officiële RDW open data: APK-historie & gebreken, NAP-telleroordeel, BPM-restwaarde, wegenbelasting, terugroepacties, WOK en een voertuigscore.">
 <meta property="og:url" content="https://kentekencheck.apexclusive.nl/">
-<meta property="og:image" content="https://kentekencheck.apexclusive.nl/icon-512.png">
+<meta property="og:image" content="https://kentekencheck.apexclusive.nl/og-share.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="APEXclusive Kentekencheck — gratis volledig voertuigrapport op basis van officiële RDW-data">
 <meta property="og:locale" content="nl_NL">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Gratis kentekencheck — APEXclusive">
 <meta name="twitter:description" content="APK-historie, NAP, BPM, wegenbelasting, recalls en voertuigscore uit officiële RDW open data. Gratis, zonder account.">
-<meta name="twitter:image" content="https://kentekencheck.apexclusive.nl/icon-512.png">
+<meta name="twitter:image" content="https://kentekencheck.apexclusive.nl/og-share.png">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -236,6 +239,27 @@ header::after{content:'';position:absolute;left:10%;right:10%;bottom:-1px;height
 .empty-tri span:nth-child(3){height:16px;background:#ba7e53;opacity:.6}
 .empty-title{font-family:var(--sf);font-size:1.35rem;font-style:italic;color:rgba(214,219,224,.5);margin-bottom:.5rem}
 .empty-sub{font-size:.7rem;color:rgba(200,205,210,.45);letter-spacing:.1em;font-family:var(--lb)}
+/* Vertrouwensstrook onder de zoekbalk (blijft zichtbaar) */
+.trust-strip{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+  margin:1.3rem 0 0;border:1px solid rgba(186,126,83,.22);
+  background:rgba(186,126,83,.10);
+}
+.trust-item{
+  display:flex;align-items:center;gap:.7rem;
+  background:var(--panel);padding:.95rem 1rem;
+  color:var(--brand-copper-light);
+}
+.trust-item svg{flex-shrink:0;opacity:.9}
+.trust-item span{display:flex;flex-direction:column;gap:.05rem;font-family:var(--lb);line-height:1.35;font-size:.64rem;color:rgba(198,203,209,.62)}
+.trust-item b{font-size:.72rem;font-weight:700;color:var(--brand-copper-light);letter-spacing:.02em}
+@media(max-width:760px){
+  .trust-strip{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:420px){
+  .trust-item{padding:.75rem .7rem;gap:.55rem}
+  .trust-item svg{width:15px;height:15px}
+}
 .empty-feats{display:flex;gap:1.6rem;justify-content:center;flex-wrap:wrap;margin-top:1.8rem}
 .ef{display:flex;flex-direction:column;gap:.2rem;align-items:center}
 .ef b{font-family:var(--sf);font-size:.92rem;color:var(--brand-copper-light);font-weight:400}
@@ -639,7 +663,7 @@ header::after{content:'';position:absolute;left:10%;right:10%;bottom:-1px;height
 .cmp-table td.win{color:var(--brand-copper-light)}
 .cmp-table th:nth-child(2),.cmp-table td:nth-child(2){background:rgba(186,126,83,.05)}
 @media print{
-  header.topbar,.page-hero,.search-wrap,.empty-state,.report-actions,.other-tools,.cta-wrap,.lead-banner,.back-btn,.bhead-chev,.bhead-icon,.compare-panel,.to-top,#scroll-prog,.voorbeelden,#skeleton,.car-view .car-view-sub,.mini-cta,.wa-fab{display:none!important}
+  header.topbar,.page-hero,.search-wrap,.empty-state,.trust-strip,.report-actions,.other-tools,.cta-wrap,.lead-banner,.back-btn,.bhead-chev,.bhead-icon,.compare-panel,.to-top,#scroll-prog,.voorbeelden,#skeleton,.car-view .car-view-sub,.mini-cta,.wa-fab{display:none!important}
   .car-view{border:1px solid #ccc;background:none;padding:.6rem .8rem;break-inside:avoid}
   .print-head{display:flex!important;justify-content:space-between;align-items:baseline;border-bottom:2px solid #000;padding-bottom:.5rem;margin-bottom:1rem;font-family:Georgia,serif;font-size:1rem;color:#000}
   .print-head span{font-weight:normal;font-size:.75rem}
@@ -1379,6 +1403,26 @@ body{font-family:'DM Sans',Arial,sans-serif;font-weight:400}
     </div>
   </div>
 
+  <!-- Vertrouwensstrook: blijft zichtbaar, verlaagt drempel & stimuleert delen -->
+  <div class="trust-strip rv" id="trust-strip" aria-label="Waarom deze kentekencheck">
+    <div class="trust-item">
+      <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l8 3v6c0 5-3.5 8.5-8 11-4.5-2.5-8-6-8-11V5z"/><polyline points="9 12 11 14 15 9"/></svg>
+      <span><b>100% gratis</b>geen paywall of account</span>
+    </div>
+    <div class="trust-item">
+      <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg>
+      <span><b>Officiële RDW-data</b>zelfde bron als dealers</span>
+    </div>
+    <div class="trust-item">
+      <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg>
+      <span><b>Direct resultaat</b>binnen enkele seconden</span>
+    </div>
+    <div class="trust-item">
+      <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="10.5" x2="15.4" y2="6.5"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/></svg>
+      <span><b>Deel & vergelijk</b>tip een vriend of vergelijk 2 auto's</span>
+    </div>
+  </div>
+
   <!-- Lege state -->
   <div class="empty-state" id="empty-state">
     <div class="empty-tri"><span></span><span></span><span></span></div>
@@ -1483,6 +1527,10 @@ body{font-family:'DM Sans',Arial,sans-serif;font-weight:400}
       <button type="button" class="act-btn" id="copy-link" onclick="copyShareLink()">
         <svg aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
         Deel-link kopiëren
+      </button>
+      <button type="button" class="act-btn" id="share-native-btn" style="display:none" onclick="shareReport('native')">
+        <svg aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="10.5" x2="15.4" y2="6.5"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/></svg>
+        Delen…
       </button>
       <button type="button" class="act-btn" onclick="shareReport('wa')">
         <svg aria-hidden="true" viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.8 14.06c-.24.68-1.4 1.3-1.94 1.38-.5.07-1.13.1-1.82-.11-.42-.13-.96-.31-1.65-.61-2.9-1.25-4.79-4.18-4.94-4.37-.14-.19-1.18-1.57-1.18-2.99 0-1.42.74-2.12 1.01-2.41.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.41-.07.64.49.24.57.81 1.97.88 2.11.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.17-.29.37-.42.5-.14.14-.28.29-.12.57.16.28.71 1.17 1.52 1.9 1.05.94 1.93 1.23 2.21 1.37.28.14.45.12.61-.07.16-.19.69-.8.87-1.08.18-.28.37-.23.62-.14.25.09 1.6.76 1.87.9.27.14.45.21.52.33.07.12.07.68-.18 1.36z"/></svg>
@@ -2218,6 +2266,14 @@ function shareReport(kanaal){
     copyShareLink();
   }
 }
+/* Toon de native deelknop alleen als het platform systeem-delen ondersteunt
+   (vooral mobiel: WhatsApp, berichten, e-mail, AirDrop…). */
+(function(){
+  if(navigator.share){
+    const b=document.getElementById('share-native-btn');
+    if(b)b.style.display='inline-flex';
+  }
+})();
 
 /* Deel-link kopiëren */
 /* APK-herinnering: genereert een .ics-agendabestand met alarm 7 en 1 dag voor verval.
