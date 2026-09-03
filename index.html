@@ -639,7 +639,7 @@ header::after{content:'';position:absolute;left:10%;right:10%;bottom:-1px;height
 .cmp-table td.win{color:var(--brand-copper-light)}
 .cmp-table th:nth-child(2),.cmp-table td:nth-child(2){background:rgba(186,126,83,.05)}
 @media print{
-  header.topbar,.page-hero,.search-wrap,.empty-state,.report-actions,.other-tools,.cta-wrap,.lead-banner,.back-btn,.bhead-chev,.bhead-icon,.compare-panel,.to-top,#scroll-prog,.voorbeelden,#skeleton,.car-view .car-view-sub{display:none!important}
+  header.topbar,.page-hero,.search-wrap,.empty-state,.report-actions,.other-tools,.cta-wrap,.lead-banner,.back-btn,.bhead-chev,.bhead-icon,.compare-panel,.to-top,#scroll-prog,.voorbeelden,#skeleton,.car-view .car-view-sub,.mini-cta,.wa-fab{display:none!important}
   .car-view{border:1px solid #ccc;background:none;padding:.6rem .8rem;break-inside:avoid}
   .print-head{display:flex!important;justify-content:space-between;align-items:baseline;border-bottom:2px solid #000;padding-bottom:.5rem;margin-bottom:1rem;font-family:Georgia,serif;font-size:1rem;color:#000}
   .print-head span{font-weight:normal;font-size:.75rem}
@@ -648,6 +648,10 @@ header::after{content:'';position:absolute;left:10%;right:10%;bottom:-1px;height
   .bbody.hidden{display:block!important}
   body{background:#fff!important}
   footer{background:#fff!important}
+  .print-cta{display:block!important;margin-top:1.4rem;padding:1rem 1.1rem;border:2px solid #000;break-inside:avoid}
+  .print-cta-titel{font-family:Georgia,serif;font-size:1.05rem;font-weight:bold;margin-bottom:.4rem;color:#000}
+  .print-cta p{font-size:.82rem;line-height:1.6;color:#000;margin:0 0 .6rem}
+  .print-cta-contact{font-size:.8rem;line-height:1.6;color:#000;border-top:1px solid #ccc;padding-top:.5rem}
 }
 
 /* ══ Voertuigscore (APEX-wijzer) ══ */
@@ -703,6 +707,16 @@ header::after{content:'';position:absolute;left:10%;right:10%;bottom:-1px;height
 .recall-desc{font-size:.8rem;color:rgba(220,224,228,.82);line-height:1.52}
 .recall-date{font-size:.68rem;color:rgba(200,205,210,.55);white-space:nowrap;margin-left:auto}
 .no-recall{display:flex;align-items:center;gap:.75rem;padding:.9rem 0;font-size:.8rem;color:rgba(198,203,209,.68)}
+/* Contextuele mini-CTA op twijfelmomenten (recall/NAP/BPM) */
+.mini-cta{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;margin-top:.9rem;padding:.8rem .95rem;
+  border:1px solid rgba(186,126,83,.38);background:linear-gradient(120deg,rgba(186,126,83,.10),rgba(186,126,83,.02));border-radius:6px}
+.mini-cta-ico{color:var(--brand-copper-light);display:flex;flex-shrink:0}
+.mini-cta-txt{flex:1;min-width:180px;font-size:.8rem;line-height:1.55;color:rgba(225,229,232,.9)}
+.mini-cta-txt b{color:var(--brand-copper-light);font-weight:600}
+.mini-cta-link{font-family:var(--lb);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;
+  color:#0b0e0e;background:var(--brand-copper);padding:.5rem .85rem;border-radius:4px;white-space:nowrap;flex-shrink:0;
+  transition:background .25s}
+.mini-cta-link:hover{background:var(--brand-copper-light)}
 .no-recall::before{content:'';display:block;width:5px;height:5px;border-radius:50%;background:var(--ok);flex-shrink:0}
 
 /* Recall-kaarten */
@@ -790,6 +804,9 @@ header::after{content:'';position:absolute;left:10%;right:10%;bottom:-1px;height
   position:relative;overflow:hidden;text-align:center;
 }
 .cta-wrap::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:var(--tr);opacity:.42}
+/* Alleen-print aanbiedingsblok (lead-bron in bewaarde/gedeelde PDF) */
+.print-cta{display:none}
+
 /* Score-afhankelijke lead-banner */
 .lead-banner{display:flex;gap:1rem;align-items:flex-start;border:1px solid rgba(186,126,83,.4);background:linear-gradient(120deg,rgba(186,126,83,.12),rgba(186,126,83,.03));padding:1.1rem 1.25rem;margin:0 0 1.4rem}
 .lead-banner.lb-bad{border-color:rgba(225,80,80,.5);background:linear-gradient(120deg,rgba(225,80,80,.12),rgba(225,80,80,.03))}
@@ -862,6 +879,24 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 .to-top.show{opacity:1;transform:none;pointer-events:auto}
 .to-top:hover{background:var(--brand-copper);color:#111}
 @media(max-width:600px){.to-top{right:14px;bottom:14px;width:42px;height:42px}}
+
+/* Zwevende WhatsApp-knop (desktop) — conversie naar persoonlijk advies */
+.wa-fab{
+  position:fixed;right:22px;bottom:80px;z-index:119;width:50px;height:50px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;text-decoration:none;
+  background:linear-gradient(150deg,#2f9e63,#1f7a49);color:#fff;
+  box-shadow:0 6px 20px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.08);
+  opacity:0;transform:translateY(16px) scale(.9);pointer-events:none;
+  transition:opacity .4s,transform .4s,box-shadow .3s;
+}
+.wa-fab.show{opacity:1;transform:none;pointer-events:auto}
+.wa-fab:hover{transform:translateY(-2px) scale(1.04);box-shadow:0 10px 26px rgba(31,122,73,.5)}
+.wa-fab svg{width:26px;height:26px}
+.wa-fab::after{content:'';position:absolute;inset:0;border-radius:50%;
+  border:2px solid rgba(47,158,99,.6);opacity:0;animation:waPulse 2.6s ease-out infinite}
+@keyframes waPulse{0%{transform:scale(1);opacity:.7}70%{transform:scale(1.45);opacity:0}100%{transform:scale(1.45);opacity:0}}
+@media(max-width:760px){.wa-fab{display:none!important}}
+@media print{.wa-fab{display:none!important}}
 
 /* Scroll-voortgangsbalk (koperen haarlijn bovenin) */
 #scroll-prog{position:fixed;top:0;left:0;height:2px;width:0;z-index:200;
@@ -1662,6 +1697,9 @@ body{font-family:'DM Sans',Arial,sans-serif;font-weight:400}
           <!-- Onderhouds-vooruitblik op basis van leeftijd (algemene richtlijn, géén auto-specifieke data) -->
           <div id="onderhoud-ijkpunt" style="display:none;margin:0 0 1.05rem;padding:1rem 1.15rem;border:1px solid rgba(244,241,235,.14);background:#0e1414"></div>
 
+          <!-- Context-CTA bij een niet-logisch/ontbrekend tellerstandoordeel (lead-bron) -->
+          <div id="nap-cta" style="display:none;margin:0 0 1.05rem"></div>
+
           <!-- Gratis, officiële RDW-tellerstandcheck (formulier + e-mail; geen open data/API) -->
           <div style="margin:1.15rem 0;padding:1.1rem 1.2rem;border:1px solid rgba(186,126,83,.4);background:linear-gradient(120deg,rgba(186,126,83,.1),rgba(186,126,83,.02))">
             <div style="font-family:var(--sf);font-size:1.05rem;color:var(--brand-text-85);margin-bottom:.35rem">Twijfelt u over de kilometerstand? Doe de gratis RDW-check</div>
@@ -1864,9 +1902,24 @@ body{font-family:'DM Sans',Arial,sans-serif;font-weight:400}
       <div class="cta-sub"><a href="tel:+31624735939">of bel <b>+31 6 24 73 59 39</b></a> · <a href="https://apexclusive.nl/aankoopbegeleiding.html">bekijk de volledige werkwijze</a></div>
     </div>
 
+    <!-- Alleen zichtbaar in print/PDF: aanbieding + contact (lead-bron bij delen/bewaren) -->
+    <div class="print-cta">
+      <div class="print-cta-titel">Overweegt u deze auto écht aan te kopen?</div>
+      <p>Dit rapport toont de RDW-feiten. Voor de complete staat — onafhankelijke inspectie, volledige historie &amp; documenten, BPM bij import en onderhandeling — begeleidt <b>APEXclusive</b> u van selectie tot aflevering. Eén telefoontje kan een miskoop van duizenden euro's voorkomen.</p>
+      <div class="print-cta-contact">
+        <b>Martijn · APEXclusive</b><br>
+        WhatsApp / bel: +31 6 24 73 59 39 · info@apexclusive.nl<br>
+        apexclusive.nl/aankoopbegeleiding · Maastricht
+      </div>
+    </div>
+
   </div>
 </main>
 
+<a id="wa-fab" class="wa-fab" href="https://wa.me/31624735939" target="_blank" rel="noopener noreferrer"
+   aria-label="Stel uw autovraag via WhatsApp" title="Gratis advies via WhatsApp">
+  <svg aria-hidden="true" viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.8 14.06c-.24.68-1.4 1.3-1.94 1.38-.5.07-1.13.1-1.82-.11-.42-.13-.96-.31-1.65-.61-2.9-1.25-4.79-4.18-4.94-4.37-.14-.19-1.18-1.57-1.18-2.99 0-1.42.74-2.12 1.01-2.41.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.41-.07.64.49.24.57.81 1.97.88 2.11.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.17-.29.37-.42.5-.14.14-.28.29-.12.57.16.28.71 1.17 1.52 1.9 1.05.94 1.93 1.23 2.21 1.37.28.14.45.12.61-.07.16-.19.69-.8.87-1.08.18-.28.37-.23.62-.14.25.09 1.6.76 1.87.9.27.14.45.21.52.33.07.12.07.68-.18 1.36z"/></svg>
+</a>
 <button type="button" id="to-top" class="to-top" aria-label="Terug naar boven" title="Terug naar boven">
   <svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 15 12 9 18 15"/></svg>
 </button>
@@ -2811,6 +2864,17 @@ function aanbodLinks(merk,model){
         '<a class="aanbod-btn" href="'+u+'" target="_blank" rel="noopener noreferrer nofollow">'+n+' ↗</a>').join('')+'</div></div>';
 }
 
+/* Subtiele context-CTA op een moment van twijfel (open recall, NAP-risico,
+   hoge BPM, import). Voertuigafhankelijk bericht → persoonlijk WhatsApp-contact. */
+function miniCTA(boodschap,plate){
+  const tekst='Beste Martijn, ik overweeg de aankoop van kenteken '+plate+'. '+boodschap+' Kunt u vrijblijvend meedenken?';
+  return '<div class="mini-cta">'
+    +'<span class="mini-cta-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.8 14.06c-.24.68-1.4 1.3-1.94 1.38-.5.07-1.13.1-1.82-.11-.42-.13-.96-.31-1.65-.61-2.9-1.25-4.79-4.18-4.94-4.37-.14-.19-1.18-1.57-1.18-2.99 0-1.42.74-2.12 1.01-2.41.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.41-.07.64.49.24.57.81 1.97.88 2.11.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.17-.29.37-.42.5-.14.14-.28.29-.12.57.16.28.71 1.17 1.52 1.9 1.05.94 1.93 1.23 2.21 1.37.28.14.45.12.61-.07.16-.19.69-.8.87-1.08.18-.28.37-.23.62-.14.25.09 1.6.76 1.87.9.27.14.45.21.52.33.07.12.07.68-.18 1.36z"/></svg></span>'
+    +'<span class="mini-cta-txt">Twijfel over dit punt? Laat een expert het voor aankoop verifiëren — <b>gratis en vrijblijvend</b>.</span>'
+    +'<a class="mini-cta-link" href="https://wa.me/31624735939?text='+encodeURIComponent(tekst)+'" target="_blank" rel="noopener noreferrer">Vraag advies <span aria-hidden="true">↗</span></a>'
+    +'</div>';
+}
+
 function renderExtraBlock(extra,merk,model){
   const wrap=document.getElementById('ad-wrap');
   if(!wrap)return;
@@ -2960,6 +3024,7 @@ async function doCheck(){
   const rbReset=document.getElementById('retry-btn');if(rbReset)rbReset.classList.remove('show');
   const retryBtn=document.getElementById('retry-btn');
   if(retryBtn)retryBtn.classList.remove('show');
+  const fabHide=document.getElementById('wa-fab');if(fabHide)fabHide.classList.remove('show');
 
   /* Een Nederlands kenteken telt altijd 6 tekens (letters/cijfers). Kortere
      invoer kan nooit een resultaat geven — vang dat direct af zonder RDW-call. */
@@ -3464,6 +3529,20 @@ async function doCheck(){
     }
     document.getElementById('nap-jaar').textContent=napJaar||'—';
 
+    /* Context-CTA tonen als het tellerstandoordeel niet 'logisch' is (grootste aankooprisico) */
+    (function(){
+      const napBox=document.getElementById('nap-cta');
+      if(!napBox)return;
+      const n=nap.toLowerCase();
+      if(n==='logisch'){napBox.style.display='none';return;}
+      let msg;
+      if(n.includes('onlogisch'))msg='Het NAP-oordeel voor dit kenteken is ONLOGISCH — mogelijk is de teller teruggedraaid. Ik wil dit grondig laten uitzoeken vóór ik eventueel koop.';
+      else if(nap)msg='Het tellerstandoordeel is "'+cap(nap)+'". Ik wil graag dat een expert de tellerstand en historie verifieert voor ik koop.';
+      else msg='Voor dit kenteken is géén NAP-telleroordeel beschikbaar (vaak bij import). Ik wil de echte kilometerstand en historie laten verifiëren.';
+      napBox.innerHTML=miniCTA(msg,plateFormatted);
+      napBox.style.display='block';
+    })();
+
     /* ── Afgeleid kilometer-ijkpunt (schatting, géén echte tellerstand) ── */
     (function(){
       const box=document.getElementById('km-ijkpunt');
@@ -3691,6 +3770,9 @@ async function doCheck(){
           +'<div class="recall-meta">'+meta+'</div>'
           +'</div>';
       });
+      if(recallsOpen.length>0){
+        html+=miniCTA('Er staat ten minste één openstaande terugroepactie op dit kenteken. Ik wil zeker weten of de auto veilig en compleet hersteld is voor ik koop.',plate);
+      }
       html+='<div class="wb-note">Gegevens uit het RDW terugroepregister per kenteken. De RDW publiceert <b>niet</b> de exacte reparatiedatum per auto — alleen de status (open of "fabrikant heeft herstel gemeld"). De getoonde datum is de publicatiedatum van de actie.</div>';
       recallWrap.innerHTML=html;
     }else{
@@ -3803,7 +3885,11 @@ async function doCheck(){
       }
       tx.textContent=bericht;
       const wa=document.getElementById('lead-wa');
-      if(wa)wa.href='https://wa.me/31624735939?text='+encodeURIComponent('Beste Martijn, ik overweeg de aankoop van kenteken '+plate+'. De gratis kentekencheck geeft score '+score.score+'/100. Kunt u vrijblijvend meedenken over een aankoopinspectie/begeleiding?');
+      const waBoodschap='https://wa.me/31624735939?text='+encodeURIComponent('Beste Martijn, ik overweeg de aankoop van kenteken '+plate+'. De gratis kentekencheck geeft score '+score.score+'/100. Kunt u vrijblijvend meedenken over een aankoopinspectie/begeleiding?');
+      if(wa)wa.href=waBoodschap;
+      /* Zwevende WhatsApp-knop (desktop) dezelfde context geven + tonen */
+      const fab=document.getElementById('wa-fab');
+      if(fab){fab.href=waBoodschap;fab.classList.add('show');fab.setAttribute('aria-label','Vraag advies over '+plate+' via WhatsApp');}
     })();
 
     /* ── Print-kop vullen (alleen zichtbaar in PDF/print) ── */
