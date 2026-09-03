@@ -2770,13 +2770,32 @@ const BRAND_MARKS={
   /* Lotus: gestileerd drie-spaaks embleem (Lotus-tribute) */
   'LOTUS':'<circle cx="12" cy="12" r="9.2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 4.2 L13.4 12 L12 19.8 M12 12 L5.4 8.6 M12 12 L18.6 8.6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>',
   /* Cadillac: schild met kleurvlakken (monochroom) */
-  'CADILLAC':'<path d="M12 2.6 L16.5 5 L16.5 12.5c0 4-2.3 7.2-4.5 8.8C9.8 19.7 7.5 16.5 7.5 12.5V5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M12 5.5 L14.2 6.8 L14.2 12.3c0 2.9-1.5 5.2-2.2 6.4-.7-1.2-2.2-3.5-2.2-6.4V6.8z" fill="currentColor"/>'
+  'CADILLAC':'<path d="M12 2.6 L16.5 5 L16.5 12.5c0 4-2.3 7.2-4.5 8.8C9.8 19.7 7.5 16.5 7.5 12.5V5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M12 5.5 L14.2 6.8 L14.2 12.3c0 2.9-1.5 5.2-2.2 6.4-.7-1.2-2.2-3.5-2.2-6.4V6.8z" fill="currentColor"/>',
+  /* Škoda: gevleugelde pijl in een ring (gestileerd) */
+  'SKODA':'<circle cx="12" cy="12" r="9.4" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 6.6 L16.6 12 L12 17.4 L7.4 12 Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M12 6.6 L12 17.4 M12 12 L18.4 9.6 M12 12 L5.6 9.6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>',
+  /* MG: achthoekig embleem */
+  'MG':'<polygon points="12,2.6 18.4,5.2 21.4,12 18.4,18.8 12,21.4 5.6,18.8 2.6,12 5.6,5.2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><text x="12" y="15.4" text-anchor="middle" font-family="Georgia,serif" font-size="8.5" font-weight="700" fill="currentColor">MG</text>',
+  /* BYD: ovale woordletters */
+  'BYD':'<ellipse cx="12" cy="12" rx="10" ry="7.2" fill="none" stroke="currentColor" stroke-width="1.5"/><text x="12" y="15.2" text-anchor="middle" font-family="Arial,sans-serif" font-size="7.6" font-weight="700" letter-spacing="0.5" fill="currentColor">BYD</text>',
+  /* Polestar: vier ster-helften (gestileerd) */
+  'POLESTAR':'<path d="M12 3.2 L13.9 10.1 L20.8 12 L13.9 13.9 L12 20.8 L10.1 13.9 L3.2 12 L10.1 10.1 Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>',
+  /* DS: monogram */
+  'DS':'<circle cx="12" cy="12" r="9.4" fill="none" stroke="currentColor" stroke-width="1.5"/><text x="12" y="15.6" text-anchor="middle" font-family="Georgia,serif" font-size="9.5" font-weight="700" fill="currentColor">DS</text>',
+  /* Smart */
+  'SMART':'<circle cx="12" cy="12" r="9.4" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M9 9.2c-.9-.3-2.1-.1-2.2.9-.1 1.3 2.9 1.1 3 2.5.1 1.2-1.6 1.5-2.7 1" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M14.2 8.6v6.8M17.4 8.6c-1.8 0-2.3 1-2.3 3.4s.5 3.4 2.3 3.4" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>'
 };
 function brandMark(merk){
   if(!merk)return null;
-  const m=String(merk).toUpperCase().trim();
+  /* normaliseer: hoofdletters, geen diakritische tekens, dubbele streepjes/spaties */
+  const norm=s=>String(s).toUpperCase().trim()
+    .normalize('NFD').replace(/[̀-ͯ]/g,'')
+    .replace(/\s+/g,' ');
+  const m=norm(merk);
   if(BRAND_MARKS[m])return BRAND_MARKS[m];
-  const ali={'VW':'VOLKSWAGEN','CITROEN':'CITROEN','MB':'MERCEDES-BENZ','MERCEDES BENZ':'MERCEDES-BENZ'};
+  const ali={'VW':'VOLKSWAGEN','MB':'MERCEDES-BENZ','MERCEDES BENZ':'MERCEDES-BENZ','MERCEDES-BENZ':'MERCEDES-BENZ',
+    'SKODA':'SKODA','LANDROVER':'LAND ROVER','ALFA ROMEO':'ALFA ROMEO','ASTON MARTIN':'ASTON MARTIN'};
+  const keys=['MERCEDES-BENZ','LAND ROVER','ALFA ROMEO','ASTON MARTIN'];
+  for(const k of keys){if(m===k.replace(/ /g,'')||m.startsWith(k))return BRAND_MARKS[k];}
   if(BRAND_MARKS[ali[m]])return BRAND_MARKS[ali[m]];
   return null;
 }
