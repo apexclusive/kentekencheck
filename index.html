@@ -2797,9 +2797,35 @@ function shareReport(kanaal){
     copyShareLink();
   }
 }
-/* Mobiel: gebruik het systeem-deelblad (WhatsApp/berichten/kopiëren/AirDrop)
-   als dat beschikbaar is; anders terugvallen op link-kopiëren. */
+/* Mobiel: de duim-bereikbare 'Delen'-knop deelt bij voorkeur de PERSOONLIJKE
+   scorekaart als afbeelding. Op iOS Safari en Android Chrome opent
+   navigator.share({files}) het systeemdeelblad met de PNG, waardoor de kaart
+   (met score en het gekleurde oordeel 'LET OP' / 'STERK PROFIEL') direct als
+   afbeelding in WhatsApp zichtbaar is — dat trekt beduidend meer aandacht en
+   doorkliks dan een kale link met een generieke voorbeeldfoto. Heeft het
+   apparaat geen bestands-delen, dan valt het terug op link/tekst-delen. */
 function mobielDelen(){
+  const res=document.getElementById('results');
+  const hasReport=!!(res&&res.classList.contains('show'));
+  let kanAfbeelding=false;
+  try{
+    if(hasReport&&typeof navigator.canShare==='function'){
+      const probeer=new File(['x'],'kentekencheck.png',{type:'image/png'});
+      kanAfbeelding=navigator.canShare({files:[probeer]});
+    }
+  }catch(e){kanAfbeelding=false;}
+  if(kanAfbeelding){
+    const txtEl=document.getElementById('ma-share-txt');
+    const oud=txtEl?txtEl.textContent:'';
+    if(txtEl)txtEl.textContent='Kaart…';
+    /* deelAlsAfbeelding opent het deelblad met de persoonlijke PNG-kaart.
+       De functie is zelf fout-robust (eigen try/catch); herstel daarna het label. */
+    Promise.resolve(deelAlsAfbeelding(null))
+      .catch(()=>{})
+      .then(()=>{if(txtEl&&oud)txtEl.textContent=oud;});
+    return;
+  }
+  /* Terugval: systeemdeelblad met tekst+link, of link naar het klembord. */
   if(navigator.share){shareReport('native');}
   else{copyShareLink();}
 }
@@ -2835,8 +2861,10 @@ function _aCardData(){
   if(numEl){const ds=parseInt(numEl.getAttribute('data-score'),10);score=isNaN(ds)?null:ds;
     const dt=numEl.getAttribute('data-tone');if(dt)tone=dt;}
   if(score===null){const t=parseInt(g('score-num'),10);if(!isNaN(t))score=t;}
+  const badgeEl2=document.getElementById('r-badge');
+  const plate=(badgeEl2&&(badgeEl2.getAttribute('data-plate')||badgeEl2.textContent.trim()))||'——';
   return{
-    plate:g('r-badge')||'——',
+    plate:plate,
     name:g('r-name')&&g('r-name')!=='—'?g('r-name').toUpperCase():'VOERTUIGRAPPORT',
     merk:(g('d-merk')&&g('d-merk')!=='—')?g('d-merk'):'',
     score:score,tone:tone,
