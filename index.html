@@ -736,7 +736,10 @@ header::after{content:'';position:absolute;left:10%;right:10%;bottom:-1px;height
 .waarde-cta{display:flex;align-items:center;gap:.9rem;flex-wrap:wrap;margin-top:.9rem;padding:1rem 1.1rem;
   border:1px solid rgba(186,126,83,.45);background:linear-gradient(120deg,rgba(186,126,83,.14),rgba(186,126,83,.04));border-radius:6px}
 .waarde-cta-txt{flex:1;min-width:220px;font-size:.82rem;line-height:1.6;color:rgba(232,236,238,.94)}
-@media print{.waarde-cta{border-color:#000!important;background:none!important}.waarde-cta-txt{color:#000!important}}
+.waarde-cta .mini-cta-link{flex-shrink:0}
+.mini-cta-link.alt{border-color:rgba(255,255,255,.25);color:rgba(232,236,238,.85);background:rgba(255,255,255,.04)}
+.mini-cta-link.alt:hover{border-color:var(--brand-copper);color:var(--brand-copper-light);background:rgba(186,126,83,.14)}
+@media print{.waarde-cta{border-color:#000!important;background:none!important}.waarde-cta-txt{color:#000!important}.waarde-cta .mini-cta-link{display:none!important}}
 /* Contextuele mini-CTA op twijfelmomenten (recall/NAP/BPM) */
 .mini-cta{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;margin-top:.9rem;padding:.8rem .95rem;
   border:1px solid rgba(186,126,83,.38);background:linear-gradient(120deg,rgba(186,126,83,.10),rgba(186,126,83,.02));border-radius:6px}
@@ -1766,7 +1769,7 @@ body{font-family:'DM Sans',Arial,sans-serif;font-weight:400}
           <div><span class="di-lbl">Resterende APK</span><span class="di-val" id="d-apkdays">—</span></div>
           <div><span class="di-lbl">Gestolen</span><span class="di-val" id="d-gestolen">—</span></div>
           <div><span class="di-lbl">Geëxporteerd</span><span class="di-val" id="d-export">—</span></div>
-          <div><span class="di-lbl">Gescorst</span><span class="di-val" id="d-geschorst">—</span></div>
+          <div><span class="di-lbl">Geschorst</span><span class="di-val" id="d-geschorst">—</span></div>
           <div><span class="di-lbl">Geïmporteerd</span><span class="di-val" id="d-import">—</span></div>
           <div><span class="di-lbl">Tenaamstellen mogelijk</span><span class="di-val" id="d-ttm">—</span></div>
           <div><span class="di-lbl">WAM verzekerd</span><span class="di-val" id="d-wam">—</span></div>
@@ -3212,6 +3215,10 @@ function renderTCO(tco,isEV,plate){
     '<div class="waarde-cta">'+
       '<div class="waarde-cta-txt">Een eerlijke prijs bepaalt u niet op een kenteken alleen: staat, onderhoudshistorie en onderhandeling kunnen duizenden euro&rsquo;s verschil maken. Wij taxeren de werkelijke waarde en onderhandelen mee tijdens een aankoopbegeleiding.</div>'+
       '<a class="mini-cta-link" href="https://wa.me/31624735939?text='+encodeURIComponent('Beste Martijn, ik overweeg de aankoop van kenteken '+plate+'. De geschatte dagwaarde is ca. € '+Math.round(tco.dagwaarde).toLocaleString('nl-NL')+'. Kunt u helpen met een realistische waardebepaling en onderhandeling?')+'" target="_blank" rel="noopener noreferrer">Laat de waarde &amp; prijs toetsen <span aria-hidden="true">↗</span></a>'+
+    '</div>'+
+    '<div class="waarde-cta" style="margin-top:.7rem">'+
+      '<div class="waarde-cta-txt">Rijdt u deze auto op basis van deze indicatie naar schatting <b>€ '+Math.round(perMaand).toLocaleString('nl-NL')+' per maand</b> (exclusief financiering), met een verzekeringspost van ca. <b>€ '+Math.round(tco.verzekering).toLocaleString('nl-NL')+' per jaar</b>. Een scherpe verzekering of een passende financiering (privé of zakelijk) kan dat plaatje flink verbeteren — wij vergelijken het aanbod en regelen het desgewenst mee.</div>'+
+      '<a class="mini-cta-link alt" href="https://wa.me/31624735939?text='+encodeURIComponent('Beste Martijn, voor kenteken '+plate+' wil ik graag vrijblijvend weten of u kunt helpen met een scherpe autoverzekering en/of een passende financiering. Geschatte maandkosten ca. € '+Math.round(perMaand).toLocaleString('nl-NL')+' exclusief financiering.')+'" target="_blank" rel="noopener noreferrer">Verzekering &amp; financiering <span aria-hidden="true">↗</span></a>'+
     '</div>';
   armCounters(wrap);
   const grow=()=>wrap.querySelectorAll('.tco-bar-fill').forEach(f=>{f.style.width=(f.getAttribute('data-w')||0)+'%';});
