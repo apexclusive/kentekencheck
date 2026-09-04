@@ -2961,6 +2961,28 @@ async function deelAlsAfbeelding(btn){
     }
     ctx.textAlign='left';
 
+    /* Oordeel-pil: één krachtige woordzegel onder de cirkel die de score
+       uitlegt ('Sterk profiel' / 'Let op' / 'Aandacht vereist'). Voor een
+       ontvanger die alleen de afbeelding ziet is het getal alleen niet
+       genoeg — dit label kleurt en duidt de uitkomst direct. */
+    const oordeelPalet={
+      ok:  {bg:'rgba(39,174,96,0.16)', line:'rgba(39,174,96,0.6)',  tx:'#5fd88f', woord:'STERK PROFIEL'},
+      bad: {bg:'rgba(224,86,96,0.18)', line:'rgba(224,86,96,0.65)', tx:'#f27984', woord:'AANDACHT VEREIST'},
+      warn:{bg:'rgba(217,163,0,0.16)', line:'rgba(217,163,0,0.6)',  tx:'#eec659', woord:'LET OP'}
+    };
+    const oord=oordeelPalet[D.tone]||oordeelPalet.ok;
+    if(D.score!==null){
+      ctx.font='700 34px '+SANS;
+      const ow=ctx.measureText(oord.woord).width;
+      const pilW=Math.min(ow+88,W-200),pilH=74,pilX=(W-pilW)/2,pilY=cy+R+30;
+      _roundRectPath(ctx,pilX,pilY,pilW,pilH,pilH/2);
+      ctx.fillStyle=oord.bg;ctx.fill();
+      ctx.strokeStyle=oord.line;ctx.lineWidth=2;ctx.stroke();
+      ctx.fillStyle=oord.tx;ctx.textAlign='center';
+      ctx.fillText(oord.woord,W/2,pilY+48);
+      ctx.textAlign='left';
+    }
+
     /* Stat-chips met semantische kleur (rood/geel/groen/neutraal) */
     const chipPalet={
       ok:  {bg:'rgba(39,174,96,0.14)', line:'rgba(39,174,96,0.55)',  tx:'#43d183'},
@@ -2982,7 +3004,8 @@ async function deelAlsAfbeelding(btn){
       else chips.push(['APK','onbekend','warn']);
     }
     if(D.bpm&&D.bpm!=='—'&&D.bpm!=='')chips.push(['BPM-rest (indicatie)',D.bpm,'neu']);
-    let chipY=cy+R+64;
+    /* chips beginnen onder de oordeel-pil als die getekend is */
+    let chipY=cy+R+(D.score!==null?150:64);
     ctx.font='600 28px '+SANS;
     chips.forEach(([k,v,tone])=>{
       const pal=chipPalet[tone]||chipPalet.neu;
