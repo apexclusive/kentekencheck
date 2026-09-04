@@ -4044,6 +4044,23 @@ function wisKnopBijwerken(){
   clr.classList.toggle('show',kt.value.trim().length>0);
 }
 
+/* Werk de sociale meta-tags (Open Graph + Twitter) bij naar het getoonde
+   rapport, zodat een gedeelde rapport-link op WhatsApp/social context geeft
+   (kenteken + score in plaats van alleen de generieke homepage-tekst). */
+function _setMeta(prop,content){
+  const el=document.querySelector('meta[property="'+prop+'"],meta[name="'+prop+'"]');
+  if(el&&content)el.setAttribute('content',content);
+}
+function updateSocialMeta(plate,score){
+  const naam=document.getElementById('r-name')?document.getElementById('r-name').textContent.trim():'';
+  const titel=(naam?naam:'Kentekencheck')+' · Score '+score+'/100';
+  const omschrijving='Gratis RDW-voertuigrapport voor '+plate+': APK-historie, NAP-telleroordeel, BPM, wegenbelasting, recalls, echte autokosten en een voertuigscore. Volledig gratis, zonder account.';
+  _setMeta('og:title',titel);
+  _setMeta('og:description',omschrijving);
+  _setMeta('twitter:title','Kentekencheck '+plate+' — score '+score+'/100');
+  _setMeta('twitter:description',omschrijving);
+}
+
 /* RDW-fetch met automatische retry (netwerkhik) en sessie-cache (sneller bij herhaling) */
 const _cache={};
 function rdwFetch(url,tries){
@@ -5050,6 +5067,8 @@ async function doCheck(){
     /* Deelbare URL bijwerken (zonder paginaverversing) */
     try{history.replaceState(null,'','?kenteken='+encodeURIComponent(plateFormatted));}catch(e){}
     document.title=plateFormatted+' — Kentekencheck | APEXclusive';
+    /* Sociale meta meegeven met het rapport (WhatsApp/social link-preview) */
+    try{updateSocialMeta(plateFormatted,score.score);}catch(e){}
 
     /* Scroll naar resultaten */
     setTimeout(()=>{try{if(res&&res.scrollIntoView)res.scrollIntoView({behavior:'smooth',block:'start'});}catch(e){}},100);
