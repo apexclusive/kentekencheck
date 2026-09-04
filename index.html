@@ -2577,11 +2577,15 @@ applyTheme(document.documentElement.getAttribute('data-theme')==='light'?'light'
 
 function onReveal(el,cb,once){
   if(reduceMotion||!('IntersectionObserver' in window)){cb();return;}
+  /* Drempel 0.12 i.p.v. 0.35: een element dat langer is dan ~2,8× de
+     viewport kan 35% eigen hoogte nóóit in beeld brengen, waardoor de
+     teller/balk/grafiek nooit zou starten. 0.12 wordt door elk formaat
+     gehaald en vuurt ook als een element de viewport maar net in schuift. */
   const io=new IntersectionObserver(entries=>{
     entries.forEach(e=>{
       if(e.isIntersecting){cb();if(once)io.unobserve(e.target);}
     });
-  },{threshold:.35});
+  },{threshold:.12,rootMargin:'0px 0px 40px 0px'});
   io.observe(el);
 }
 
