@@ -2298,7 +2298,9 @@ async function runCompare(){
     h+='</tbody></table><div class="wb-note" style="margin-top:.6rem">Koperen waarde is in die rij het gunstigst (bij CO₂: hoe lager, hoe beter). Alle gegevens uit RDW open data.</div>';
     h+='<div style="margin-top:.9rem;display:flex;gap:.6rem;flex-wrap:wrap">'+
       '<button type="button" class="aanbod-btn" id="cmp-share">🔗 Deel deze vergelijking</button>'+
+      '<button type="button" class="aanbod-btn" id="cmp-share-img" style="border-style:dashed">🖼 Vergelijkingskaart delen</button>'+
       '<a class="aanbod-btn" href="https://vergelijk.apexclusive.nl/" target="_blank" rel="noopener noreferrer">Uitgebreide vergelijker ↗</a></div>';
+    CMP_STATE={A,B,k1,k2};
     h+='<div class="mini-cta" style="margin-top:1rem">'
       +'<span class="mini-cta-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.8 14.06c-.24.68-1.4 1.3-1.94 1.38-.5.07-1.13.1-1.82-.11-.42-.13-.96-.31-1.65-.61-2.9-1.25-4.79-4.18-4.94-4.37-.14-.19-1.18-1.57-1.18-2.99 0-1.42.74-2.12 1.01-2.41.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.41-.07.64.49.24.57.81 1.97.88 2.11.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.17-.29.37-.42.5-.14.14-.28.29-.12.57.16.28.71 1.17 1.52 1.9 1.05.94 1.93 1.23 2.21 1.37.28.14.45.12.61-.07.16-.19.69-.8.87-1.08.18-.28.37-.23.62-.14.25.09 1.6.76 1.87.9.27.14.45.21.52.33.07.12.07.68-.18 1.36z"/></svg></span>'
       +'<span class="mini-cta-txt">Tussen deze twee twijfelen? De tabel vergelijkt de specificaties — maar staat, historie en onderhandeling bepalen de échte keuze. <b>Vraag gratis welke volgens een aankoopexpert de betere koop is.</b></span>'
@@ -2320,6 +2322,8 @@ async function runCompare(){
       }
       if(navigator.share){navigator.share({title:'Kentekenvergelijking',text:txt,url:location.href}).catch(()=>{});}
     };
+    const shImgBtn=document.getElementById('cmp-share-img');
+    if(shImgBtn)shImgBtn.onclick=function(){deelVergelijkingAlsAfbeelding(shImgBtn);};
   }catch(e){bt.textContent='Vergelijk';err.textContent='Vergelijken mislukt — probeer het opnieuw.';err.classList.add('show');}
 }
 
@@ -2383,6 +2387,54 @@ function _aCardData(){
     bpm:g('bpm-rest')||''
   };
 }
+/* Merk-embleem op een canvas (monochroom koper). Eigen SVG-merken als
+   ingesloten SVG-afbeelding (Georgia/Arial-lettervormen); CC0-iconen via Path2D. */
+async function _drawMerkEmbleem(ctx,merk,x,y,size,color){
+  if(!merk)return;
+  const COPL=color||'#e2b28e';
+  const mk=brandMark(merk);
+  const lp=brandLogoPath(merk);
+  if(lp&&window.Path2D){
+    ctx.save();
+    ctx.fillStyle=COPL;
+    ctx.translate(x,y);ctx.scale(size/24,size/24);
+    try{ctx.fill(new Path2D(lp));}catch(e){}
+    ctx.restore();
+  }else if(mk){
+    const svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="'+size+'" height="'+size+'">'+
+      '<g fill="'+COPL+'" stroke="'+COPL+'">'+mk.replace(/currentColor/g,COPL)+'</g></svg>';
+    const img=new Image();
+    try{
+      await new Promise((res,rej)=>{img.onload=res;img.onerror=rej;img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);});
+      ctx.drawImage(img,x,y,size,size);
+    }catch(e){/* logo niet beschikbaar: zonder doorgaan */}
+  }
+}
+function _drawMiniPlate(ctx,plate,x,y,w,h){
+  ctx.save();
+  _roundRectPath(ctx,x,y,w,h,10);ctx.fillStyle='#f4f3ee';ctx.fill();
+  ctx.fillStyle='#003DA5';ctx.fillRect(x,y,h*0.74,h);
+  _roundRectPath(ctx,x,y,w,h,10);ctx.strokeStyle='rgba(0,0,0,0.25)';ctx.lineWidth=1.5;ctx.stroke();
+  ctx.fillStyle='#ffd326';ctx.font='700 '+(h*0.24)+'px Arial';ctx.textAlign='center';
+  ctx.fillText('★',x+h*0.37,y+h*0.42);
+  ctx.fillStyle='#fff';ctx.font='700 '+(h*0.22)+'px Arial';
+  ctx.fillText('NL',x+h*0.37,y+h*0.74);
+  ctx.textAlign='left';ctx.fillStyle='#1a1a1a';ctx.font='700 '+(h*0.5)+'px Arial,sans-serif';
+  ctx.fillText(plate,x+h*0.95,y+h*0.66);
+  ctx.restore();
+}
+/* Breek een label in maximaal maxL regels; laatste regel krijgt ellips bij afkap. */
+function _canvasLines(ctx,text,maxW,maxL){
+  const words=String(text).toUpperCase().split(' ');const lines=[];let cur='';
+  for(const wd of words){const t2=cur?cur+' '+wd:wd;
+    if(ctx.measureText(t2).width<=maxW)cur=t2;
+    else{if(cur)lines.push(cur);cur=wd;}}
+  if(cur)lines.push(cur);
+  if(lines.length>maxL){let t=lines.slice(0,maxL).join(' ');
+    while(ctx.measureText(t+'…').width>maxW&&t.length>4)t=t.slice(0,-1);
+    return[t+'…'];}
+  return lines;
+}
 function _roundRectPath(ctx,x,y,w,h,r){
   ctx.beginPath();
   ctx.moveTo(x+r,y);
@@ -2428,29 +2480,8 @@ async function deelAlsAfbeelding(btn){
     ctx.fillStyle=COPL;ctx.font='600 28px '+SANS;ctx.textBaseline='alphabetic';ctx.textAlign='left';
     ctx.fillText('GRATIS KENTEKENCHECK · RDW-DATA',80,158);
 
-    /* Merk-embleem rechtsboven (monochroom koper). Eigen SVG-merken worden als
-       SVG-afbeelding getekend (ingesloten lettervormen in Georgia/Arial);
-       simple-icons-paden direct via Path2D. */
-    if(D.merk){
-      const sSize=92,sx=W-80-sSize,sy=120;
-      const mk=brandMark(D.merk);
-      const lp=brandLogoPath(D.merk);
-      if(lp&&window.Path2D){
-        ctx.save();
-        ctx.fillStyle=COPL;
-        ctx.translate(sx,sy);ctx.scale(sSize/24,sSize/24);
-        try{ctx.fill(new Path2D(lp));}catch(e){}
-        ctx.restore();
-      }else if(mk){
-        const svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="'+sSize+'" height="'+sSize+'">'+
-          '<g fill="'+COPL+'" stroke="'+COPL+'">'+mk.replace(/currentColor/g,COPL)+'</g></svg>';
-        const img=new Image();
-        try{
-          await new Promise((res,rej)=>{img.onload=res;img.onerror=rej;img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);});
-          ctx.drawImage(img,sx,sy,sSize,sSize);
-        }catch(e){/* logo niet beschikbaar: zonder doorgaan */}
-      }
-    }
+    /* Merk-embleem rechtsboven (monochroom koper) */
+    await _drawMerkEmbleem(ctx,D.merk,W-80-92,120,92);
 
     /* Autonaam: serif, max 2 regels; langer → afkappen met ellips */
     ctx.fillStyle=TXT;ctx.font='400 62px '+SERIF;
@@ -2540,6 +2571,111 @@ async function deelAlsAfbeelding(btn){
     else{
       alert('De afbeelding kon niet worden gemaakt. Gebruik anders de WhatsApp- of link-knop.');
     }
+  }finally{
+    if(btn){btn.disabled=false;if(oldHtml)btn.innerHTML=oldHtml;}
+  }
+}
+
+/* ── Deelkaart van een tweewagen-vergelijking ── */
+let CMP_STATE=null;
+function _cmpFuel(o){
+  if(!o||!o.fuels||!o.fuels.length)return'—';
+  const raw=String(o.fuels[0].brandstof_omschrijving||'').toUpperCase();
+  if(/ELEKTR|^EV$/.test(raw))return'Elektrisch';
+  if(/DIESEL/.test(raw))return'Diesel';
+  if(/BENZINE|LPG|CNG|WATERSTOF|HYBRIDE/.test(raw))return raw.charAt(0)+raw.slice(1).toLowerCase().split('/')[0].split(' ')[0];
+  return raw.split(' ')[0].charAt(0)+raw.split(' ')[0].slice(1).toLowerCase();
+}
+async function deelVergelijkingAlsAfbeelding(btn){
+  const oldHtml=btn?btn.innerHTML:'';
+  if(btn){btn.disabled=true;btn.innerHTML='…';}
+  try{
+    if(!CMP_STATE)throw new Error('geen vergelijking');
+    if(document.fonts&&document.fonts.ready){try{await document.fonts.ready;}catch(e){}}
+    const {A,B,k1,k2}=CMP_STATE;
+    const W=1080,H=1350;
+    const cv=document.createElement('canvas');cv.width=W;cv.height=H;
+    const ctx=cv.getContext('2d');
+    const SANS="Manrope,'DM Sans',Arial,sans-serif";
+    const SERIF="'Playfair Display',Georgia,'Times New Roman',serif";
+    const COPL='#e2b28e',COP='#ba7e53',BG='#0b0e0e',MUT='#9aa4a7',TXT='#eae7e1';
+
+    ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);
+    const grad=ctx.createLinearGradient(0,0,W,H);
+    grad.addColorStop(0,'rgba(186,126,83,0.10)');grad.addColorStop(0.5,'rgba(186,126,83,0.02)');grad.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);
+    ctx.strokeStyle='rgba(186,126,83,0.55)';ctx.lineWidth=3;
+    ctx.beginPath();ctx.moveTo(80,104);ctx.lineTo(280,104);ctx.stroke();
+    ctx.fillStyle=COPL;ctx.font='600 28px '+SANS;ctx.textBaseline='alphabetic';ctx.textAlign='left';
+    ctx.fillText('AUTOVERGELIJKING · RDW-DATA',80,158);
+
+    const ph=128,padX=80;
+    function side(o,plate,ty){
+      _drawMiniPlate(ctx,plate,padX,ty,W-padX*2,ph);
+      const nmY=ty+ph+52;
+      ctx.fillStyle=TXT;ctx.font='400 44px '+SERIF;ctx.textAlign='left';
+      const nm=((o.v.merk||'')+' '+(o.v.handelsbenaming||o.v.type||'')).trim()||'VOERTUIG';
+      const lines=_canvasLines(ctx,nm,W-padX*2-96,2);
+      let yy=nmY;
+      lines.forEach(ln=>{ctx.fillText(ln,padX,yy);yy+=52;});
+      _drawMerkEmbleem(ctx,o.v.merk,W-padX-74,nmY-42,74);
+      let sy=nmY+(lines.length===1?58:108);
+      const specs=[
+        ['Bouwjaar',o.v.datum_eerste_toelating?o.v.datum_eerste_toelating.substring(0,4):'—'],
+        ['Brandstof',_cmpFuel(o)],
+        ['Vermogen',o.kw?o.kw+' kW / '+kwToPk(o.kw)+' pk':'—'],
+        ['Catalogusprijs',o.v.catalogusprijs?'€ '+parseInt(o.v.catalogusprijs).toLocaleString('nl-NL'):'—']
+      ];
+      ctx.font='600 26px '+SANS;
+      specs.forEach(([k,v])=>{
+        ctx.fillStyle=MUT;ctx.textAlign='left';ctx.fillText(k.toUpperCase(),padX,sy);
+        ctx.fillStyle=TXT;ctx.textAlign='right';
+        const vv=String(v).length>32?String(v).slice(0,31)+'…':String(v);
+        ctx.fillText(vv,W-padX,sy);
+        ctx.strokeStyle='rgba(255,255,255,0.07)';ctx.lineWidth=1;
+        ctx.beginPath();ctx.moveTo(padX,sy+16);ctx.lineTo(W-padX,sy+16);ctx.stroke();
+        sy+=58;
+      });
+      ctx.textAlign='left';
+      return sy;
+    }
+
+    const aEnd=side(A,formatPlate(k1),205);
+    const divY=aEnd+40;
+    ctx.strokeStyle='rgba(186,126,83,0.3)';ctx.lineWidth=2;
+    ctx.beginPath();ctx.moveTo(120,divY);ctx.lineTo(W-120,divY);ctx.stroke();
+    ctx.save();
+    ctx.beginPath();ctx.arc(W/2,divY,46,0,Math.PI*2);ctx.fillStyle=BG;ctx.fill();
+    ctx.strokeStyle=COP;ctx.lineWidth=3;ctx.stroke();
+    ctx.fillStyle=COPL;ctx.font='700 28px '+SANS;ctx.textAlign='center';
+    ctx.fillText('VS',W/2,divY+10);ctx.textAlign='left';
+    ctx.restore();
+    side(B,formatPlate(k2),divY+72);
+
+    ctx.strokeStyle='rgba(186,126,83,0.3)';ctx.lineWidth=2;
+    ctx.beginPath();ctx.moveTo(80,H-150);ctx.lineTo(W-80,H-150);ctx.stroke();
+    ctx.fillStyle=COPL;ctx.font='700 36px '+SANS;ctx.textAlign='left';
+    ctx.fillText('APEXclusive',80,H-94);
+    ctx.fillStyle=MUT;ctx.font='400 28px '+SANS;ctx.textAlign='right';
+    ctx.fillText('kentekencheck.apexclusive.nl',W-80,H-94);
+    ctx.textAlign='left';
+
+    const blob=await new Promise(res=>cv.toBlob(res,'image/png'));
+    if(!blob)throw new Error('geen afbeelding');
+    const slug=t=>formatPlate(t).replace(/[^A-Z0-9]/gi,'').toLowerCase();
+    const file=new File([blob],'vergelijking-'+slug(k1)+'-vs-'+slug(k2)+'.png',{type:'image/png'});
+    if(navigator.canShare&&navigator.canShare({files:[file]})){
+      await navigator.share({files:[file],title:'Kentekenvergelijking',
+        text:'Vergelijking '+formatPlate(k1)+' vs '+formatPlate(k2)+' — gratis RDW-rapport.'});
+    }else{
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement('a');a.href=url;a.download=file.name;
+      document.body.appendChild(a);a.click();a.remove();
+      setTimeout(()=>URL.revokeObjectURL(url),2000);
+    }
+  }catch(e){
+    if(e&&e.name==='AbortError'){}
+    else alert('De vergelijkingskaart kon niet worden gemaakt. Gebruik anders de link-knop.');
   }finally{
     if(btn){btn.disabled=false;if(oldHtml)btn.innerHTML=oldHtml;}
   }
