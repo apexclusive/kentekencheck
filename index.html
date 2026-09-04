@@ -5054,6 +5054,10 @@ async function doCheck(){
          zodat Martijn direct ziet om welk kenteken en welke score het gaat. */
       const ctaWa=document.getElementById('cta-wa');
       if(ctaWa)ctaWa.href=waBoodschap;
+      /* Mobiele vaste actiebalk: de 'Vraag expert'-knop dezelfde context geven,
+         zodat de expert-WhatsApp altijd duim-bereikbaar is tijdens het scrollen. */
+      const maExp=document.getElementById('ma-expert');
+      if(maExp)maExp.href=waBoodschap;
       const ctaMail=document.getElementById('cta-mail');
       if(ctaMail)ctaMail.href='mailto:info@apexclusive.nl?subject='+encodeURIComponent('Aankoopbegeleiding gevraagd — '+plate+' (score '+score.score+'/100)');
     })();
@@ -5352,10 +5356,10 @@ if('serviceWorker' in navigator){
 
 <!-- Mobiele vaste actiebalk (alleen zichtbaar op telefoon, bij een rapport) -->
 <nav class="mobile-actions" id="mobile-actions" aria-label="Rapportacties">
-  <button type="button" class="ma-btn ma-primary" onclick="window.print()"><span class="ma-ic">⎙</span><span>PDF</span></button>
+  <button type="button" class="ma-btn" onclick="window.print()"><span class="ma-ic">⎙</span><span>PDF</span></button>
   <button type="button" class="ma-btn" onclick="kopieerSamenvatting(event)"><span class="ma-ic">☰</span><span>Samenvatting</span></button>
-  <button type="button" class="ma-btn" id="ma-share" onclick="mobielDelen()"><span class="ma-ic" id="ma-share-ic">🔗</span><span id="ma-share-txt">Link</span></button>
-  <button type="button" class="ma-btn" onclick="shareReport('wa')"><span class="ma-ic">✆</span><span>WhatsApp</span></button>
+  <button type="button" class="ma-btn" id="ma-share" onclick="mobielDelen()"><span class="ma-ic" id="ma-share-ic">🔗</span><span id="ma-share-txt">Delen</span></button>
+  <a class="ma-btn ma-primary" id="ma-expert" href="https://wa.me/31624735939" target="_blank" rel="noopener noreferrer" aria-label="Vraag advies aan een expert via WhatsApp"><span class="ma-ic">✆</span><span>Vraag expert</span></a>
   <button type="button" class="ma-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})"><span class="ma-ic">↑</span><span>Boven</span></button>
 </nav>
 </body>
