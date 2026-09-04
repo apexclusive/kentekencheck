@@ -424,6 +424,13 @@
 :root[data-theme="light"] input,
 :root[data-theme="light"] select{background:#fff;color:#23201a}
 :root[data-theme="light"] .compare-panel .kt-input{background:#fff!important}
+/* 'Niet gevonden'-venster: uitlegtekst donker op de crème/gele tint */
+:root[data-theme="light"] .notfound{background:rgba(154,116,0,.07);border-color:rgba(154,116,0,.35)}
+:root[data-theme="light"] .nf-lijst{color:#3a352d}
+:root[data-theme="light"] .nf-lijst b{color:#1f1c16}
+:root[data-theme="light"] .nf-input{background:#fff;color:#23201a;border-color:var(--line-soft)}
+:root[data-theme="light"] .nf-link{color:var(--brand-copper)}
+:root[data-theme="light"] .nf-link:hover{color:#fff;background:var(--brand-copper)}
 /* BPM/MRB notities */
 :root[data-theme="light"] .mrb-ev{background:rgba(11,122,60,.07);border-color:rgba(11,122,60,.35);color:#0b6b35}
 
@@ -1007,6 +1014,18 @@ header::after{content:'';position:absolute;left:10%;right:10%;bottom:-1px;height
 .report-actions{display:flex;gap:.6rem;flex-wrap:wrap;margin:0 0 1.4rem}
 .act-btn{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--lb);font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;background:transparent;color:rgba(236,238,240,.85);border:1px solid rgba(198,203,209,.28);padding:.62rem 1.05rem;cursor:pointer;transition:.25s}
 .act-btn:hover{color:var(--brand-copper-light);border-color:var(--brand-copper-light);background:rgba(186,126,83,.08)}
+/* Mobiel: de vaste onderbalk biedt al PDF, samenvatting, link en WhatsApp.
+   Verberg de dubbele knoppen zodat de rapportinhoud direct in beeld komt;
+   houd alleen de unieke acties (vergelijken, APK-herinnering) compact over. */
+@media(max-width:760px){
+  .report-actions{gap:.55rem;margin:0 0 1.1rem}
+  .report-actions .act-btn{flex:1 1 auto;justify-content:center;padding:.62rem .7rem}
+  .report-actions .act-btn[onclick*="window.print()"],
+  .report-actions .act-btn[onclick*="kopieerSamenvatting"],
+  .report-actions #copy-link,
+  .report-actions #share-native-btn,
+  .report-actions .act-btn[onclick*="shareReport('wa')"]{display:none}
+}
 .compare-panel{background:var(--panel);border:1px solid var(--ln);padding:1.1rem 1.2rem;margin:0 0 1.4rem}
 .compare-head{font-family:var(--ld);font-size:1.15rem;color:var(--brand-text-85);margin-bottom:.8rem}
 .compare-row{display:flex;gap:.6rem}
