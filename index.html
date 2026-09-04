@@ -3216,11 +3216,14 @@ function downloadApkIcs(){
 /* Korte platte-tekst samenvatting van het rapport (voor WhatsApp/notities/mail) */
 /* Eén eerlijk, doorstuur-klaar koopadvies op basis van de score.
    Geen juridische/financiële garantie — een leesbare duiding van de registerdata. */
-function koopadviesZin(score){
+function koopadviesZin(score,tone){
   const s=parseInt(score,10);
   if(isNaN(s))return '';
-  if(s<62)return 'Kort advies: niet zomaar kopen — er staan rode vlaggen in de data. Laat dit eerst door een expert nalopen.';
-  if(s<80)return 'Kort advies: geen directe blokkade, maar wel punten om te verifiëren vóór u onderhandelt.';
+  /* Een open rood signaal (tone='bad') of 'let op' (tone='warn') mag nooit
+     tot 'geen waarschuwingssignalen' leiden — houd het advies consistent met
+     het oordeel in het rapport en op de deelkaart. */
+  if(tone==='bad'||s<62)return 'Kort advies: er staat een belangrijk signaal in deze data — niet zomaar kopen. Laat dit eerst door een expert nalopen (vraag een gratis second opinion).';
+  if(tone==='warn'||s<80)return 'Kort advies: geen directe blokkade, maar wel punten om te verifiëren vóór u onderhandelt.';
   return 'Kort advies: sterke registerdata — geen waarschuwingssignalen. Een proefrit/inspectie blijft verstandig.';
 }
 function kopieerSamenvatting(evt){
@@ -3236,11 +3239,12 @@ function kopieerSamenvatting(evt){
   if(qcs.length)regels.push('Snelle checks: '+qcs.join(' | '));
   const scoreNumEl=document.getElementById('score-num');
   const score=scoreNumEl?(scoreNumEl.getAttribute('data-score')||txt('score-num')):'';
+  const tone=scoreNumEl?(scoreNumEl.getAttribute('data-tone')||''):'';
   const verdict=txt('score-verdict');
   if(score&&score!=='–'&&score!=='—')regels.push('APEX-score: '+score+'/100'+(verdict?' ('+verdict+')':''));
-  const advies=koopadviesZin(score);
+  const advies=koopadviesZin(score,tone);
   if(advies)regels.push(advies);
-  const apk=txt('d-apk');if(apk&&apk!=='—')regels.push('APK geldig tot: '+apk+' ('+txt('d-apkdays')+')');
+  const apk=txt('d-apk');if(apk&&apk!=='—')regels.push('APK-vervaldatum: '+apk+' ('+txt('d-apkdays')+')');
   const nap=txt('d-nap');if(nap)regels.push('NAP-telleroordeel: '+nap);
   /* Totale autokosten (TCO) uit data-attributen, niet uit verkeerde/geanimeerde velden */
   const tcoWrap=document.getElementById('tco-wrap');
