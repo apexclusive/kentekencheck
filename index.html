@@ -2560,20 +2560,26 @@ async function deelAlsAfbeelding(btn){
     const file=new File([blob],'kentekencheck-'+String(D.plate).replace(/[^A-Z0-9]/gi,'').toLowerCase()+'.png',{type:'image/png'});
     if(navigator.canShare&&navigator.canShare({files:[file]})){
       await navigator.share({files:[file],title:'Kentekencheck '+D.plate,
-        text:'Mijn gratis kentekencheck van '+D.plate+' — volledig RDW-rapport.'});
+        text:'Mijn gratis kentekencheck van '+D.plate+' — volledig RDW-rapport: '+location.href});
     }else{
       const url=URL.createObjectURL(blob);
       const a=document.createElement('a');a.href=url;a.download=file.name;
       document.body.appendChild(a);a.click();a.remove();
       setTimeout(()=>URL.revokeObjectURL(url),2000);
+      /* Zet de rapport-link op het klembord zodat afbeelding + link samen gedeeld
+         kunnen worden (desktop zonder native bestands-delen). */
+      try{await navigator.clipboard.writeText(location.href);}catch(e){}
+      if(btn){const sp=btn.querySelector('.rs-img-txt');if(sp){sp.textContent='Opgeslagen — link gekopieerd';
+        setTimeout(()=>{if(!btn.disabled&&oldHtml)btn.innerHTML=oldHtml;},2500);}}
     }
   }catch(e){
     if(e&&e.name==='AbortError'){/* gebruiker annuleerde deelblad */}
     else{
       alert('De afbeelding kon niet worden gemaakt. Gebruik anders de WhatsApp- of link-knop.');
     }
+    if(btn&&oldHtml)btn.innerHTML=oldHtml;
   }finally{
-    if(btn){btn.disabled=false;if(oldHtml)btn.innerHTML=oldHtml;}
+    if(btn){btn.disabled=false;}
   }
 }
 
@@ -2667,18 +2673,22 @@ async function deelVergelijkingAlsAfbeelding(btn){
     const file=new File([blob],'vergelijking-'+slug(k1)+'-vs-'+slug(k2)+'.png',{type:'image/png'});
     if(navigator.canShare&&navigator.canShare({files:[file]})){
       await navigator.share({files:[file],title:'Kentekenvergelijking',
-        text:'Vergelijking '+formatPlate(k1)+' vs '+formatPlate(k2)+' — gratis RDW-rapport.'});
+        text:'Vergelijking '+formatPlate(k1)+' vs '+formatPlate(k2)+' — gratis RDW-rapport: '+location.href});
     }else{
       const url=URL.createObjectURL(blob);
       const a=document.createElement('a');a.href=url;a.download=file.name;
       document.body.appendChild(a);a.click();a.remove();
       setTimeout(()=>URL.revokeObjectURL(url),2000);
+      try{await navigator.clipboard.writeText(location.href);}catch(e){}
+      if(btn){btn.textContent='✓ Opgeslagen — link gekopieerd';
+        setTimeout(()=>{if(!btn.disabled&&oldHtml)btn.innerHTML=oldHtml;},2500);}
     }
   }catch(e){
     if(e&&e.name==='AbortError'){}
     else alert('De vergelijkingskaart kon niet worden gemaakt. Gebruik anders de link-knop.');
+    if(btn&&oldHtml)btn.innerHTML=oldHtml;
   }finally{
-    if(btn){btn.disabled=false;if(oldHtml)btn.innerHTML=oldHtml;}
+    if(btn){btn.disabled=false;}
   }
 }
 /* Toon de native deelknop alleen als het platform systeem-delen ondersteunt
