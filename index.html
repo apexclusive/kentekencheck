@@ -3159,6 +3159,15 @@ function downloadApkIcs(){
   setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},1500);
 }
 /* Korte platte-tekst samenvatting van het rapport (voor WhatsApp/notities/mail) */
+/* Eén eerlijk, doorstuur-klaar koopadvies op basis van de score.
+   Geen juridische/financiële garantie — een leesbare duiding van de registerdata. */
+function koopadviesZin(score){
+  const s=parseInt(score,10);
+  if(isNaN(s))return '';
+  if(s<62)return 'Kort advies: niet zomaar kopen — er staan rode vlaggen in de data. Laat dit eerst door een expert nalopen.';
+  if(s<80)return 'Kort advies: geen directe blokkade, maar wel punten om te verifiëren vóór u onderhandelt.';
+  return 'Kort advies: sterke registerdata — geen waarschuwingssignalen. Een proefrit/inspectie blijft verstandig.';
+}
 function kopieerSamenvatting(evt){
   const txt=id=>{const el=document.getElementById(id);return el?el.textContent.trim().replace(/\s+/g,' '):'';};
   const regels=[];
@@ -3174,10 +3183,21 @@ function kopieerSamenvatting(evt){
   const score=scoreNumEl?(scoreNumEl.getAttribute('data-score')||txt('score-num')):'';
   const verdict=txt('score-verdict');
   if(score&&score!=='–'&&score!=='—')regels.push('APEX-score: '+score+'/100'+(verdict?' ('+verdict+')':''));
+  const advies=koopadviesZin(score);
+  if(advies)regels.push(advies);
   const apk=txt('d-apk');if(apk&&apk!=='—')regels.push('APK geldig tot: '+apk+' ('+txt('d-apkdays')+')');
   const nap=txt('d-nap');if(nap)regels.push('NAP-telleroordeel: '+nap);
-  const kost=txt('d-kostjr');if(kost&&kost!=='—')regels.push('Echte autokosten (schatting): ca. '+kost+'/jaar · '+txt('d-kostkm')+'/km');
-  const wb=txt('d-wb');if(wb&&wb!=='—')regels.push('Wegenbelasting: '+wb);
+  /* Totale autokosten (TCO) uit data-attributen, niet uit verkeerde/geanimeerde velden */
+  const tcoWrap=document.getElementById('tco-wrap');
+  if(tcoWrap){
+    const maand=tcoWrap.getAttribute('data-maand'),jaar=tcoWrap.getAttribute('data-jaar');
+    if(maand)regels.push('Echte autokosten (eigen schatting): ca. € '+parseInt(maand,10).toLocaleString('nl-NL')+'/maand · € '+parseInt(jaar,10).toLocaleString('nl-NL')+'/jaar bij 15.000 km (excl. financiering)');
+  }
+  const brJr=txt('d-kostjr'),brKm=txt('d-kostkm');
+  if(brJr&&brJr!=='—'){const kmSch=(brKm&&brKm!=='—')?(brKm.includes('/')?brKm:brKm+'/km'):'';regels.push('Brandstofkosten (eigen schatting): '+brJr+(kmSch?(' · '+kmSch):''));}
+  /* Wegenbelasting: Limburg (thuisprovincie) kwartaalbedrag uit data-attribuut */
+  const mrbEl=document.querySelector('.mrb-row.hl[data-mrb]')||document.querySelector('.mrb-row[data-mrb]');
+  if(mrbEl){const mv=parseInt(mrbEl.getAttribute('data-mrb'),10);if(mv)regels.push('Wegenbelasting (MRB, indicatie): ca. € '+mv.toLocaleString('nl-NL')+'/kwartaal (Limburg; per provincie verschillend)');}
   const bpm=txt('d-brutobpm');if(bpm&&bpm!=='—')regels.push('Bruto BPM bij eerste toelating: '+bpm);
   const recalls=txt('d-recall-sum');if(recalls)regels.push('Terugroepregister: '+recalls);
   regels.push('');
@@ -3795,6 +3815,10 @@ function renderTCO(tco,isEV,plate){
   const aandeel=top?Math.round(top.v/tco.totaal*100):0;
   const perKm=(tco.totaal/15000).toFixed(2).replace('.',',');
   const afschrAandeel=Math.round(tco.afschrijving/tco.totaal*100);
+  /* Stabiele waarden voor de deelbare samenvatting (geen afhankelijkheid van animatie/DOM-tekst) */
+  wrap.setAttribute('data-maand',Math.round(perMaand));
+  wrap.setAttribute('data-jaar',tco.totaal);
+  wrap.setAttribute('data-dagwaarde',tco.dagwaarde);
   wrap.innerHTML=
     '<div class="tco-hero">'+
       '<div class="tco-cell"><div class="tco-lbl">Geschatte totale kosten</div>'+
@@ -4701,7 +4725,8 @@ async function doCheck(){
     wbSorted.forEach((r,i)=>{
       const hl=r.p==='LIMBURG';
       const pct=(r.val/wbMax*100).toFixed(1);
-      wbHtml+='<div class="mrb-row'+(hl?' hl':'')+'">'
+      const dataAttr=(r.val?(' data-mrb="'+Math.round(r.val)+'"'):'');
+      wbHtml+='<div class="mrb-row'+(hl?' hl':'')+'"'+dataAttr+'>'
         +'<span class="mrb-prov">'+cap(r.p)+(hl?' ★':'')+'</span>'
         +'<div class="mrb-track"><div class="mrb-fill" style="width:'+pct+'%;transition-delay:'+Math.min(i*45,540)+'ms"></div></div>'
         +'<span class="mrb-val">'+(r.val?('€ '+r.val.toLocaleString('nl-NL')):'€ 0')+'</span></div>';
