@@ -1779,6 +1779,7 @@ body{font-family:'DM Sans',Arial,sans-serif;font-weight:400}
         </div>
         <div style="font-family:var(--lb);font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(214,220,226,.75);margin-bottom:.75rem">APK Keuringshistorie</div>
         <div id="apk-history-wrap"><div style="font-size:.78rem;color:rgba(214,220,226,.75)">Laden…</div></div>
+        <div id="gebreken-cta" style="display:none;margin-top:1.1rem"></div>
         <div id="apk-cta" style="display:none;margin-top:1.1rem"></div>
         <div id="status-cta" style="display:none;margin-top:.9rem"></div>
       </div>
@@ -4107,6 +4108,25 @@ async function doCheck(){
         html+='<div class="wb-note">Alleen periodieke APK-controles getoond. Tellerstanden bij keuring zijn NAP-data en niet in RDW open data opgenomen.</div>';
         apkWrap.innerHTML=html;
       }else apkWrap.innerHTML='<div style="font-size:.75rem;color:rgba(198,203,209,.25)">Geen keuringshistorie beschikbaar.</div>';
+
+      /* CTA als er herhaalde/veel gebreken bij APK-controles waren —
+         concreet signaal dat een aankoopkeuring loont. */
+      (function(){
+        const gc=document.getElementById('gebreken-cta');
+        if(!gc)return;
+        const metGebreken=keuringen.filter(k=>(gebrByDate[k.meld_datum_door_keuringsinstantie]||[]).length>0);
+        const totaalGebr=Object.values(gebrByDate).reduce((n,arr)=>n+arr.reduce((m,g)=>m+(parseInt(g.aantal,10)||1),0),0);
+        if(metGebreken.length>=2||totaalGebr>=4){
+          let msg;
+          if(metGebreken.length>=2){
+            msg='Bij '+metGebreken.length+' van de laatste APK-controles zijn gebreken geconstateerd (weliswaar hersteld vóór goedkeuring). Herhaalde gebreken kunnen wijzen op structurele slijtage — een onafhankelijke aankoopkeuring brengt vóór de koop in kaart wat er écht speelt.';
+          }else{
+            msg='Er zijn in totaal '+totaalGebr+' gebreken geconstateerd bij APK-controles (hersteld vóór goedkeuring). Bij een aanstaande aankoop loont het om die punten fysiek te laten nalopen — een onafhankelijke aankoopkeuring doet dat.';
+          }
+          gc.innerHTML=miniCTA(msg,plateFormatted);
+          gc.style.display='block';
+        }else gc.style.display='none';
+      })();
     }else apkWrap.innerHTML='<div style="font-size:.75rem;color:rgba(198,203,209,.25)">Geen keuringshistorie beschikbaar.</div>';
 
     /* ── Tellerstand / NAP-oordeel ── */
