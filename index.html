@@ -42,6 +42,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="preconnect" href="https://opendata.rdw.nl" crossorigin>
+<script>(function(){try{var t=localStorage.getItem('kc-theme');if(!t){t=(window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark';}if(t==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();</script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Manrope:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Manrope:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap"></noscript>
 <style>
 /* Respecteer 'minder animatie'-voorkeur van de bezoeker */
@@ -75,7 +76,357 @@
   --cs:linear-gradient(100deg,#8a9099 0%,#d4d8dc 40%,#fff 50%,#d4d8dc 60%,#8a9099 100%);
   --tr:linear-gradient(90deg,transparent 0%,#8a5a3b 20%,#e2b28e 50%,#8a5a3b 80%,transparent 100%);
   --tf:linear-gradient(90deg,transparent 0%,rgba(186,126,83,.6) 25%,#e2b28e 50%,rgba(186,126,83,.6) 75%,transparent 100%);
+  /* achtergrond-vlakken (voor lichte modus te overschrijven) */
+  --bg-page:#080808;--bg-panel:#0d0d0d;--bg-panel2:#131313;--bg-panel3:#181818;
+  --bg-topbar:rgba(11,14,14,.96);
+  --tx-body:#eef0f2;--tx-muted:#a4aaae;
+  --line-soft:rgba(198,203,209,.18);
+  --tx-oncopper:#14100c;
 }
+
+/* ══════════ LICHT THEMA ══════════ */
+:root[data-theme="light"]{
+  color-scheme:light;
+  --pt:#3a4149;--pt-s:#1f2429;
+  --ink:#f4f1ea;--ink2:#ffffff;--ink3:#f0ece3;--ink4:#e9e4d9;
+  --ln:rgba(60,52,42,.18);--hr:rgba(60,52,42,.14);
+  --tx:#26221c;--mt:#5e584f;
+  --brand-ink:#f4f1ea;--brand-ink2:#ffffff;
+  --brand-paper:#f1eee8;--brand-text:#2b2620;
+  --brand-muted:#6b655b;
+  --brand-copper:#9c5f28;--brand-copper-light:#9c5f28;
+  --brand-line:rgba(60,52,42,.2);
+  --brand-text-85:rgba(43,38,32,.92);
+  --panel:#ffffff;
+  --bg-page:#f4f1ea;--bg-panel:#ffffff;--bg-panel2:#f4f0e7;--bg-panel3:#ece7dc;
+  --bg-topbar:rgba(255,255,255,.94);
+  --tx-body:#2b2620;--tx-muted:#6a6358;
+  --line-soft:rgba(60,52,42,.16);
+  --back-text:rgba(43,38,32,.85);--back-border:rgba(60,52,42,.3);
+  --ok:#0b7a3c;--warn:#9a7400;--bad:#c02030;
+}
+:root[data-theme="light"] body{background:var(--bg-page)!important;color:var(--tx-body)}
+:root[data-theme="light"] .wrap{background:transparent}
+/* Header */
+:root[data-theme="light"] header.topbar{background:var(--bg-topbar)!important;border-bottom:1px solid var(--brand-line)!important}
+:root[data-theme="light"] header.topbar .wordmark,
+:root[data-theme="light"] header.topbar .wordmark .brand-apex,
+:root[data-theme="light"] .footer-wordmark .brand-apex{color:var(--brand-text)!important}
+:root[data-theme="light"] header.topbar .wordmark .brand-excl,
+:root[data-theme="light"] .footer-wordmark .brand-excl{color:var(--brand-copper)!important}
+:root[data-theme="light"] .theme-toggle{color:var(--brand-text);border-color:var(--back-border)}
+:root[data-theme="light"] .brand-excl{color:rgba(60,52,42,.55)}
+/* Panelen: witte kaarten op crème achtergrond */
+:root[data-theme="light"] .dblock,
+:root[data-theme="light"] .score-card,
+:root[data-theme="light"] .compare-panel,
+:root[data-theme="light"] .garage,
+:root[data-theme="light"] .bpm-side,
+:root[data-theme="light"] .tco-cell,
+:root[data-theme="light"] .report-share,
+:root[data-theme="light"] .car-view,
+:root[data-theme="light"] .cta-wrap,
+:root[data-theme="light"] .faq-item{
+  background:var(--bg-panel)!important;border-color:var(--line-soft)!important;
+}
+:root[data-theme="light"] .dblock:hover{background:var(--bg-panel2)!important}
+:root[data-theme="light"] .tco-cell{background:var(--bg-panel2)!important}
+:root[data-theme="light"] .car-view{background:linear-gradient(180deg,rgba(156,95,40,.07),rgba(156,95,40,.02))!important;border-color:rgba(156,95,40,.3)!important}
+/* Hero */
+:root[data-theme="light"] .page-hero h1{color:#2b2620!important;-webkit-text-fill-color:#2b2620!important}
+:root[data-theme="light"] .page-hero h1 em{color:var(--brand-copper)!important;-webkit-text-fill-color:var(--brand-copper)!important}
+:root[data-theme="light"] .page-hero p{color:#4c463d!important}
+:root[data-theme="light"] .ey{color:#7a7165}
+/* Zoekbalk */
+:root[data-theme="light"] .search-lbl{color:#6a6358}
+:root[data-theme="light"] .search-row{background:var(--line-soft)}
+:root[data-theme="light"] .kt-input{background:#fff!important;color:#23201a;border-bottom-color:transparent}
+:root[data-theme="light"] .kt-input:focus{background:#fff!important;border-bottom-color:var(--brand-copper)!important}
+:root[data-theme="light"] .kt-input::placeholder{color:#a89f92}
+:root[data-theme="light"] .search-btn{background:var(--brand-copper)!important;color:#fff!important}
+:root[data-theme="light"] .search-btn::before{background:linear-gradient(100deg,#7d4b1d,#b07a3f 50%,#7d4b1d)}
+:root[data-theme="light"] .field-help,:root[data-theme="light"] .search-help{color:#7a7165!important}
+/* Trust strip / empty state */
+:root[data-theme="light"] .trust-strip{background:rgba(156,95,40,.08);border-color:rgba(156,95,40,.3)}
+:root[data-theme="light"] .trust-item{background:#fff}
+:root[data-theme="light"] .trust-item span{color:#5c554a}
+:root[data-theme="light"] .trust-item b{color:var(--brand-copper)}
+:root[data-theme="light"] .empty-title{color:#8a8175}
+:root[data-theme="light"] .empty-sub,:root[data-theme="light"] .ef span,:root[data-theme="light"] .empty-cta{color:#7a7165}
+:root[data-theme="light"] .ef b{color:var(--brand-copper)}
+/* Labels + waarden in datablokken: donkere tekst */
+:root[data-theme="light"] .bhead-title,
+:root[data-theme="light"] .bhead-chev,
+:root[data-theme="light"] .di-lbl,
+:root[data-theme="light"] .di-val,
+:root[data-theme="light"] .res-name,
+:root[data-theme="light"] .res-meta,
+:root[data-theme="light"] .tco-lbl,
+:root[data-theme="light"] .tco-big,
+:root[data-theme="light"] .tco-sub,
+:root[data-theme="light"] .tco-bar-name,
+:root[data-theme="light"] .tco-bar-val,
+:root[data-theme="light"] .wb-note,
+:root[data-theme="light"] .tco-inzicht,
+:root[data-theme="light"] .wam-notice,
+:root[data-theme="light"] .mini-cta-txt,
+:root[data-theme="light"] .waarde-cta-txt,
+:root[data-theme="light"] .rs-txt b,
+:root[data-theme="light"] .rs-txt span,
+:root[data-theme="light"] .lead-titel,
+:root[data-theme="light"] .lead-tekst,
+:root[data-theme="light"] .nap-oordeel,
+:root[data-theme="light"] .faq-q,
+:root[data-theme="light"] .faq-a,
+:root[data-theme="light"] .recall-desc,
+:root[data-theme="light"] .apk-table td,
+:root[data-theme="light"] .apk-table th,
+:root[data-theme="light"] .mrb-row,
+:root[data-theme="light"] .timeline,
+:root[data-theme="light"] .tl-body,
+:root[data-theme="light"] .tl-datum,
+:root[data-theme="light"] .cta-wrap h3,
+:root[data-theme="light"] .cta-wrap p,
+:root[data-theme="light"] .footer *,
+:root[data-theme="light"] .score-points .sp,
+:root[data-theme="light"] .score-verdict,
+:root[data-theme="light"] .di-grid span{color:var(--tx-body)!important}
+:root[data-theme="light"] .di-lbl,:root[data-theme="light"] .tco-lbl,:root[data-theme="light"] .bhead-title{color:#7a7165!important}
+:root[data-theme="light"] .tco-big small,:root[data-theme="light"] .tco-sub{color:#6a6358!important}
+/* Quick-check chips: lichte achtergrond met gekleurde rand, tekst donker/gekleurd */
+:root[data-theme="light"] .qc{background:#fff!important;border:1px solid rgba(60,52,42,.2)!important;color:#3a352d!important}
+:root[data-theme="light"] .qc.qc-ok{border-color:rgba(11,122,60,.5)!important;color:#0b6b35!important;background:rgba(11,122,60,.06)!important}
+:root[data-theme="light"] .qc.qc-warn{border-color:rgba(154,116,0,.55)!important;color:#8a6600!important;background:rgba(154,116,0,.07)!important}
+:root[data-theme="light"] .qc.qc-bad{border-color:rgba(192,32,48,.5)!important;color:#b02030!important;background:rgba(192,32,48,.06)!important}
+:root[data-theme="light"] .qc.qc-copper{border-color:rgba(156,95,40,.5)!important;color:var(--brand-copper)!important;background:rgba(156,95,40,.07)!important}
+/* Knoppen */
+:root[data-theme="light"] .rs-btn{border-color:var(--brand-copper);color:var(--brand-copper)}
+:root[data-theme="light"] .rs-btn.rs-wa{background:var(--brand-copper)!important;color:#fff!important;border-color:var(--brand-copper)}
+:root[data-theme="light"] .mini-cta-link,
+:root[data-theme="light"] .waarde-cta .mini-cta-link{background:var(--brand-copper);color:#fff;border-color:var(--brand-copper)}
+:root[data-theme="light"] .mini-cta-link.alt{background:transparent;color:var(--brand-copper);border-color:rgba(156,95,40,.5)}
+:root[data-theme="light"] .aanbod-btn{background:#fff;color:var(--brand-copper);border:1px solid rgba(156,95,40,.45)}
+/* Voortgangs-/scorebalken */
+:root[data-theme="light"] .tco-bar-track{background:rgba(60,52,42,.1)}
+:root[data-theme="light"] .tco-bar-fill.f-afschr{background:linear-gradient(90deg,rgba(120,130,140,.5),#7d868f)}
+/* Vaste mobiele balk + FABs */
+:root[data-theme="light"] .mobile-actions{background:rgba(255,255,255,.97)!important;border-top:1px solid var(--brand-line)}
+:root[data-theme="light"] .mobile-actions .ma-btn{color:#3a352d}
+:root[data-theme="light"] .to-top{background:rgba(255,255,255,.95)!important;color:var(--brand-copper);border-color:var(--brand-copper)}
+:root[data-theme="light"] .wa-fab{background:linear-gradient(150deg,#2f9e63,#1f7a49)!important;color:#fff}
+:root[data-theme="light"] ::selection{background:var(--brand-copper);color:#fff}
+/* Scrollbar */
+:root[data-theme="light"]{scrollbar-color:rgba(156,95,40,.6) #f4f1ea}
+:root[data-theme="light"] ::-webkit-scrollbar-track{background:#f4f1ea}
+:root[data-theme="light"] ::-webkit-scrollbar-thumb{border-color:#f4f1ea}
+/* ── Tweede ronde: alle resterende licht-op-licht klassen donker maken ── */
+:root[data-theme="light"] .faq,
+:root[data-theme="light"] .faq-titel,
+:root[data-theme="light"] .faq-v,
+:root[data-theme="light"] .faq-a-in,
+:root[data-theme="light"] .bhead-count,
+:root[data-theme="light"] .car-view-lbl,
+:root[data-theme="light"] .cmp-cta-tekst,
+:root[data-theme="light"] .cta-sub,
+:root[data-theme="light"] .etxt,
+:root[data-theme="light"] .extra-empty,
+:root[data-theme="light"] .fs-txt,
+:root[data-theme="light"] .garage-name,
+:root[data-theme="light"] .km-slider-out,
+:root[data-theme="light"] .mrb-prov,
+:root[data-theme="light"] .odo-stat-l,
+:root[data-theme="light"] .next-search,
+:root[data-theme="light"] .other-tools,
+:root[data-theme="light"] .other-tools-links,
+:root[data-theme="light"] .site-footer,
+:root[data-theme="light"] .site-footer *,
+:root[data-theme="light"] .footer-grid,
+:root[data-theme="light"] .footer-share,
+:root[data-theme="light"] .footer-share *,
+:root[data-theme="light"] .footer-grid *,
+:root[data-theme="light"] .page-width,
+:root[data-theme="light"] .bpm-lbl,
+:root[data-theme="light"] .bpm-bar-lbl,
+:root[data-theme="light"] .bpm-sub,
+:root[data-theme="light"] .km-slider-lbl,
+:root[data-theme="light"] .tl-date,
+:root[data-theme="light"] .tl-sub,
+:root[data-theme="light"] .tl-title,
+:root[data-theme="light"] .apk-tl-legende,
+:root[data-theme="light"] .recall-meta,
+:root[data-theme="light"] .recall-ref,
+:root[data-theme="light"] .recall-defect,
+:root[data-theme="light"] .mak-stap,
+:root[data-theme="light"] .kf-hint,
+:root[data-theme="light"] .recent-lbl,
+:root[data-theme="light"] .garage-clear,
+:root[data-theme="light"] .nl-code,
+:root[data-theme="light"] .search-lbl{color:var(--tx-body)!important}
+/* muted-grijze krijgen lichter-donkere tint */
+:root[data-theme="light"] .faq-a-in,
+:root[data-theme="light"] .cta-sub,
+:root[data-theme="light"] .fs-txt,
+:root[data-theme="light"] .km-slider-out,
+:root[data-theme="light"] .km-slider-lbl,
+:root[data-theme="light"] .bpm-sub,
+:root[data-theme="light"] .tl-sub,
+:root[data-theme="light"] .recall-meta,
+:root[data-theme="light"] .kf-hint,
+:root[data-theme="light"] .car-view-lbl,
+:root[data-theme="light"] .extra-empty,
+:root[data-theme="light"] .cmp-cta-tekst,
+:root[data-theme="light"] .other-tools,
+:root[data-theme="light"] .garage-clear,
+:root[data-theme="light"] .recent-lbl,
+:root[data-theme="light"] .bhead-count,
+:root[data-theme="light"] .odo-stat-l{color:#5c554a!important}
+/* chips / badges / chips met witte tekst op gekleurde achtergrond blijven leesbaar */
+:root[data-theme="light"] .qc{color:#3a352d!important}
+:root[data-theme="light"] .qc *{color:inherit!important}
+:root[data-theme="light"] .bpm-verdict{color:#0b6b35!important;background:rgba(11,122,60,.08)!important;border-color:rgba(11,122,60,.35)!important}
+:root[data-theme="light"] .recall-badge.done{color:#0b6b35!important;background:rgba(11,122,60,.1)!important;border-color:rgba(11,122,60,.4)!important}
+:root[data-theme="light"] .r-risk-gem{color:#8a6600!important;background:rgba(154,116,0,.1)!important;border-color:rgba(154,116,0,.4)!important}
+/* recent chips / garage chips */
+:root[data-theme="light"] .recent-chip,
+:root[data-theme="light"] .recent-chip.vb{background:#fff!important;color:var(--brand-copper)!important;border:1px solid rgba(156,95,40,.45)!important}
+:root[data-theme="light"] .recent-chip b,
+:root[data-theme="light"] .recent-chip strong{color:var(--brand-text)!important}
+:root[data-theme="light"] .recent-chip .x,
+:root[data-theme="light"] .garage-x,
+:root[data-theme="light"] .garage-star{color:#8a8175!important}
+:root[data-theme="light"] .garage-star:hover,:root[data-theme="light"] .garage-x:hover{color:var(--bad)!important}
+/* km presets */
+:root[data-theme="light"] .km-preset{background:#fff!important;color:#5c554a!important;border:1px solid rgba(60,52,42,.25)!important}
+:root[data-theme="light"] .km-preset.on{background:var(--brand-copper)!important;color:#fff!important;border-color:var(--brand-copper)!important}
+/* knoppen met witte tekst */
+:root[data-theme="light"] .act-btn,
+:root[data-theme="light"] .fs-btns,
+:root[data-theme="light"] .btn.gh,
+:root[data-theme="light"] .next-search-row .search-btn,
+:root[data-theme="light"] .next-search-row .controleer,
+:root[data-theme="light"] .search-row .search-btn{color:#fff!important}
+:root[data-theme="light"] .next-search-row .kt-input{background:#fff!important;color:#23201a!important}
+:root[data-theme="light"] .next-search .kt-input{background:#fff!important}
+/* FAQ item achtergrond */
+:root[data-theme="light"] .faq{background:transparent!important;border-bottom:1px solid var(--line-soft)}
+/* score / sb-titel */
+:root[data-theme="light"] .sb-titel{color:var(--brand-text)!important}
+/* mak-stap (werkwijze) */
+:root[data-theme="light"] .mak-stap{background:#fff!important;border:1px solid var(--line-soft)!important}
+/* BPM slider track */
+:root[data-theme="light"] .km-slider input[type=range]{accent-color:var(--brand-copper)}
+:root[data-theme="light"] .bpm-bar-track{background:rgba(60,52,42,.1)}
+/* ── Derde ronde: footer, volgende-zoeken, ghost-knoppen ── */
+/* Footer: donkere hardcoded bg -> crème met donkere tekst */
+:root[data-theme="light"] .site-footer{background:#ece7dc!important;border-top:1px solid var(--brand-line)!important}
+:root[data-theme="light"] .site-footer .footer-wordmark .brand-apex{color:var(--brand-text)!important}
+:root[data-theme="light"] .site-footer .footer-wordmark .brand-excl{color:var(--brand-copper)!important}
+:root[data-theme="light"] .footer-grid h3{color:var(--brand-copper)!important}
+:root[data-theme="light"] .footer-grid>div>p,
+:root[data-theme="light"] .footer-grid a,
+:root[data-theme="light"] .footer-grid li,
+:root[data-theme="light"] .footer-bottom,
+:root[data-theme="light"] .footer-bottom *{color:#5c554a!important}
+:root[data-theme="light"] .footer-bottom{border-top:1px solid var(--line-soft)}
+/* Volgende kenteken zoeken */
+:root[data-theme="light"] .next-search{background:#fff!important;border:1px solid var(--line-soft)!important}
+:root[data-theme="light"] .next-search-lbl{color:var(--brand-copper)!important}
+:root[data-theme="light"] .next-search-row .kt-input{background:#f4f0e7!important;color:#23201a!important;border:1px solid var(--line-soft)!important}
+:root[data-theme="light"] .next-search-row .search-btn{background:var(--brand-copper)!important;color:#fff!important}
+/* Other tools */
+:root[data-theme="light"] .other-tools{background:transparent}
+:root[data-theme="light"] .other-tools-links a{color:var(--brand-copper)!important}
+/* Ghost / outline knoppen: donkere tekst + rand */
+:root[data-theme="light"] .act-btn,
+:root[data-theme="light"] .btn.gh{background:transparent!important;color:#3a352d!important;border:1px solid rgba(60,52,42,.35)!important}
+:root[data-theme="light"] .btn.gh::before{background:rgba(156,95,40,.12)}
+:root[data-theme="light"] .act-btn:hover{border-color:var(--brand-copper)!important;color:var(--brand-copper)!important}
+/* Delen-knoppen in rapport */
+:root[data-theme="light"] .fs-btn,
+:root[data-theme="light"] .fs-btns button{color:#3a352d!important;background:#fff!important;border:1px solid rgba(60,52,42,.25)!important}
+:root[data-theme="light"] .fs-copy-txt{color:#3a352d!important}
+/* ── Vierde ronde: inline donkere ijkpunt-blokken + other-tools ── */
+:root[data-theme="light"] #km-ijkpunt,
+:root[data-theme="light"] #onderhoud-ijkpunt{background:#f4f0e7!important;border:1px solid var(--line-soft)!important}
+:root[data-theme="light"] #km-ijkpunt *,
+:root[data-theme="light"] #onderhoud-ijkpunt *{color:var(--tx-body)!important}
+:root[data-theme="light"] .other-tools{background:#fff!important;border:1px solid var(--line-soft)!important}
+:root[data-theme="light"] .other-tools h3{color:var(--brand-text)!important}
+:root[data-theme="light"] .faq{background:#fff!important;border:1px solid var(--line-soft)!important}
+/* ── Vijfde ronde: resterende echte contrastteksten ── */
+:root[data-theme="light"] .sb-tekst,
+:root[data-theme="light"] .sb-tekst b,
+:root[data-theme="light"] .status-banner,
+:root[data-theme="light"] .status-banner p,
+:root[data-theme="light"] .status-banner span{color:var(--tx-body)!important}
+:root[data-theme="light"] .status-banner.sb-bad .sb-titel{color:var(--bad)!important}
+:root[data-theme="light"] .status-banner.sb-warn .sb-titel{color:var(--warn)!important}
+:root[data-theme="light"] .status-banner.sb-ok .sb-titel{color:var(--ok)!important}
+:root[data-theme="light"] .car-view-sub,
+:root[data-theme="light"] .other-tools-lbl,
+:root[data-theme="light"] .fs-btns,
+:root[data-theme="light"] .fs-btns *,
+:root[data-theme="light"] kbd,
+:root[data-theme="light"] .car-view em,
+:root[data-theme="light"] .bhead em,
+:root[data-theme="light"] .dblock em{color:#5c554a!important;background:transparent!important}
+:root[data-theme="light"] kbd{border:1px solid var(--line-soft)}
+:root[data-theme="light"] .other-tools a,
+:root[data-theme="light"] .other-tools-links a{color:var(--brand-copper)!important}
+:root[data-theme="light"] .dblock h2 em,
+:root[data-theme="light"] .bhead-title em{color:var(--brand-copper)!important}
+/* ── Zesde ronde: geneste teksten in specifieke containers ── */
+:root[data-theme="light"] .sb-tekst a{color:var(--brand-copper)!important}
+:root[data-theme="light"] .res-name em{color:var(--brand-copper)!important}
+:root[data-theme="light"] .score-num,
+:root[data-theme="light"] .score-num span,
+:root[data-theme="light"] .score-ring *{color:var(--brand-text)!important}
+:root[data-theme="light"] .bbody,
+:root[data-theme="light"] .bbody div,
+:root[data-theme="light"] .bbody span,
+:root[data-theme="light"] .bbody p,
+:root[data-theme="light"] .bbody td,
+:root[data-theme="light"] .bbody th,
+:root[data-theme="light"] .bbody li,
+:root[data-theme="light"] .bbody b,
+:root[data-theme="light"] .bbody strong{color:var(--tx-body)!important}
+:root[data-theme="light"] .bbody em,
+:root[data-theme="light"] .bbody i{color:var(--brand-copper)!important}
+:root[data-theme="light"] .apk-tl-punt span,
+:root[data-theme="light"] .apk-tl-punt,
+:root[data-theme="light"] .apk-tl-punt b{color:var(--tx-body)!important}
+:root[data-theme="light"] .recall-meta,
+:root[data-theme="light"] .recall-meta b,
+:root[data-theme="light"] .recall-meta span,
+:root[data-theme="light"] .recall-meta div,
+:root[data-theme="light"] .recall-card,
+:root[data-theme="light"] .recall-card p{color:var(--tx-body)!important}
+:root[data-theme="light"] .cta-wrap h3 em,
+:root[data-theme="light"] .cta-wrap em{color:var(--brand-copper)!important}
+:root[data-theme="light"] .cta-sub a,
+:root[data-theme="light"] .cta-sub b{color:var(--brand-copper)!important}
+:root[data-theme="light"] .cta-sub{color:#5c554a!important}
+/* ── Zevende ronde: mobiele vaste actiebalk in licht ── */
+:root[data-theme="light"] .mobile-actions{background:rgba(255,255,255,.98)!important;border-top:1px solid var(--brand-line)!important}
+:root[data-theme="light"] .ma-btn{color:#3a352d!important}
+:root[data-theme="light"] .ma-btn:active{color:var(--brand-copper)!important}
+:root[data-theme="light"] .ma-btn.ma-primary{background:var(--brand-copper)!important;color:#fff!important}
+:root[data-theme="light"] .mobile-actions .ma-btn .ma-ic{color:inherit}
+
+
+
+
+
+
+/* Invoer (vergelijk/tweede zoekbalk) */
+:root[data-theme="light"] .nf-input,
+:root[data-theme="light"] .kt-input,
+:root[data-theme="light"] input,
+:root[data-theme="light"] select{background:#fff;color:#23201a}
+:root[data-theme="light"] .compare-panel .kt-input{background:#fff!important}
+/* BPM/MRB notities */
+:root[data-theme="light"] .mrb-ev{background:rgba(11,122,60,.07);border-color:rgba(11,122,60,.35);color:#0b6b35}
+
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;scroll-padding-top:96px}
 body{background:var(--ink);color:var(--tx);font-family:var(--ss);font-weight:400;line-height:1.75;-webkit-font-smoothing:antialiased;overflow-x:hidden;min-height:100vh}
@@ -1112,9 +1463,18 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
   /* quick-check chips beter leesbaar en kleiner op mobiel */
   .qc{font-size:.53rem;letter-spacing:.1em;padding:.38rem .65rem}
   /* header: knop mag krimpen, logo mag niet overlopen */
-  header.topbar{gap:.8rem;padding-inline:1.1rem}
-  header.topbar .back{padding:.6rem .7rem;white-space:nowrap}
-  header.topbar .wordmark{min-width:0}
+  header.topbar{gap:.5rem;padding-inline:.7rem;padding-block:.85rem}
+  header.topbar .back{padding:.5rem .6rem;white-space:nowrap;font-size:.5rem;letter-spacing:.1em;gap:.35rem}
+  header.topbar .back svg{width:11px;height:11px}
+  header.topbar .back .back-txt{display:none}
+  header.topbar .back::after{content:'TERUG';font:600 .5rem/1 var(--brand-display);letter-spacing:.1em}
+  header.topbar .wordmark{min-width:0;font-size:.82rem;letter-spacing:.12em;flex:1}
+  header.topbar .wordmark .brand-apex{letter-spacing:.14em}
+  header.topbar .wordmark .brand-excl{letter-spacing:.14em}
+  header.topbar .wordmark .brand-sep{margin:0 .25rem}
+  header.topbar .topbar-actions{gap:.45rem;flex-shrink:0}
+  header.topbar .theme-toggle{width:32px;height:32px;flex-shrink:0}
+  header.topbar .theme-toggle svg{width:14px;height:14px}
   /* databron-melding compact */
   .wam-notice{font-size:.7rem;padding:.75rem .85rem}
   /* empty-state */
@@ -1168,11 +1528,21 @@ header.topbar .wordmark .brand-excl{font-weight:400;color:var(--brand-copper-lig
 header.topbar .back{
   display:inline-flex;align-items:center;gap:.5rem;
   font:600 .6rem/1 var(--brand-display);letter-spacing:.14em;text-transform:uppercase;
-  color:rgba(244,241,235,.75);border:1px solid rgba(244,241,235,.22);
-  padding:.75rem 1.05rem;background:transparent;transition:.25s;text-decoration:none;
+  color:var(--back-text,rgba(244,241,235,.75));border:1px solid var(--back-border,rgba(244,241,235,.22));
+  padding:.75rem 1.05rem;background:transparent;transition:.25s;text-decoration:none;white-space:nowrap;
 }
 header.topbar .back svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.6}
 header.topbar .back:hover{color:var(--brand-copper-light);border-color:var(--brand-copper-light);background:transparent}
+.topbar-actions{display:inline-flex;align-items:center;gap:.6rem}
+.theme-toggle{
+  display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;
+  border:1px solid var(--back-border,rgba(244,241,235,.22));background:transparent;
+  color:var(--brand-text,#f5f3ee);cursor:pointer;transition:.25s;border-radius:2px;flex-shrink:0;
+}
+.theme-toggle:hover{border-color:var(--brand-copper-light);color:var(--brand-copper-light)}
+.theme-toggle .ic-sun{display:none}
+[data-theme="light"] .theme-toggle .ic-sun{display:block}
+[data-theme="light"] .theme-toggle .ic-moon{display:none}
 
 /* Hero: copper accent i.p.v. tricolore */
 .page-hero::after{background:linear-gradient(90deg,transparent,var(--brand-copper) 30%,var(--brand-copper-light) 50%,transparent 70%)!important;opacity:.5!important;height:1px!important}
@@ -1372,10 +1742,16 @@ body{font-family:'DM Sans',Arial,sans-serif;font-weight:400}
     <span class="brand-sep" aria-hidden="true"></span>
     <span class="brand-excl">EXCLUSIVE</span>
   </a>
-  <a href="https://apexclusive.nl" class="back">
-    <svg aria-hidden="true" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-    Terug naar website
-  </a>
+  <div class="topbar-actions">
+    <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Wissel tussen donker en licht thema" title="Wissel donker/licht" onclick="toggleTheme()">
+      <svg class="ic-moon" aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <svg class="ic-sun" aria-hidden="true" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M19.1 4.9l-1.7 1.7M6.6 17.4l-1.7 1.7"/></svg>
+    </button>
+    <a href="https://apexclusive.nl" class="back">
+      <svg aria-hidden="true" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      <span class="back-txt">Terug naar website</span>
+    </a>
+  </div>
 </header>
 
 <!-- ══ HERO ══ -->
@@ -2154,6 +2530,27 @@ function armCounters(root){
   });
 }
 /* Voer cb uit zodra el in beeld komt (of direct als IO ontbreekt). */
+/* ══ Thema: donker/licht schakelaar ══ */
+function applyTheme(t){
+  const root=document.documentElement;
+  if(t==='light')root.setAttribute('data-theme','light');else root.removeAttribute('data-theme');
+  try{localStorage.setItem('kc-theme',t);}catch(e){}
+  const mc=document.querySelector('meta[name="theme-color"]');
+  if(mc)mc.setAttribute('content',t==='light'?'#f4f1ea':'#0b0e0e');
+}
+function toggleTheme(){
+  const cur=document.documentElement.getAttribute('data-theme')==='light'?'light':'dark';
+  applyTheme(cur==='light'?'dark':'light');
+  // Canvas-grafieken (BPM-curve) gebruiken thema-afhankelijke kleuren: herteken.
+  try{
+    const bc=document.getElementById('bpm-chart');
+    if(bc&&bc.offsetWidth&&typeof drawBpmChart==='function'&&window._bpmChartData){
+      drawBpmChart(bc,window._bpmChartData.maanden,window._bpmChartData.pct);
+    }
+  }catch(e){}
+}
+applyTheme(document.documentElement.getAttribute('data-theme')==='light'?'light':'dark');
+
 function onReveal(el,cb,once){
   if(reduceMotion||!('IntersectionObserver' in window)){cb();return;}
   const io=new IntersectionObserver(entries=>{
@@ -3510,7 +3907,10 @@ function drawBpmChart(canvas,maanden,restPct){
   const maxM=120;
   const x=m=>pad.l+(Math.min(m,maxM)/maxM)*gW;
   const y=pct=>pad.t+gH-(pct*gH);
-  ctx.strokeStyle='rgba(198,203,209,.07)';ctx.fillStyle='rgba(198,203,209,.42)';
+  const isLight=document.documentElement.getAttribute('data-theme')==='light';
+  const gridCol=isLight?'rgba(60,52,42,.14)':'rgba(198,203,209,.07)';
+  const tickCol=isLight?'rgba(60,52,42,.6)':'rgba(198,203,209,.42)';
+  ctx.strokeStyle=gridCol;ctx.fillStyle=tickCol;
   ctx.font='8px Oswald,sans-serif';ctx.lineWidth=1;
   [0,.25,.5,.75,1].forEach(p=>{ctx.beginPath();ctx.moveTo(pad.l,y(p));ctx.lineTo(pad.l+gW,y(p));ctx.stroke();
     ctx.textAlign='right';ctx.fillText(Math.round(p*100)+'%',pad.l-6,y(p)+3);});
@@ -3524,9 +3924,10 @@ function drawBpmChart(canvas,maanden,restPct){
   ctx.fillStyle=gr;ctx.fill();
   if(maanden>=0){
     const mx=x(maanden),my=y(restPct);
-    ctx.beginPath();ctx.arc(mx,my,4.5,0,Math.PI*2);ctx.fillStyle='#e2b28e';ctx.fill();
-    ctx.beginPath();ctx.moveTo(mx,my);ctx.lineTo(mx,pad.t+gH);ctx.strokeStyle='rgba(226,178,142,.5)';ctx.setLineDash([3,3]);ctx.lineWidth=1;ctx.stroke();ctx.setLineDash([]);
-    ctx.fillStyle='#e2b28e';ctx.textAlign='center';ctx.font='600 9px Oswald,sans-serif';
+    const markCol=isLight?'#9c5f28':'#e2b28e';
+    ctx.beginPath();ctx.arc(mx,my,4.5,0,Math.PI*2);ctx.fillStyle=markCol;ctx.fill();
+    ctx.beginPath();ctx.moveTo(mx,my);ctx.lineTo(mx,pad.t+gH);ctx.strokeStyle=isLight?'rgba(156,95,40,.5)':'rgba(226,178,142,.5)';ctx.setLineDash([3,3]);ctx.lineWidth=1;ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle=markCol;ctx.textAlign='center';ctx.font='600 9px Oswald,sans-serif';
     ctx.fillText(Math.round(restPct*100)+'% rest',mx,my-9);
   }
 }
@@ -4347,6 +4748,7 @@ async function doCheck(){
     (function(){
       const bpmBlock=document.getElementById('bpm-chart');
       if(!bpmBlock)return;
+      window._bpmChartData={maanden:bpmData.maanden,pct:bpmData.pct};
       onReveal(bpmBlock,()=>drawBpmChart(bpmBlock,bpmData.maanden,bpmData.pct),true);
     })();
 
