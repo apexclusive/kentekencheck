@@ -1241,6 +1241,21 @@ header::after{content:'';position:absolute;left:10%;right:10%;bottom:-1px;height
 .lead-tekst{font-size:.82rem;color:var(--mt);line-height:1.7;margin-bottom:.85rem}
 .lead-btns{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}
 .lead-wa svg{margin-right:.45rem}
+/* Primaire expert-CTA: standaard gevuld koper (niet alleen bij hover), zodat
+   de actie ook op aanraakschermen — zonder hover — direct als hoofdknoop
+   herkenbaar is en uitnodigt tot klikken. Donkere tekst op koper = goed contrast. */
+.lead-btns .lead-wa{
+  position:relative;overflow:hidden;
+  background:linear-gradient(100deg,#a06a47,#ba7e53 48%,#d9a478);
+  border-color:#ba7e53;color:#14100c;font-weight:700;
+  box-shadow:0 8px 22px rgba(186,126,83,.28);
+  transition:transform .18s,box-shadow .25s,filter .25s;
+}
+.lead-btns .lead-wa::before{display:none}
+.lead-btns .lead-wa:hover{color:#14100c;filter:brightness(1.07);transform:translateY(-1px);box-shadow:0 12px 28px rgba(186,126,83,.4)}
+.lead-btns .lead-wa:active{transform:translateY(0)}
+/* Secundaire knop blijft outline (ghost) voor duidelijke hiërarchie */
+.lead-btns .lead-gh{background:transparent}
 .mak-stappen{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.6rem;margin:0 0 1.5rem;text-align:left}
 .mak-stap{font-size:.72rem;color:rgba(222,226,230,.82);border:1px solid var(--ln);padding:.7rem .8rem;font-family:var(--lb);letter-spacing:.04em;line-height:1.4}
 .mak-stap span{display:block;font-family:var(--sf);font-size:1.05rem;color:var(--brand-copper-light);margin-bottom:.2rem}
