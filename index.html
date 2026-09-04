@@ -2376,6 +2376,7 @@ function _aCardData(){
   return{
     plate:g('r-badge')||'——',
     name:g('r-name')&&g('r-name')!=='—'?g('r-name').toUpperCase():'VOERTUIGRAPPORT',
+    merk:(g('d-merk')&&g('d-merk')!=='—')?g('d-merk'):'',
     score:score,
     nap:g('d-nap')||'',
     apk:g('d-apkst')||'',
@@ -2425,7 +2426,31 @@ async function deelAlsAfbeelding(btn){
 
     /* Kop-eyebrow */
     ctx.fillStyle=COPL;ctx.font='600 28px '+SANS;ctx.textBaseline='alphabetic';ctx.textAlign='left';
-    ctx.fillText('GRATIS KENTEKENCHECK · RDW OPEN DATA',80,158);
+    ctx.fillText('GRATIS KENTEKENCHECK · RDW-DATA',80,158);
+
+    /* Merk-embleem rechtsboven (monochroom koper). Eigen SVG-merken worden als
+       SVG-afbeelding getekend (ingesloten lettervormen in Georgia/Arial);
+       simple-icons-paden direct via Path2D. */
+    if(D.merk){
+      const sSize=92,sx=W-80-sSize,sy=120;
+      const mk=brandMark(D.merk);
+      const lp=brandLogoPath(D.merk);
+      if(lp&&window.Path2D){
+        ctx.save();
+        ctx.fillStyle=COPL;
+        ctx.translate(sx,sy);ctx.scale(sSize/24,sSize/24);
+        try{ctx.fill(new Path2D(lp));}catch(e){}
+        ctx.restore();
+      }else if(mk){
+        const svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="'+sSize+'" height="'+sSize+'">'+
+          '<g fill="'+COPL+'" stroke="'+COPL+'">'+mk.replace(/currentColor/g,COPL)+'</g></svg>';
+        const img=new Image();
+        try{
+          await new Promise((res,rej)=>{img.onload=res;img.onerror=rej;img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);});
+          ctx.drawImage(img,sx,sy,sSize,sSize);
+        }catch(e){/* logo niet beschikbaar: zonder doorgaan */}
+      }
+    }
 
     /* Autonaam: serif, max 2 regels; langer → afkappen met ellips */
     ctx.fillStyle=TXT;ctx.font='400 62px '+SERIF;
