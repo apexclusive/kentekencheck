@@ -77,7 +77,7 @@
   --tf:linear-gradient(90deg,transparent 0%,rgba(186,126,83,.6) 25%,#e2b28e 50%,rgba(186,126,83,.6) 75%,transparent 100%);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
 body{background:var(--ink);color:var(--tx);font-family:var(--ss);font-weight:400;line-height:1.75;-webkit-font-smoothing:antialiased;overflow-x:hidden;min-height:100vh}
 img{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
@@ -316,7 +316,11 @@ header::after{content:'';position:absolute;left:10%;right:10%;bottom:-1px;height
 .ma-btn.ma-primary:active{background:var(--brand-copper-light)}
 @media(min-width:761px){.mobile-actions{display:none!important}}
 @media print{.mobile-actions{display:none!important}}
-@media(max-width:760px){body.has-results{padding-bottom:64px}}
+@media(max-width:760px){
+  body.has-results{padding-bottom:96px}
+  /* De vaste actiebalk heeft zelf al een 'Boven'-knop; verberg de zwevende to-top om overlap te voorkomen */
+  .to-top{display:none!important}
+}
 /* Niet-gevonden hulpvenster */
 .notfound{display:none;margin-top:1.1rem;max-width:560px;border:1px solid rgba(240,170,40,.32);background:rgba(240,170,40,.05);padding:1.15rem 1.3rem}
 .notfound.show{display:block;animation:bannerIn .4s ease both}
@@ -1071,6 +1075,9 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
   .score-num b{font-size:1.7rem}
   .score-points{gap:.3rem 1rem}
   .sp{font-size:.72rem}
+  /* Knoppen met lange tekst mogen afbreken in plaats van buiten het kader te lopen */
+  .btn{white-space:normal;text-align:center;line-height:1.35;padding:.8rem .9rem}
+  .btn svg{flex-shrink:0}
   /* lead-banner knoppen volle breedte */
   .lead-banner{padding:1rem 1.1rem}
   .lead-titel{font-size:1.02rem}
@@ -1137,10 +1144,11 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 
 /* Header */
 header.topbar{
-  position:sticky!important;top:0;z-index:100;height:84px;
+  position:sticky!important;top:0;z-index:1000;height:84px;
   display:flex;align-items:center;justify-content:space-between;
   padding-inline:var(--pd);
-  background:rgba(11,14,14,.88)!important;
+  background:#0b0e0e!important;
+  background:rgba(11,14,14,.96)!important;
   border-bottom:1px solid var(--brand-line)!important;
   backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
 }
@@ -1269,7 +1277,8 @@ header.topbar .back:hover{color:var(--brand-copper-light);border-color:var(--bra
 /* Subtiele noise-korrel zoals de homepage (puur sfeer, niet klikbaar) */
 body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.035;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 140 140' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E")}
-header.topbar,.wrap,footer{position:relative;z-index:2}
+header.topbar{position:sticky;z-index:1000}
+.wrap,footer{position:relative;z-index:2}
 
 /* Brood-lettertype: DM Sans 400, 16px basis */
 body{font-family:'DM Sans',Arial,sans-serif;font-weight:400}
@@ -1659,7 +1668,7 @@ body{font-family:'DM Sans',Arial,sans-serif;font-weight:400}
 
     <!-- Databron / beperking notice -->
     <div class="wam-notice" id="data-notice">
-      Deze tool gebruikt uitsluitend gratis, officiële RDW open data. De RDW publiceert daarin <strong>geen</strong> volledige eigenaarshistorie, tellerstanden per APK of advertentiehistorie. Die gegevens — plus een fysieke inspectie — achterhalen wij wél als wij een aankoop voor u begeleiden. <a href="https://apexclusive.nl/aankoopbegeleiding.html" style="color:var(--brand-copper-light);border-bottom:1px solid rgba(186,126,83,.5);text-decoration:none">Bekijk wat aankoopbegeleiding u oplevert ↗</a>
+      <span style="flex:1;min-width:0;overflow-wrap:anywhere">Deze tool gebruikt uitsluitend gratis, officiële RDW open data. De RDW publiceert daarin <strong>geen</strong> volledige eigenaarshistorie, tellerstanden per APK of advertentiehistorie. Die gegevens — plus een fysieke inspectie — achterhalen wij wél als wij een aankoop voor u begeleiden. <a href="https://apexclusive.nl/aankoopbegeleiding.html" style="color:var(--brand-copper-light);border-bottom:1px solid rgba(186,126,83,.5);text-decoration:none">Bekijk wat aankoopbegeleiding u oplevert&nbsp;↗</a></span>
     </div>
 
     <!-- 1. Voertuiggegevens -->
@@ -4105,14 +4114,14 @@ async function doCheck(){
           const datum=dt?dt.substring(0,10):'—';
           const gebr=gebrByDate[dt]||[];
           let rc='apk-ok',rt='Goedgekeurd';
-          let gebrTxt='Geen';
+          let gebrTxt='Geen gebreken';
           if(gebr.length>0){
             /* Gebreken geconstateerd bij een periodieke controle = goedgekeurd na reparatie
                (RDW neemt afkeurkeuringen niet in deze open dataset op). */
             rc='apk-afk';rt='Goedgekeurd na reparatie';
             gebrTxt=gebr.map(g=>'<div style="margin:.15rem 0">'+g.aantal+'× '+g.oms+'</div>').join('');
           }
-          html+='<tr><td>'+datum+'</td><td><span class="apk-res '+rc+'">'+rt+'</span></td><td style="font-size:.74rem;color:rgba(198,203,209,.6)">'+gebrTxt+'</td></tr>';
+          html+='<tr><td style="white-space:nowrap;font-variant-numeric:tabular-nums">'+fmtDate(dt)+'</td><td><span class="apk-res '+rc+'">'+rt+'</span></td><td style="font-size:.74rem;color:rgba(198,203,209,.6)">'+gebrTxt+'</td></tr>';
         });
         html+='</tbody></table></div>';
         html+='<div class="wb-note">Alleen periodieke APK-controles getoond. Tellerstanden bij keuring zijn NAP-data en niet in RDW open data opgenomen.</div>';
@@ -4180,7 +4189,7 @@ async function doCheck(){
       if(!jp||jp.jr<1){box.style.display='none';return;}
       const tip='<div style="font-family:var(--brand-display);font-weight:600;font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(222,226,224,.66);margin-bottom:.45rem">Kilometerstand-ijkpunt (afgeleide schatting)</div>'
         +'<div style="font-size:.92rem;line-height:1.6;color:var(--brand-text)">'+jp.tekst+'</div>'
-        +'<div style="font-size:.78rem;color:rgba(206,212,207,.85);margin-top:.45rem;line-height:1.55">Dit is <b>geen</b> echte tellerstand (die staat niet in RDW open data), maar een referentie op basis van de leeftijd en het "+jp.label+".  Staat er bij een aanbieding <i>minder</i> dan ~'+jp.laag.toLocaleString('nl-NL')+' km op? Vraag dan goed door naar onderhoudsbewijzen — zeker bij een youngtimer of een import-auto. De gratis RDW-check hieronder toetst de door de verkoper genóémde stand.</div>';
+        +'<div style="font-size:.78rem;color:rgba(206,212,207,.85);margin-top:.45rem;line-height:1.55">Dit is <b>geen</b> echte tellerstand (die staat niet in RDW open data), maar een referentie op basis van de leeftijd en het '+jp.label+'.  Staat er bij een aanbieding <i>minder</i> dan ~'+jp.laag.toLocaleString('nl-NL')+' km op? Vraag dan goed door naar onderhoudsbewijzen — zeker bij een youngtimer of een import-auto. De gratis RDW-check hieronder toetst de door de verkoper genóémde stand.</div>';
       box.innerHTML=tip;box.style.display='block';
     })();
 
