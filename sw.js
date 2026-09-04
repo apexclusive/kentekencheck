@@ -3,15 +3,16 @@
    ook zonder verbinding opent. RDW-datavragen (opendata.rdw.nl) gaan ALTIJD
    rechtstreeks naar het netwerk en worden nooit gecachet — die data moet actueel
    blijven. Alleen verzoeken naar onze eigen oorsprong komen in aanmerking. */
-const VERSIE='kc-v3.6.7';
+const VERSIE='kc-v3.6.8';
 const APP_SHELL=[
-  './',
-  './index.html',
-  './manifest.webmanifest',
-  './icon.svg',
-  './icon-192.png',
-  './icon-512.png',
-  './icon-maskable-512.png',
+ './',
+ './index.html',
+ './brand-logos.js',
+ './manifest.webmanifest',
+ './icon.svg',
+ './icon-192.png',
+ './icon-512.png',
+ './icon-maskable-512.png',
 ];
 
 self.addEventListener('install',event=>{
