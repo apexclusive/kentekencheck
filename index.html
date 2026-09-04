@@ -2783,7 +2783,12 @@ function footerDeelCopy(btn){
    deelblad, of downloadt hem (desktop). Werkt volledig client-side, zonder server. */
 function _aCardData(){
   const g=id=>{const el=document.getElementById(id);return el?el.textContent.trim():'';};
-  let score=parseInt(g('score-num'),10);if(isNaN(score))score=null;
+  /* Score: gebruik het data-score attribuut (direct gevuld bij het laden),
+     niet de geanimeerde teller (die pas op scroll-reveal van '–' naar het getal telt). */
+  const numEl=document.getElementById('score-num');
+  let score=null;
+  if(numEl){const ds=parseInt(numEl.getAttribute('data-score'),10);score=isNaN(ds)?null:ds;}
+  if(score===null){const t=parseInt(g('score-num'),10);if(!isNaN(t))score=t;}
   return{
     plate:g('r-badge')||'——',
     name:g('r-name')&&g('r-name')!=='—'?g('r-name').toUpperCase():'VOERTUIGRAPPORT',
@@ -2867,7 +2872,7 @@ async function deelAlsAfbeelding(btn){
   try{
     if(document.fonts&&document.fonts.ready){try{await document.fonts.ready;}catch(e){}}
     const D=_aCardData();
-    const W=1080,H=1350;
+    const W=1080,H=1500;
     const cv=document.createElement('canvas');cv.width=W;cv.height=H;
     const ctx=cv.getContext('2d');
     const SERIF="'Playfair Display',Georgia,'Times New Roman',serif";
@@ -2933,20 +2938,37 @@ async function deelAlsAfbeelding(btn){
     }
     ctx.textAlign='left';
 
-    /* Stat-chips */
+    /* Stat-chips met semantische kleur (rood/geel/groen/neutraal) */
+    const chipPalet={
+      ok:  {bg:'rgba(39,174,96,0.14)', line:'rgba(39,174,96,0.55)',  tx:'#43d183'},
+      bad: {bg:'rgba(224,86,96,0.15)', line:'rgba(224,86,96,0.6)',   tx:'#f07a86'},
+      warn:{bg:'rgba(217,163,0,0.14)', line:'rgba(217,163,0,0.55)',  tx:'#e8bd45'},
+      neu: {bg:PANEL,                    line:'rgba(186,126,83,0.4)', tx:COPL}
+    };
     const chips=[];
-    if(D.nap)chips.push(['NAP',D.nap.replace(/[^a-zA-Z ]/g,' ').trim().split(' ')[0]]);
-    if(D.apk)chips.push(['APK',/verlopen/i.test(D.apk)?'verlopen':/geldig|goedgekeurd/i.test(D.apk)?'geldig':'bekend']);
-    if(D.bpm&&D.bpm!=='—'&&D.bpm!=='')chips.push(['BPM-rest',D.bpm]);
+    const napL=String(D.nap||'').toLowerCase();
+    if(D.nap){
+      if(/logisch/.test(napL)&&!/niet|onlogisch|geen oordeel|onbekend/.test(napL))chips.push(['NAP-tellerstand','logisch','ok']);
+      else if(/niet|onlogisch/.test(napL))chips.push(['NAP-tellerstand','niet logisch','bad']);
+      else chips.push(['NAP-tellerstand','geen oordeel','warn']);
+    }
+    const apkL=String(D.apk||'').toLowerCase();
+    if(D.apk){
+      if(/verlopen|verval|afgekeurd/.test(apkL))chips.push(['APK','verlopen','bad']);
+      else if(/geldig|goedgekeurd/.test(apkL))chips.push(['APK','geldig','ok']);
+      else chips.push(['APK','onbekend','warn']);
+    }
+    if(D.bpm&&D.bpm!=='—'&&D.bpm!=='')chips.push(['BPM-rest (indicatie)',D.bpm,'neu']);
     let chipY=cy+R+64;
     ctx.font='600 28px '+SANS;
-    chips.forEach(([k,v])=>{
+    chips.forEach(([k,v,tone])=>{
+      const pal=chipPalet[tone]||chipPalet.neu;
       const label=k+': '+v;
       const tw=ctx.measureText(label).width;
       const bw=Math.min(tw+60,W-160),bx=(W-bw)/2;
-      _roundRectPath(ctx,bx,chipY,bw,66,33);ctx.fillStyle=PANEL;ctx.fill();
-      ctx.strokeStyle='rgba(186,126,83,0.35)';ctx.lineWidth=1.5;ctx.stroke();
-      ctx.fillStyle=COPL;ctx.textAlign='center';
+      _roundRectPath(ctx,bx,chipY,bw,66,33);ctx.fillStyle=pal.bg;ctx.fill();
+      ctx.strokeStyle=pal.line;ctx.lineWidth=1.5;ctx.stroke();
+      ctx.fillStyle=pal.tx;ctx.textAlign='center';
       ctx.fillText(label,W/2,chipY+43);
       ctx.textAlign='left';
       chipY+=84;
