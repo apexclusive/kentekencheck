@@ -5045,7 +5045,16 @@ async function doCheck(){
       }
       tx.textContent=bericht;
       const wa=document.getElementById('lead-wa');
-      const waBoodschap='https://wa.me/31624735939?text='+encodeURIComponent('Beste Martijn, ik overweeg de aankoop van kenteken '+plate+'. De gratis kentekencheck geeft score '+score.score+'/100. Kunt u vrijblijvend meedenken over een aankoopinspectie/begeleiding?');
+      /* Neem de concrete signalen mee in het expertenbericht, zodat Martijn
+         direct ziet wat er speelt (minder typwerk voor de bezoeker = hogere
+         verzendgraad; relevanter antwoord = hogere close). De labels komen
+         uit dezelfde signaallijst die op de pagina wordt getoond. */
+      const signaalRegel=sigBad.length
+        ? 'Belangrijkste signalen: '+sigBad.slice(0,3).map(x=>x.l).join('; ')+'.'
+        : sigWarn.length
+          ? 'Aandachtspunten om te verifiëren: '+sigWarn.slice(0,3).map(x=>x.l).join('; ')+'.'
+          : 'De registerdata tonen geen waarschuwingssignalen.';
+      const waBoodschap='https://wa.me/31624735939?text='+encodeURIComponent('Beste Martijn, ik overweeg de aankoop van kenteken '+plate+'. De gratis kentekencheck geeft score '+score.score+'/100. '+signaalRegel+' Kunt u vrijblijvend meedenken over een aankoopinspectie/begeleiding?');
       if(wa)wa.href=waBoodschap;
       /* Zwevende WhatsApp-knop (desktop) dezelfde context geven + tonen */
       const fab=document.getElementById('wa-fab');
